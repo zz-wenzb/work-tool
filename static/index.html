@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>工具</title>
+    <style>
+        /* 保持原有 CSS 不变 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #join-box, #chat-box {
+            display: none;
+        }
+
+        #join-box.active {
+            display: block;
+        }
+
+        #chat-box.active {
+            display: flex;
+            gap: 16px;
+            height: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        #error {
+            color: red;
+            min-height: 20px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        /* 面板样式优化 */
+        #deploy-panel, #monitor-panel, #token-panel, #command-panel {
+            background: #f8fbff;
+            border: 1px solid #dce9f7;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 13px;
+            color: #333;
+            overflow-y: auto;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 特定面板宽度控制 */
+        #deploy-panel {
+            width: 240px;
+            max-height: 100%;
+        }
+
+        /* 右侧容器包裹 token 和 command 面板 */
+        .right-side-panel {
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        #token-panel, #command-panel {
+            flex: 1; /* 让两个面板平分高度或根据内容自适应 */
+            min-height: 140px;
+        }
+
+        #deploy-panel h3, #monitor-panel h3, #token-panel h3, #command-panel h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 2px solid #e3f2fd;
+            padding-bottom: 8px;
+            flex-shrink: 0;
+        }
+
+        #deploy-panel h3, #monitor-panel h3 { color: #1976D2; }
+        #token-panel h3 { color: #F57C00; border-bottom-color: #ffe0b2; } /* Token 面板用橙色主题区分 */
+        #command-panel h3 { color: #2c3e50; border-bottom-color: #eee; }
+
+        /* 【新增】搜索框样式 */
+        #deploy-search {
+            width: 100%;
+            padding: 6px 8px;
+            margin-bottom: 10px;
+            border: 1px solid #bbdefb;
+            border-radius: 4px;
+            font-size: 12px;
+            outline: none;
+            transition: border-color 0.2s;
+            flex-shrink: 0;
+        }
+        #deploy-search:focus {
+            border-color: #2196F3;
+            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+        }
+
+        #deploy-list-container, #monitor-panel ul, #token-panel ul, #command-panel ul {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #deploy-panel li, #monitor-panel li, #token-panel li, #command-panel li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            cursor: default;
+        }
+
+        #deploy-panel li:hover, #monitor-panel li:hover, #token-panel li:hover, #command-panel li:hover {
+            background: #e3f2fd;
+        }
+
+        #deploy-panel li.no-result {
+            color: #999;
+            text-align: center;
+            font-style: italic;
+            cursor: default;
+        }
+
+        #deploy-panel code, #monitor-panel code, #token-panel code, #command-panel code {
+            display: inline-block;
+            background: #eef7ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* 不同面板的 code 颜色微调 */
+        #deploy-panel code { color: #0d47a1; background: #e3f2fd; }
+        #token-panel code { color: #E65100; background: #ffe0b2; } /* Token 命令高亮 */
+        #command-panel code { color: #2196F3; background: #eef7ff; }
+
+        #deploy-panel code:hover, #token-panel code:hover, #command-panel code:hover {
+            filter: brightness(0.9);
+        }
+
+        .loading-text {
+            color: #999;
+            font-style: italic;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        #messages {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .msg {
+            margin-bottom: 8px;
+            padding: 6px 0;
+            word-wrap: break-word;
+        }
+
+        .msg.system {
+            color: #666;
+            font-style: italic;
+            background: #f9f9f9;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .msg.chat strong {
+            color: #2196F3;
+        }
+
+        .msg.chat small {
+            color: #999;
+            margin-left: 8px;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        #message {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>💬 工具</h1>
+
+<div id="join-box" class="active">
+    <div class="form-group">
+        <label for="nickname">请输入昵称（2~20字符）：</label>
+        <input type="text" id="nickname" placeholder="例如：小明" maxlength="20" autocomplete="off"/>
+    </div>
+    <button onclick="joinChat()">加入聊天</button>
+    <div id="error"></div>
+</div>
+
+<div id="chat-box">
+    <!-- 左侧：部署服务面板 (动态内容) -->
+    <div id="deploy-panel">
+        <h3>🚀 部署服务</h3>
+        <input type="text" id="deploy-search" placeholder="🔍 搜索项目名称..." oninput="filterDeployList(this.value)">
+        <div id="deploy-list-container">
+            <li class="loading-text">正在加载项目列表...</li>
+        </div>
+    </div>
+
+    <!-- 中间：聊天主区域 -->
+    <div class="chat-main">
+        <div id="messages"></div>
+        <div class="input-area">
+            <input type="text" id="message" placeholder="输入消息或命令（如 /d1 或点击右侧命令）..." maxlength="500"
+                   autocomplete="off"/>
+            <button onclick="sendMessage()">发送</button>
+        </div>
+    </div>
+
+    <!-- 右侧：功能面板组 -->
+    <div class="right-side-panel">
+        <!-- 【新增】独立的 Token 获取面板 -->
+        <div id="token-panel">
+            <h3>🔑 获取 Token</h3>
+            <ul>
+                <li><code onclick="fillCmd('/token-app')">/token-app</code><br><small style="color:#666;font-size:11px">获取 App Token</small></li>
+                <li><code onclick="fillCmd('/token-vue-nt')">/token-vue-nt</code><br><small style="color:#666;font-size:11px">获取 Vue Token</small></li>
+            </ul>
+        </div>
+
+        <!-- 原有：通用命令面板 -->
+        <div id="command-panel">
+            <h3>📘 通用命令</h3>
+            <ul>
+                <li><code onclick="fillCmd('/users')">/users</code> 查看在线用户</li>
+                <li><code onclick="fillCmd('/help')">/help</code> 帮助信息</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    let ws;
+    const messagesDiv = document.getElementById('messages');
+    const errorDiv = document.getElementById('error');
+    const joinBox = document.getElementById('join-box');
+    const chatBox = document.getElementById('chat-box');
+    const deployListContainer = document.getElementById('deploy-list-container');
+
+    // 存储所有原始项目数据，用于搜索过滤
+    let windowAllDeployItems = [];
+
+    function showError(msg) {
+        errorDiv.textContent = msg;
+        setTimeout(() => {
+            errorDiv.textContent = '';
+        }, 5000);
+    }
+
+    function showJoin() {
+        joinBox.classList.add('active');
+        chatBox.classList.remove('active');
+    }
+
+    function showChat() {
+        joinBox.classList.remove('active');
+        chatBox.classList.add('active');
+        document.getElementById('message').focus();
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function fillCmd(cmd) {
+        const input = document.getElementById('message');
+        input.value = cmd + " ";
+        input.focus();
+    }
+
+    // 渲染动态部署列表
+    function renderDeployList(projects, commandsMap) {
+        windowAllDeployItems = [];
+        deployListContainer.innerHTML = '';
+
+        if (!commandsMap || Object.keys(commandsMap).length === 0) {
+            deployListContainer.innerHTML = '<li class="loading-text">暂无项目数据</li>';
+            return;
+        }
+
+        const ul = document.createElement('ul');
+
+        // 排序命令
+        const sortedCommands = Object.entries(commandsMap).sort((a, b) => {
+            const numA = parseInt(a[0].replace('/d', ''));
+            const numB = parseInt(b[0].replace('/d', ''));
+            return numA - numB;
+        });
+
+        sortedCommands.forEach(([cmd, cfg]) => {
+            const serviceName = typeof cfg === 'object' ? (cfg.service || '未知服务') : cfg;
+            const branchInfo = typeof cfg === 'object' && cfg.branch ? `(${cfg.branch})` : '';
+
+            const li = document.createElement('li');
+            li.innerHTML = `<code>${cmd}</code> ${serviceName} <small style="color:#999">${branchInfo}</small>`;
+            li.title = `点击复制 ${cmd} 部署 ${serviceName}`;
+            li.onclick = () => fillCmd(cmd);
+
+            ul.appendChild(li);
+
+            windowAllDeployItems.push({
+                cmd: cmd,
+                service: serviceName,
+                branch: branchInfo,
+                element: li
+            });
+        });
+
+        deployListContainer.appendChild(ul);
+    }
+
+    // 搜索过滤函数
+    function filterDeployList(keyword) {
+        const ul = deployListContainer.querySelector('ul');
+        if (!ul) return;
+
+        const term = keyword.toLowerCase().trim();
+        let visibleCount = 0;
+
+        const items = ul.querySelectorAll('li');
+
+        items.forEach(li => {
+            const text = li.textContent.toLowerCase();
+
+            if (term === '' || text.includes(term)) {
+                li.style.display = '';
+                visibleCount++;
+            } else {
+                li.style.display = 'none';
+            }
+        });
+
+        let noResultMsg = ul.querySelector('.no-result');
+        if (visibleCount === 0) {
+            if (!noResultMsg) {
+                noResultMsg = document.createElement('li');
+                noResultMsg.className = 'no-result';
+                noResultMsg.textContent = '未找到匹配的项目';
+                ul.appendChild(noResultMsg);
+            }
+        } else {
+            if (noResultMsg) {
+                noResultMsg.remove();
+            }
+        }
+    }
+
+    function joinChat() {
+        const nickInput = document.getElementById('nickname');
+        const nick = nickInput.value.trim();
+
+        if (!nick || nick.length < 2) {
+            showError("昵称至少需要2个字符");
+            nickInput.focus();
+            return;
+        }
+
+        if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.close();
+        }
+
+        const wsUrl = `ws://${window.location.hostname}:8765`;
+        console.log("[WS] Connecting to:", wsUrl);
+        ws = new WebSocket(wsUrl);
+
+        ws.onopen = () => {
+            console.log("[WS] 连接已打开，发送加入请求...");
+            ws.send(JSON.stringify({type: "join", nickname: nick}));
+        };
+
+        ws.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                console.log("[收到消息]", data);
+
+                if (data.type === 'project_list') {
+                    console.log("[更新] 收到项目列表，正在渲染...");
+                    renderDeployList(data.data, data.dynamic_commands);
+                    return;
+                }
+
+                if (data.type !== 'error') {
+                    showChat();
+                }
+
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'msg ' + data.type;
+
+                if (data.type === 'system') {
+                    msgDiv.innerHTML = `<span>[${data.time}] ${data.content.replace(/\n/g, '<br>')}</span>`;
+                } else if (data.type === 'chat') {
+                    msgDiv.innerHTML = `<strong>${data.nickname}:</strong> ${data.content} <small>[${data.time}]</small>`;
+                } else if (data.type === 'error') {
+                    showError(data.content);
+                    ws.close();
+                    return;
+                }
+
+                messagesDiv.appendChild(msgDiv);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            } catch (e) {
+                console.error("消息解析失败:", e);
+            }
+        };
+
+        ws.onclose = (event) => {
+            console.log("[WS] 连接关闭", event.code, event.reason);
+            if (event.code !== 1000) {
+                showError("连接断开：" + (event.reason || "未知原因"));
+            }
+            showJoin();
+        };
+
+        ws.onerror = (err) => {
+            console.error("[WS] 错误", err);
+            showError("连接发生错误，请刷新页面重试");
+            showJoin();
+        };
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('message');
+        const content = input.value.trim();
+        if (!content) return;
+
+        if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({type: "chat", content: content}));
+            input.value = '';
+        } else {
+            showError("未连接到服务器");
+        }
+    }
+
+    document.getElementById('nickname').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') joinChat();
+    });
+
+    document.getElementById('message').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+    window.onload = () => {
+        document.getElementById('nickname').focus();
+    };
+</script>
+
+</body>
+</html>

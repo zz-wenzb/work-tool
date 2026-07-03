@@ -1,0 +1,4056 @@
+{
+  "created_at": "2026-07-03T15:12:55.073375",
+  "count": 405,
+  "data": [
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "debang-api-business",
+      "gmtCreate": "2025-08-14T02:19:02.000+00:00",
+      "description": "这是建立于2025-08-14的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "lorry-msp-order-service",
+      "gmtCreate": "2025-08-16T07:15:13.000+00:00",
+      "description": "这是建立于2025-08-16的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "oas-api-web",
+      "gmtCreate": "2025-08-18T03:00:13.000+00:00",
+      "description": "这是建立于2025-08-18的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "oas-central",
+      "gmtCreate": "2025-08-18T05:18:25.000+00:00",
+      "description": "这是建立于2025-08-18的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "oas-revert",
+      "gmtCreate": "2025-08-18T05:55:45.000+00:00",
+      "description": "这是建立于2025-08-18的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "oas-mp-driver",
+      "gmtCreate": "2025-08-18T06:27:06.000+00:00",
+      "description": "这是建立于2025-08-18的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "tap-signature-api",
+      "gmtCreate": "2025-08-19T01:37:59.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "openapi-oas-web",
+      "gmtCreate": "2025-08-19T01:40:16.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5d25af62271dd40d6923",
+      "name": "app-dv-api",
+      "gmtCreate": "2025-08-19T02:16:14.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "openapi-crypto-flow",
+      "gmtCreate": "2025-08-19T05:25:01.000+00:00",
+      "description": "openapi加密转发服务（智序港城）",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "openapi-auth-web",
+      "gmtCreate": "2025-08-19T05:30:40.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "mq-consumer-ma",
+      "gmtCreate": "2025-08-19T05:33:58.000+00:00",
+      "description": "mq服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "mq-consumer-oas",
+      "gmtCreate": "2025-08-19T05:35:10.000+00:00",
+      "description": "mq服务oas",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "msg-api-web",
+      "gmtCreate": "2025-08-19T05:36:50.000+00:00",
+      "description": "msg-api-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "openapi-dv-web",
+      "gmtCreate": "2025-08-19T05:37:37.000+00:00",
+      "description": "openapi-dv-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6656884145b74139929148fe",
+      "name": "toms-api-config",
+      "gmtCreate": "2025-08-19T05:37:42.000+00:00",
+      "description": "toms-api-config",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "openapi-callback",
+      "gmtCreate": "2025-08-19T05:38:44.000+00:00",
+      "description": "openapi-callback",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "openapi-pos-web",
+      "gmtCreate": "2025-08-19T05:39:23.000+00:00",
+      "description": "openapi-pos-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5d25af62271dd40d6923",
+      "name": "report-api-user",
+      "gmtCreate": "2025-08-19T06:14:47.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5d25af62271dd40d6923",
+      "name": "report-credit-stats",
+      "gmtCreate": "2025-08-19T06:21:03.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5d25af62271dd40d6923",
+      "name": "finance-api-nanjing",
+      "gmtCreate": "2025-08-19T06:41:07.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5d25af62271dd40d6923",
+      "name": "finance-api-jilin",
+      "gmtCreate": "2025-08-19T06:44:02.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5d25af62271dd40d6923",
+      "name": "finance-api-ccb",
+      "gmtCreate": "2025-08-19T06:44:49.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5d25af62271dd40d6923",
+      "name": "gps-api-web",
+      "gmtCreate": "2025-08-19T06:53:46.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5d25af62271dd40d6923",
+      "name": "fuel-api-web",
+      "gmtCreate": "2025-08-19T07:15:26.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d60470c3c7ce81c9ca1ed",
+      "name": "oas-mp-order",
+      "gmtCreate": "2025-08-19T09:28:07.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d60470c3c7ce81c9ca1ed",
+      "name": "oas-platform-report",
+      "gmtCreate": "2025-08-19T09:33:35.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d60470c3c7ce81c9ca1ed",
+      "name": "oas-mp-agent",
+      "gmtCreate": "2025-08-19T09:41:58.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d60470c3c7ce81c9ca1ed",
+      "name": "oas-api-jianlong",
+      "gmtCreate": "2025-08-19T09:47:07.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d60470c3c7ce81c9ca1ed",
+      "name": "oas-flow",
+      "gmtCreate": "2025-08-19T09:51:29.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d60470c3c7ce81c9ca1ed",
+      "name": "oas-report",
+      "gmtCreate": "2025-08-19T09:55:58.000+00:00",
+      "description": "这是建立于2025-08-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "lorry-msp-app-driver",
+      "gmtCreate": "2025-08-20T03:04:09.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "lorry-msp-employee",
+      "gmtCreate": "2025-08-20T03:18:39.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "lorry-msp-auth",
+      "gmtCreate": "2025-08-20T03:21:23.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "lorry-msp-job",
+      "gmtCreate": "2025-08-20T03:22:30.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "lorry-msp-payment",
+      "gmtCreate": "2025-08-20T03:23:09.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "lorry-msp-value-add",
+      "gmtCreate": "2025-08-20T03:24:16.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "lorry-msp-robot-core",
+      "gmtCreate": "2025-08-20T03:25:11.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "lorry-msp-marketing",
+      "gmtCreate": "2025-08-20T03:25:54.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "lorry-msp-file",
+      "gmtCreate": "2025-08-20T03:26:41.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "lorry-msp-web",
+      "gmtCreate": "2025-08-20T03:26:56.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "lorry-msp-wechat-robot",
+      "gmtCreate": "2025-08-20T03:27:31.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "lorry-msp-message",
+      "gmtCreate": "2025-08-20T03:27:52.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "lorry-msp-number-generator",
+      "gmtCreate": "2025-08-20T03:28:30.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "lorry-msp-gateway",
+      "gmtCreate": "2025-08-20T03:29:39.000+00:00",
+      "description": "这是建立于2025-08-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "tap-rn-api",
+      "gmtCreate": "2025-08-21T07:24:35.000+00:00",
+      "description": "这是建立于2025-08-21的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "gen-driver-static-map",
+      "gmtCreate": "2025-08-21T07:34:42.000+00:00",
+      "description": "这是建立于2025-08-21的应用",
+      "appTemplateName": "baoqi-frontend-node-template",
+      "appTemplateDisplayName": "宝奇前端node模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "lorry-msp-user",
+      "gmtCreate": "2025-08-21T12:04:20.000+00:00",
+      "description": "这是建立于2025-08-21的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "tap-gateway",
+      "gmtCreate": "2025-08-25T06:46:32.000+00:00",
+      "description": "这是建立于2025-08-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "tap-sms-service",
+      "gmtCreate": "2025-08-25T07:03:13.000+00:00",
+      "description": "这是建立于2025-08-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d60470c3c7ce81c9ca1ed",
+      "name": "oas-handle-program",
+      "gmtCreate": "2025-08-26T02:28:41.000+00:00",
+      "description": "这是建立于2025-08-26的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6656884145b74139929148fe",
+      "name": "pay-risk-central",
+      "gmtCreate": "2025-08-26T06:35:22.000+00:00",
+      "description": "pay-risk-central",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d60470c3c7ce81c9ca1ed",
+      "name": "oas-api-rescue",
+      "gmtCreate": "2025-08-27T02:02:30.000+00:00",
+      "description": "这是建立于2025-08-27的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "mts-manage",
+      "gmtCreate": "2025-08-27T12:26:21.000+00:00",
+      "description": "这是建立于2025-08-27的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pos-settle-job",
+      "gmtCreate": "2025-08-28T03:14:22.000+00:00",
+      "description": "这是建立于2025-08-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "debang-api-web",
+      "gmtCreate": "2025-08-28T13:04:25.000+00:00",
+      "description": "这是建立于2025-08-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "pub-api-config",
+      "gmtCreate": "2025-08-28T13:30:08.000+00:00",
+      "description": "这是建立于2025-08-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "sap-api-web",
+      "gmtCreate": "2025-08-28T13:45:45.000+00:00",
+      "description": "这是建立于2025-08-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "sap-report",
+      "gmtCreate": "2025-08-28T13:48:23.000+00:00",
+      "description": "这是建立于2025-08-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "mts-system-platform",
+      "gmtCreate": "2025-08-28T14:18:07.000+00:00",
+      "description": "这是建立于2025-08-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "sap-central",
+      "gmtCreate": "2025-08-28T14:40:31.000+00:00",
+      "description": "这是建立于2025-08-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "mts-system-shipper",
+      "gmtCreate": "2025-08-28T14:48:22.000+00:00",
+      "description": "这是建立于2025-08-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "toms-api-system",
+      "gmtCreate": "2025-08-29T01:28:54.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "tms-auth",
+      "gmtCreate": "2025-08-29T03:10:29.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "tms-central",
+      "gmtCreate": "2025-08-29T03:12:09.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "tms-api-system",
+      "gmtCreate": "2025-08-29T03:13:50.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "tms-config",
+      "gmtCreate": "2025-08-29T03:44:49.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "tms-api-web",
+      "gmtCreate": "2025-08-29T03:47:06.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-bank-central",
+      "gmtCreate": "2025-08-29T05:30:16.000+00:00",
+      "description": "bank",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-central",
+      "gmtCreate": "2025-08-29T05:32:19.000+00:00",
+      "description": "pay-central",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-api-web",
+      "gmtCreate": "2025-08-29T05:34:52.000+00:00",
+      "description": "pay-api-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-oas-central",
+      "gmtCreate": "2025-08-29T05:40:02.000+00:00",
+      "description": "pay-oas-central",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-oas-api-driver",
+      "gmtCreate": "2025-08-29T05:41:56.000+00:00",
+      "description": "pay-oas-api-driver",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-oas-api-agent",
+      "gmtCreate": "2025-08-29T05:43:56.000+00:00",
+      "description": "pay-oas-api-agent",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-oas-api-web",
+      "gmtCreate": "2025-08-29T05:45:43.000+00:00",
+      "description": "pay-oas-api-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pms-api-web",
+      "gmtCreate": "2025-08-29T05:47:39.000+00:00",
+      "description": "pms-api-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pms-central",
+      "gmtCreate": "2025-08-29T05:48:55.000+00:00",
+      "description": "pms-central",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "file-web",
+      "gmtCreate": "2025-08-29T05:50:35.000+00:00",
+      "description": "file-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "tms-shipper-job",
+      "gmtCreate": "2025-08-29T05:52:53.000+00:00",
+      "description": "tms-shipper-job",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "oas-deppon-track-push",
+      "gmtCreate": "2025-08-29T05:54:44.000+00:00",
+      "description": "oas-deppon-track-push",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "oas-thirdpayment-job",
+      "gmtCreate": "2025-08-29T05:57:00.000+00:00",
+      "description": "oas-thirdpayment-job",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "openapi-callback-job",
+      "gmtCreate": "2025-08-29T05:58:08.000+00:00",
+      "description": "openapi-callback-job",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-job-ccb",
+      "gmtCreate": "2025-08-29T05:58:54.000+00:00",
+      "description": "pay-job-ccb",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-job-hxb",
+      "gmtCreate": "2025-08-29T05:59:58.000+00:00",
+      "description": "pay-job-hxb",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-job-jilin",
+      "gmtCreate": "2025-08-29T06:00:36.000+00:00",
+      "description": "pay-job-jilin",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-job-ceb",
+      "gmtCreate": "2025-08-29T06:01:16.000+00:00",
+      "description": "pay-job-ceb",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "tms-contract-job",
+      "gmtCreate": "2025-08-29T06:02:07.000+00:00",
+      "description": "tms-contract-job",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "tms-driver-captain-job",
+      "gmtCreate": "2025-08-29T06:03:08.000+00:00",
+      "description": "tms-driver-captain-job",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "tms-vehicle-job",
+      "gmtCreate": "2025-08-29T06:03:59.000+00:00",
+      "description": "tms-vehicle-job",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "toms-api-web",
+      "gmtCreate": "2025-08-29T06:04:46.000+00:00",
+      "description": "toms-api-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "toms-auth",
+      "gmtCreate": "2025-08-29T06:05:26.000+00:00",
+      "description": "toms-auth",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "zhongbao-customer-web",
+      "gmtCreate": "2025-08-29T06:06:02.000+00:00",
+      "description": "zhongbao-customer-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "review-api",
+      "gmtCreate": "2025-08-29T07:13:55.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6656884145b74139929148fe",
+      "name": "statistics-oas-web",
+      "gmtCreate": "2025-08-29T07:30:02.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "css-api-ticket",
+      "gmtCreate": "2025-08-29T07:38:30.000+00:00",
+      "description": "css-api-ticket",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "capacity-api-web",
+      "gmtCreate": "2025-08-29T07:45:49.000+00:00",
+      "description": "capacity-api-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "gateway-mts",
+      "gmtCreate": "2025-08-29T07:55:59.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "gateway-sap",
+      "gmtCreate": "2025-08-29T08:01:06.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "gateway-mp",
+      "gmtCreate": "2025-08-29T08:04:14.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "gateway-toms",
+      "gmtCreate": "2025-08-29T08:05:55.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "gateway-openapi",
+      "gmtCreate": "2025-08-29T08:08:12.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "gateway-eporthub",
+      "gmtCreate": "2025-08-29T08:10:41.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "gateway-app",
+      "gmtCreate": "2025-08-29T08:15:13.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "data-center-datareport",
+      "gmtCreate": "2025-08-29T08:15:28.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "rpa-tax",
+      "gmtCreate": "2025-08-29T08:17:46.000+00:00",
+      "description": "rpa-tax",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "gateway-platform",
+      "gmtCreate": "2025-08-29T08:19:22.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "gateway-shipper",
+      "gmtCreate": "2025-08-29T08:22:12.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "gateway-web",
+      "gmtCreate": "2025-08-29T08:24:16.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "data-center-ticket",
+      "gmtCreate": "2025-08-29T08:27:59.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "data-center-taxinfo",
+      "gmtCreate": "2025-08-29T08:29:01.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "data-center-invoice",
+      "gmtCreate": "2025-08-29T08:30:01.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "corp-api-web",
+      "gmtCreate": "2025-08-29T08:36:03.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "data-center-oas",
+      "gmtCreate": "2025-08-29T08:40:43.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "data-center-order",
+      "gmtCreate": "2025-08-29T08:43:41.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "sap-admin",
+      "gmtCreate": "2025-08-29T08:55:59.000+00:00",
+      "description": "网货-转包端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "zhongbao-server-uid",
+      "gmtCreate": "2025-08-29T08:56:21.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "data-center-pay",
+      "gmtCreate": "2025-08-29T09:00:31.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "operation-logs-web",
+      "gmtCreate": "2025-08-29T09:04:18.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d80870c3c7ce81ca49f0a",
+      "name": "nengtou-tms-system",
+      "gmtCreate": "2025-08-29T09:29:24.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d80870c3c7ce81ca49f0a",
+      "name": "nengtou-tms-workflow",
+      "gmtCreate": "2025-08-29T09:42:06.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d80870c3c7ce81ca49f0a",
+      "name": "nengtou-tms-mp-driver",
+      "gmtCreate": "2025-08-29T09:45:18.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d80870c3c7ce81ca49f0a",
+      "name": "nengtou-tms-track",
+      "gmtCreate": "2025-08-29T09:49:47.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d80870c3c7ce81ca49f0a",
+      "name": "nengtou-tms-callback",
+      "gmtCreate": "2025-08-29T09:52:07.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d80870c3c7ce81ca49f0a",
+      "name": "nengtou-tms-carrier",
+      "gmtCreate": "2025-08-29T09:53:44.000+00:00",
+      "description": "这是建立于2025-08-29的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "frontend-test",
+      "gmtCreate": "2025-08-30T03:05:44.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "platform-admin",
+      "gmtCreate": "2025-08-30T03:50:57.000+00:00",
+      "description": "【前端】网货-平台端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "operation-proj",
+      "gmtCreate": "2025-08-30T03:59:50.000+00:00",
+      "description": "运营系统-易港通",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "lorry-font-end",
+      "gmtCreate": "2025-08-30T05:08:23.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "data-analysis-platform",
+      "gmtCreate": "2025-08-30T05:47:30.000+00:00",
+      "description": "网货-数据大屏",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc4060a97c217c00d7312",
+      "name": "crm-api-web",
+      "gmtCreate": "2025-08-30T06:07:07.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "mts-auth",
+      "gmtCreate": "2025-08-30T06:17:28.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc4060a97c217c00d7312",
+      "name": "datareport-api-web",
+      "gmtCreate": "2025-08-30T06:21:43.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "mts-railway",
+      "gmtCreate": "2025-08-30T06:27:51.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "mts-shipper",
+      "gmtCreate": "2025-08-30T06:30:54.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "mts-manage-data-center",
+      "gmtCreate": "2025-08-30T06:34:49.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "pmts-api-web",
+      "gmtCreate": "2025-08-30T06:58:19.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc4060a97c217c00d7312",
+      "name": "ums-api-web",
+      "gmtCreate": "2025-08-30T06:58:50.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "pmts-rail-agent",
+      "gmtCreate": "2025-08-30T07:00:31.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "pmts-central",
+      "gmtCreate": "2025-08-30T07:02:02.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "webview-h5-nuxt",
+      "gmtCreate": "2025-08-30T07:03:53.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc4060a97c217c00d7312",
+      "name": "ums-auth",
+      "gmtCreate": "2025-08-30T07:03:54.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc4060a97c217c00d7312",
+      "name": "ums-central",
+      "gmtCreate": "2025-08-30T07:11:11.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc4060a97c217c00d7312",
+      "name": "domain-order",
+      "gmtCreate": "2025-08-30T07:15:26.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc4060a97c217c00d7312",
+      "name": "infrastructure-contract",
+      "gmtCreate": "2025-08-30T07:22:41.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "zhongbao-security",
+      "gmtCreate": "2025-08-30T07:34:20.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc4060a97c217c00d7312",
+      "name": "infrastructure-mini-program",
+      "gmtCreate": "2025-08-30T07:40:29.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "lane-track-api",
+      "gmtCreate": "2025-08-30T08:18:36.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "lane-track-handle-history",
+      "gmtCreate": "2025-08-30T08:20:54.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "lane-dot-consumer",
+      "gmtCreate": "2025-08-30T08:45:15.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "lane-dot-producer",
+      "gmtCreate": "2025-08-30T08:46:54.000+00:00",
+      "description": "这是建立于2025-08-30的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d80870c3c7ce81ca49f0a",
+      "name": "nengtou-gateway-web",
+      "gmtCreate": "2025-09-02T01:03:55.000+00:00",
+      "description": "这是建立于2025-09-02的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d80870c3c7ce81ca49f0a",
+      "name": "tms-carrier-proj-ui",
+      "gmtCreate": "2025-09-02T01:17:48.000+00:00",
+      "description": "TMS承运商端\n",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d80870c3c7ce81ca49f0a",
+      "name": "nengtou-tms-proj-ui",
+      "gmtCreate": "2025-09-02T03:09:52.000+00:00",
+      "description": "能投TMS-平台端（前端node）",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "contracts-html",
+      "gmtCreate": "2025-09-02T03:36:57.000+00:00",
+      "description": "网货--移动端合同H5",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "toms-ui",
+      "gmtCreate": "2025-09-02T03:44:35.000+00:00",
+      "description": "网货-toms配置系统",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "mp-driver-static",
+      "gmtCreate": "2025-09-02T03:57:53.000+00:00",
+      "description": "网货-司机小程序静态资源",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "68a2c01388ec6bebc2d9dd9a",
+      "name": "energy-api-web",
+      "gmtCreate": "2025-09-02T05:35:14.000+00:00",
+      "description": "这是建立于2025-09-02的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "fds-api-feeclouds",
+      "gmtCreate": "2025-09-02T05:35:38.000+00:00",
+      "description": "这是建立于2025-09-02的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "shipper-admin",
+      "gmtCreate": "2025-09-02T05:42:21.000+00:00",
+      "description": "【前端】网货-货主pc端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "data-center",
+      "gmtCreate": "2025-09-02T05:54:26.000+00:00",
+      "description": "这是建立于2025-09-02的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "fds-api-zhongruan",
+      "gmtCreate": "2025-09-02T05:55:19.000+00:00",
+      "description": "这是建立于2025-09-02的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "fds-invoice-api",
+      "gmtCreate": "2025-09-02T06:17:09.000+00:00",
+      "description": "这是建立于2025-09-02的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "ningbo-h5",
+      "gmtCreate": "2025-09-02T06:22:38.000+00:00",
+      "description": "宁波港H5",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "prod-font-combined-transport-platform",
+      "gmtCreate": "2025-09-02T06:24:15.000+00:00",
+      "description": "多式联运---平台端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "open-sign-face",
+      "gmtCreate": "2025-09-02T06:24:27.000+00:00",
+      "description": "openapi-车队长签约",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "baoqi-portal",
+      "gmtCreate": "2025-09-02T06:27:20.000+00:00",
+      "description": "这是建立于2025-09-02的应用",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "official-h5",
+      "gmtCreate": "2025-09-02T06:28:03.000+00:00",
+      "description": "这是建立于2025-09-02的应用",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "sg-prod-front-sap-admin",
+      "gmtCreate": "2025-09-02T06:28:51.000+00:00",
+      "description": "网货--数构--转包端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "openapi-capacity-pool-html",
+      "gmtCreate": "2025-09-02T06:29:36.000+00:00",
+      "description": "openapi-运力池H5",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "tms-driver-static",
+      "gmtCreate": "2025-09-02T06:31:36.000+00:00",
+      "description": "TMS_司机小程序静态图片",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "tms-scene-static",
+      "gmtCreate": "2025-09-02T06:32:23.000+00:00",
+      "description": "TMS现场管理端--静态图片\n\n",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "prod-tms-proj",
+      "gmtCreate": "2025-09-02T06:40:58.000+00:00",
+      "description": "TMS---平台",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "68a2c01388ec6bebc2d9dd9a",
+      "name": "energy-supplier-web",
+      "gmtCreate": "2025-09-02T06:42:35.000+00:00",
+      "description": "这是建立于2025-09-02的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "prod-baoqi-official-website",
+      "gmtCreate": "2025-09-02T06:44:53.000+00:00",
+      "description": "宝奇官网（上海）",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "68a2c01388ec6bebc2d9dd9a",
+      "name": "gateway-web-energy",
+      "gmtCreate": "2025-09-02T06:47:03.000+00:00",
+      "description": "这是建立于2025-09-02的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "prod-front-ccb-platform-admin",
+      "gmtCreate": "2025-09-02T06:51:24.000+00:00",
+      "description": "网货-建行平台管理端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "prod-region-integration-official-website",
+      "gmtCreate": "2025-09-02T06:53:21.000+00:00",
+      "description": "区域化整合门户",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "prod-baoqi-official-website-mobile",
+      "gmtCreate": "2025-09-02T06:55:09.000+00:00",
+      "description": "宝奇官网（移动端）",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "prod-baoqi-official-website-baoqi56",
+      "gmtCreate": "2025-09-02T06:56:52.000+00:00",
+      "description": "宝奇官网（桦甸）",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "oas-flow-temp",
+      "gmtCreate": "2025-09-02T07:18:10.000+00:00",
+      "description": "这是建立于2025-09-02的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "oils-backend-corporation",
+      "gmtCreate": "2025-09-02T09:51:10.000+00:00",
+      "description": "能源-企业端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "oils-backend-platform",
+      "gmtCreate": "2025-09-03T07:56:16.000+00:00",
+      "description": "能源-管理端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "mq-consumer-pay",
+      "gmtCreate": "2025-09-04T02:02:20.000+00:00",
+      "description": "mq-consumer-pay",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "zhongbao-mq-producer",
+      "gmtCreate": "2025-09-04T02:22:31.000+00:00",
+      "description": "zhongbao-mq-producer",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d6a51f5ac7fac9a75cffa",
+      "name": "nengtou-tms-web",
+      "gmtCreate": "2025-09-04T09:39:30.000+00:00",
+      "description": "这是建立于2025-09-04的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "file-web20250905",
+      "gmtCreate": "2025-09-05T03:32:21.000+00:00",
+      "description": "file-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "68a2c01388ec6bebc2d9dd9a",
+      "name": "port-tms-web",
+      "gmtCreate": "2025-09-08T07:55:09.000+00:00",
+      "description": "这是建立于2025-09-08的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "port-tms-fleet",
+      "gmtCreate": "2025-09-09T05:21:37.000+00:00",
+      "description": "港口TMS-平台端（前端）",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "tap-ocr-api",
+      "gmtCreate": "2025-09-09T05:30:10.000+00:00",
+      "description": "这是建立于2025-09-09的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "tap-logs-consumer",
+      "gmtCreate": "2025-09-09T05:44:12.000+00:00",
+      "description": "这是建立于2025-09-09的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "data-center-track",
+      "gmtCreate": "2025-09-09T08:12:15.000+00:00",
+      "description": "这是建立于2025-09-09的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "zhongbao-mq-default-producer",
+      "gmtCreate": "2025-09-09T11:46:56.000+00:00",
+      "description": "这是建立于2025-09-09的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6656884145b74139929148fe",
+      "name": "zhongbao-redis-service",
+      "gmtCreate": "2025-09-09T11:57:56.000+00:00",
+      "description": "zhongbao-redis",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "zhongbao-mq-default-producer-nengtou",
+      "gmtCreate": "2025-09-10T07:11:45.000+00:00",
+      "description": "这是建立于2025-09-10的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "tap-ocr-api-nengtou",
+      "gmtCreate": "2025-09-10T07:19:33.000+00:00",
+      "description": "这是建立于2025-09-10的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6100c3764e5db15d52c3f635",
+      "name": "openapi-developer-web",
+      "gmtCreate": "2025-09-11T01:25:06.000+00:00",
+      "description": "这是建立于2025-09-11的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d6301c194a62170ba87e2",
+      "name": "finance-api-ceb",
+      "gmtCreate": "2025-09-11T05:41:19.000+00:00",
+      "description": "光大金融数据推送",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "wh-shipper-static",
+      "gmtCreate": "2025-09-11T05:56:05.000+00:00",
+      "description": "货主小程序静态文件",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "688034da1a2f30e9eb989e3c",
+      "name": "car-insurance-web",
+      "gmtCreate": "2025-09-11T06:05:39.000+00:00",
+      "description": "车险分期-测试环境-后端",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "688034da1a2f30e9eb989e3c",
+      "name": "car-insurance-vue",
+      "gmtCreate": "2025-09-11T06:28:33.000+00:00",
+      "description": "车险分期-前端项目",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "rms-api",
+      "gmtCreate": "2025-09-12T09:51:15.000+00:00",
+      "description": "这是建立于2025-09-12的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "tap-sms-api",
+      "gmtCreate": "2025-09-12T09:53:37.000+00:00",
+      "description": "这是建立于2025-09-12的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d825ec45d287a25035d1c",
+      "name": "defang-api-web",
+      "gmtCreate": "2025-09-15T02:21:40.000+00:00",
+      "description": "这是建立于2025-09-15的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pos-payment-job",
+      "gmtCreate": "2025-09-15T05:38:18.000+00:00",
+      "description": "pos-payment-job",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "openapi-v2-callback",
+      "gmtCreate": "2025-09-15T06:28:55.000+00:00",
+      "description": "这是建立于2025-09-15的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "openapi-v2-sink-zhongbao",
+      "gmtCreate": "2025-09-15T06:32:48.000+00:00",
+      "description": "这是建立于2025-09-15的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "openapi-inner-data-provide",
+      "gmtCreate": "2025-09-15T06:43:06.000+00:00",
+      "description": "这是建立于2025-09-15的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "openapi-auth",
+      "gmtCreate": "2025-09-15T06:45:08.000+00:00",
+      "description": "这是建立于2025-09-15的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "openapi-oas",
+      "gmtCreate": "2025-09-15T06:49:06.000+00:00",
+      "description": "这是建立于2025-09-15的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "openapi-gateway",
+      "gmtCreate": "2025-09-15T06:50:48.000+00:00",
+      "description": "这是建立于2025-09-15的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "openapi-dv",
+      "gmtCreate": "2025-09-15T06:52:23.000+00:00",
+      "description": "这是建立于2025-09-15的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "openapi-req-record",
+      "gmtCreate": "2025-09-15T06:54:06.000+00:00",
+      "description": "这是建立于2025-09-15的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "xd-uni-mini",
+      "gmtCreate": "2025-09-15T11:17:55.000+00:00",
+      "description": "港口TMS-H5",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "front-financial-platform-system",
+      "gmtCreate": "2025-09-17T01:37:22.000+00:00",
+      "description": "财务中台系统\n\n",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "front-combined-transport-shipper",
+      "gmtCreate": "2025-09-17T01:48:27.000+00:00",
+      "description": "多式联运----货主pc端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "oils-h5",
+      "gmtCreate": "2025-09-17T02:38:19.000+00:00",
+      "description": "能源短链专属H5（下载页）",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "openapi-developer",
+      "gmtCreate": "2025-09-17T05:12:52.000+00:00",
+      "description": "这是建立于2025-09-17的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d811aaf62271dd41b4667",
+      "name": "erp-doc",
+      "gmtCreate": "2025-09-19T02:39:24.000+00:00",
+      "description": "这是建立于2025-09-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d811aaf62271dd41b4667",
+      "name": "erp-sys",
+      "gmtCreate": "2025-09-19T02:45:07.000+00:00",
+      "description": "这是建立于2025-09-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "tap-oa-api",
+      "gmtCreate": "2025-09-22T01:18:07.000+00:00",
+      "description": "这是建立于2025-09-22的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "test-baoqi-server",
+      "gmtCreate": "2025-09-22T07:57:30.000+00:00",
+      "description": "这是建立于2025-09-22的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "test-tms-capacity-pool",
+      "gmtCreate": "2025-09-22T09:58:46.000+00:00",
+      "description": "这是建立于2025-09-22的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "test-tms-mp-driver",
+      "gmtCreate": "2025-09-22T10:08:41.000+00:00",
+      "description": "这是建立于2025-09-22的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "test-tms-system",
+      "gmtCreate": "2025-09-22T10:20:53.000+00:00",
+      "description": "这是建立于2025-09-22的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "test-tms-track",
+      "gmtCreate": "2025-09-22T10:27:18.000+00:00",
+      "description": "这是建立于2025-09-22的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "test-tms-web",
+      "gmtCreate": "2025-09-22T10:32:36.000+00:00",
+      "description": "这是建立于2025-09-22的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "test-tms-workflow",
+      "gmtCreate": "2025-09-22T10:35:20.000+00:00",
+      "description": "这是建立于2025-09-22的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5cc9c194a62170b6129c",
+      "name": "css-api-web",
+      "gmtCreate": "2025-09-23T02:00:58.000+00:00",
+      "description": "css-api-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "67c927c725be8f2424fd3a75",
+      "name": "lorry-msp-data-warehouse-service",
+      "gmtCreate": "2025-09-23T07:46:32.000+00:00",
+      "description": "这是建立于2025-09-23的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "test-tms-callback",
+      "gmtCreate": "2025-09-23T07:50:11.000+00:00",
+      "description": "这是建立于2025-09-23的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "tap-ticket-api",
+      "gmtCreate": "2025-09-24T01:30:12.000+00:00",
+      "description": "公共工单接口",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "test-baoqi-gateway",
+      "gmtCreate": "2025-09-25T08:24:31.000+00:00",
+      "description": "这是建立于2025-09-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "tms-proj",
+      "gmtCreate": "2025-09-25T10:08:28.000+00:00",
+      "description": "这是建立于2025-09-25的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d6301c194a62170ba87e2",
+      "name": "pay-bank-web",
+      "gmtCreate": "2025-09-28T02:25:18.000+00:00",
+      "description": "pay-bank-web",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "oils-backend",
+      "gmtCreate": "2025-09-28T09:34:19.000+00:00",
+      "description": "这是建立于2025-09-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhongbao-etc",
+      "gmtCreate": "2025-09-29T05:45:05.000+00:00",
+      "description": "这是建立于2025-09-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "nengtou-file-web",
+      "gmtCreate": "2025-10-11T02:59:39.000+00:00",
+      "description": "这是建立于2025-10-11的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5cc9c194a62170b6129c",
+      "name": "mq-consumer-css",
+      "gmtCreate": "2025-10-14T02:36:45.000+00:00",
+      "description": "这是建立于2025-10-14的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d6a51f5ac7fac9a75cffa",
+      "name": "nengtou-tms-server",
+      "gmtCreate": "2025-10-14T08:12:06.000+00:00",
+      "description": "这是建立于2025-10-14的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5f4a5f81fa82bfeb8050197d",
+      "name": "auth-server",
+      "gmtCreate": "2025-10-17T13:12:44.000+00:00",
+      "description": "这是建立于2025-10-17的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5f4a5f81fa82bfeb8050197d",
+      "name": "user-server",
+      "gmtCreate": "2025-10-20T03:03:26.000+00:00",
+      "description": "这是建立于2025-10-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5f4a5f81fa82bfeb8050197d",
+      "name": "auth-gateway",
+      "gmtCreate": "2025-10-20T03:08:07.000+00:00",
+      "description": "这是建立于2025-10-20的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5f4a5f81fa82bfeb8050197d",
+      "name": "user-frontend",
+      "gmtCreate": "2025-10-20T04:49:35.000+00:00",
+      "description": "这是建立于2025-10-20的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc026af62271dd4455515",
+      "name": "obs-engine",
+      "gmtCreate": "2025-10-22T01:44:42.000+00:00",
+      "description": "这是建立于2025-10-22的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "h5-txt",
+      "gmtCreate": "2025-10-29T06:30:13.000+00:00",
+      "description": "H5验证txt文件专属流水线",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "xxl-job",
+      "gmtCreate": "2025-10-30T11:31:20.000+00:00",
+      "description": "xxl-job",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "67c927c725be8f2424fd3a75",
+      "name": "cargo-posting",
+      "gmtCreate": "2025-11-03T02:50:24.000+00:00",
+      "description": "这是建立于2025-11-03的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "cargo-sync",
+      "gmtCreate": "2025-11-03T03:14:30.000+00:00",
+      "description": "货源中台 数据同步服务",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "eporthub-api-web",
+      "gmtCreate": "2025-11-03T12:40:17.000+00:00",
+      "description": "这是建立于2025-11-03的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "robot-api-web",
+      "gmtCreate": "2025-11-03T13:28:56.000+00:00",
+      "description": "这是建立于2025-11-03的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6656884145b74139929148fe",
+      "name": "driver-service",
+      "gmtCreate": "2025-11-04T03:29:19.000+00:00",
+      "description": "司机后端入口服务",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d805baf62271dd41b1d30",
+      "name": "driver-search-service",
+      "gmtCreate": "2025-11-04T09:39:45.000+00:00",
+      "description": "网货司机端ES查询服务",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "oas-exception-report",
+      "gmtCreate": "2025-11-04T09:52:34.000+00:00",
+      "description": "这是建立于2025-11-04的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "monitor-central",
+      "gmtCreate": "2025-11-04T12:41:00.000+00:00",
+      "description": "这是建立于2025-11-04的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d6301c194a62170ba87e2",
+      "name": "pms-finance-job",
+      "gmtCreate": "2025-11-05T03:09:42.000+00:00",
+      "description": "这是建立于2025-11-05的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "upgrade-record",
+      "gmtCreate": "2025-11-05T05:52:30.000+00:00",
+      "description": "这是建立于2025-11-05的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "mp-shipper",
+      "gmtCreate": "2025-11-05T08:41:37.000+00:00",
+      "description": "这是建立于2025-11-05的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6100c3764e5db15d52c3f635",
+      "name": "uc-auth-text",
+      "gmtCreate": "2025-11-05T10:17:16.000+00:00",
+      "description": "这是建立于2025-11-05的应用",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d82b5c10b0c7fdcabd87f",
+      "name": "trade-waybill-service",
+      "gmtCreate": "2025-11-06T09:42:56.000+00:00",
+      "description": "中台交易域运单业务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "68be4e5088ec6bebc2e1fbda",
+      "name": "trade-waybill-shipper-posting",
+      "gmtCreate": "2025-11-07T01:11:25.000+00:00",
+      "description": "这是建立于2025-11-07的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "611f09641069a2b0995f545b",
+      "name": "energy-job-web",
+      "gmtCreate": "2025-11-07T09:21:52.000+00:00",
+      "description": "这是建立于2025-11-07的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "tap-monitor-api",
+      "gmtCreate": "2025-11-10T06:29:17.000+00:00",
+      "description": "这是建立于2025-11-10的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "68ff208946600729fec255ae",
+      "name": "platform-data-web",
+      "gmtCreate": "2025-11-11T02:32:38.000+00:00",
+      "description": "针对各个应用市场下载渠道，按照对方要求在宝奇司机App内增加数据埋点或支持API接口进行数据同步。",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "msg-platform",
+      "gmtCreate": "2025-11-13T02:08:27.000+00:00",
+      "description": "这是建立于2025-11-13的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "manual-pdf",
+      "gmtCreate": "2025-11-14T06:43:07.000+00:00",
+      "description": "公共pdf文件",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "tap-face-api",
+      "gmtCreate": "2025-11-14T09:42:12.000+00:00",
+      "description": "这是建立于2025-11-14的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d60470c3c7ce81c9ca1ed",
+      "name": "risk-control",
+      "gmtCreate": "2025-11-17T10:18:33.000+00:00",
+      "description": "这是建立于2025-11-17的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6100c3764e5db15d52c3f635",
+      "name": "official-website-static-files",
+      "gmtCreate": "2025-11-18T06:12:33.000+00:00",
+      "description": "这是建立于2025-11-18的应用",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6100c3764e5db15d52c3f635",
+      "name": "app-auth-static-files",
+      "gmtCreate": "2025-11-18T06:47:25.000+00:00",
+      "description": "这是建立于2025-11-18的应用",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6100c3764e5db15d52c3f635",
+      "name": "openapi-auth-static-file",
+      "gmtCreate": "2025-11-19T08:03:53.000+00:00",
+      "description": "这是建立于2025-11-19的应用",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6100c3764e5db15d52c3f635",
+      "name": "infrastructure-contract-debug",
+      "gmtCreate": "2025-11-21T01:43:44.000+00:00",
+      "description": "这是建立于2025-11-21的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "test-tms-carrier",
+      "gmtCreate": "2025-11-25T07:23:28.000+00:00",
+      "description": "这是建立于2025-11-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "60ebd79eaa6381038e9f56ca",
+      "name": "config-server",
+      "gmtCreate": "2025-11-26T11:23:55.000+00:00",
+      "description": "用于APP获取配置数据",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "ev-cargo",
+      "gmtCreate": "2025-11-27T02:51:43.000+00:00",
+      "description": "新能源重卡充电项目",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "download-h5",
+      "gmtCreate": "2025-12-02T02:30:54.000+00:00",
+      "description": "宝奇司机、宝奇货主下载落地页H5，及各类下载APP的落地页专属库",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "funciton-h5",
+      "gmtCreate": "2025-12-02T02:35:14.000+00:00",
+      "description": "宝奇司机、宝奇货主内嵌功能页专属H5库",
+      "appTemplateName": "baoqi-frontend-static-template",
+      "appTemplateDisplayName": "宝奇前端静态资源模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d6143c45d287a25f992ac",
+      "name": "pay-job-nbcb",
+      "gmtCreate": "2025-12-05T05:09:13.000+00:00",
+      "description": "这是建立于2025-12-05的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhongbao-finance-loan",
+      "gmtCreate": "2025-12-08T01:54:15.000+00:00",
+      "description": "这是建立于2025-12-08的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d811aaf62271dd41b4667",
+      "name": "erp-integration-central",
+      "gmtCreate": "2025-12-08T08:30:58.000+00:00",
+      "description": "这是建立于2025-12-08的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664c3c53fc4f1e9f199c14ef",
+      "name": "data-center-risk",
+      "gmtCreate": "2025-12-10T07:07:35.000+00:00",
+      "description": "这是建立于2025-12-10的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "69266c2ceed4a5bfee732e17",
+      "name": "baoqi-notice-middle",
+      "gmtCreate": "2025-12-11T02:32:18.000+00:00",
+      "description": "baoqi-notice-middle",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "operation-proj-ui",
+      "gmtCreate": "2025-12-12T02:17:21.000+00:00",
+      "description": "这是建立于2025-12-12的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "60ebd79eaa6381038e9f56ca",
+      "name": "trade-search",
+      "gmtCreate": "2025-12-15T03:41:18.000+00:00",
+      "description": "交易搜索服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "60ebd79eaa6381038e9f56ca",
+      "name": "driver-db",
+      "gmtCreate": "2025-12-15T05:37:22.000+00:00",
+      "description": "交易司机服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "settlement",
+      "gmtCreate": "2025-12-15T09:58:29.000+00:00",
+      "description": "结算",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "risk",
+      "gmtCreate": "2025-12-16T06:45:52.000+00:00",
+      "description": "这是建立于2025-12-16的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d82b5c10b0c7fdcabd87f",
+      "name": "md-api",
+      "gmtCreate": "2025-12-18T02:36:30.000+00:00",
+      "description": "这是建立于2025-12-18的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d82b5c10b0c7fdcabd87f",
+      "name": "trade-driver",
+      "gmtCreate": "2025-12-18T08:30:22.000+00:00",
+      "description": "这是建立于2025-12-18的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d82b5c10b0c7fdcabd87f",
+      "name": "merchant",
+      "gmtCreate": "2025-12-19T05:47:24.000+00:00",
+      "description": "这是建立于2025-12-19的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d82b5c10b0c7fdcabd87f",
+      "name": "trade-driver-biz",
+      "gmtCreate": "2025-12-22T06:02:36.000+00:00",
+      "description": "这是建立于2025-12-22的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "60ebd79eaa6381038e9f56ca",
+      "name": "capacity",
+      "gmtCreate": "2025-12-22T08:06:02.000+00:00",
+      "description": "运力管理（涵盖车辆、司机、承运商等可调配的运输资源）",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d82b5c10b0c7fdcabd87f",
+      "name": "log",
+      "gmtCreate": "2025-12-26T01:16:22.000+00:00",
+      "description": "这是建立于2025-12-26的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d65ff0a97c217c0df6da6",
+      "name": "huadian-shipper-admin",
+      "gmtCreate": "2025-12-26T02:22:37.000+00:00",
+      "description": "针对桦甸货主端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "688034da1a2f30e9eb989e3c",
+      "name": "quality-service-web",
+      "gmtCreate": "2025-12-28T04:02:38.000+00:00",
+      "description": "智能质检web服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d6143c45d287a25f992ac",
+      "name": "pay-job-cebsh",
+      "gmtCreate": "2025-12-29T03:16:23.000+00:00",
+      "description": "pay-job-cebsh 光大上海银行定时任务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6927e77661f5dcc4204490f1",
+      "name": "user",
+      "gmtCreate": "2025-12-30T08:14:21.000+00:00",
+      "description": "盘古",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6927e77661f5dcc4204490f1",
+      "name": "mu-api",
+      "gmtCreate": "2025-12-31T05:59:55.000+00:00",
+      "description": "mu-api测试",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "wms-ui-test",
+      "gmtCreate": "2025-12-31T07:58:33.000+00:00",
+      "description": "这是建立于2025-12-31的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6951d85a50168a3e7eec9ff0",
+      "name": "wms-server",
+      "gmtCreate": "2025-12-31T08:24:52.000+00:00",
+      "description": "这是建立于2025-12-31的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5c3b0a97c217c0da5454",
+      "name": "tap-certificate-api",
+      "gmtCreate": "2026-01-05T05:36:08.000+00:00",
+      "description": "车辆司机证件资质",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "nengtou-tms-finance",
+      "gmtCreate": "2026-01-07T06:47:50.000+00:00",
+      "description": "这是建立于2026-01-07的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6205ea96d748dff2a3ab5904",
+      "name": "yuanjin-tms-system",
+      "gmtCreate": "2026-01-08T01:39:30.000+00:00",
+      "description": "源锦TMS系统管理服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6205ea96d748dff2a3ab5904",
+      "name": "yuanjin-tms-gateway",
+      "gmtCreate": "2026-01-08T02:35:09.000+00:00",
+      "description": "源锦TMS-gateway测试环境",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6205ea96d748dff2a3ab5904",
+      "name": "yuanjin-tms-web",
+      "gmtCreate": "2026-01-12T05:48:13.000+00:00",
+      "description": "源锦TMS平台端(货主)",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6205ea96d748dff2a3ab5904",
+      "name": "yuanjin-tms-tap-ocr",
+      "gmtCreate": "2026-01-13T05:17:19.000+00:00",
+      "description": "源锦TMS-tapOCR服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc7ca6db971bc893711a5",
+      "name": "yuanjin-tms-carrier",
+      "gmtCreate": "2026-01-13T05:48:38.000+00:00",
+      "description": "这是建立于2026-01-13的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6226c13b07074bed8c976183",
+      "name": "pay-risk-verify",
+      "gmtCreate": "2026-01-15T01:10:24.000+00:00",
+      "description": "pay-risk-verify",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "yunjiaotou-server",
+      "gmtCreate": "2026-01-16T00:50:41.000+00:00",
+      "description": "云交投-wms服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6205ea96d748dff2a3ab5904",
+      "name": "yuanjin-tms-platform",
+      "gmtCreate": "2026-01-16T03:12:35.000+00:00",
+      "description": "源锦tms货主端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "center-ui",
+      "gmtCreate": "2026-01-20T01:29:14.000+00:00",
+      "description": "这是建立于2026-01-20的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5f18366599d2094b1a180251",
+      "name": "devops-platform-backend",
+      "gmtCreate": "2026-01-20T04:33:30.000+00:00",
+      "description": "研发管理平台",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5f18366599d2094b1a180251",
+      "name": "devops-platform-frontend",
+      "gmtCreate": "2026-01-20T07:27:07.000+00:00",
+      "description": "这是建立于2026-01-20的应用",
+      "appTemplateName": "baoqi-frontend-node-template",
+      "appTemplateDisplayName": "宝奇前端node模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6205ea96d748dff2a3ab5904",
+      "name": "yuanjin-tms-carrier-vue",
+      "gmtCreate": "2026-01-21T01:17:12.000+00:00",
+      "description": "源锦TMS承运商端web前端",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "yujiaotou-center-server",
+      "gmtCreate": "2026-01-21T02:30:28.000+00:00",
+      "description": "这是建立于2026-01-21的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6959f92f5e7217876dc704e0",
+      "name": "zhongbao-regional-pay",
+      "gmtCreate": "2026-01-21T11:52:08.000+00:00",
+      "description": "这是建立于2026-01-21的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "kuafu-center",
+      "gmtCreate": "2026-01-27T06:43:18.000+00:00",
+      "description": "夸父配置中心",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "63841899a5d2aaf80f31672e",
+      "name": "tap-map-api",
+      "gmtCreate": "2026-01-28T01:14:11.000+00:00",
+      "description": "tap-map 地图服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5fa9e7e51e869675afeb",
+      "name": "jiaotou-tms-web",
+      "gmtCreate": "2026-01-28T03:42:10.000+00:00",
+      "description": "这是建立于2026-01-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "60ebd79eaa6381038e9f56ca",
+      "name": "jiaotou-gateway-web",
+      "gmtCreate": "2026-01-28T06:52:51.000+00:00",
+      "description": "交投网关",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "jiaotou-wms-micro-server",
+      "gmtCreate": "2026-01-28T07:14:47.000+00:00",
+      "description": "交投wms微服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "jiaotou-wms-system-micro-server",
+      "gmtCreate": "2026-01-28T07:50:12.000+00:00",
+      "description": "云交投wms系统管理微服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "688034da1a2f30e9eb989e3c",
+      "name": "quality-engine",
+      "gmtCreate": "2026-01-28T08:31:38.000+00:00",
+      "description": "这是建立于2026-01-28的应用",
+      "appTemplateName": null,
+      "appTemplateDisplayName": null,
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5fa9e7e51e869675afeb",
+      "name": "jiaotou-tms-mp-driver",
+      "gmtCreate": "2026-01-28T08:40:44.000+00:00",
+      "description": "这是建立于2026-01-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5fa9e7e51e869675afeb",
+      "name": "jiaotou-tms-carrier",
+      "gmtCreate": "2026-01-28T08:54:49.000+00:00",
+      "description": "这是建立于2026-01-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "jiaotou-wms-infra-micro-server",
+      "gmtCreate": "2026-01-28T09:23:11.000+00:00",
+      "description": "云交投，wms基础服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5fa9e7e51e869675afeb",
+      "name": "jiaotou-tms-workflow",
+      "gmtCreate": "2026-01-28T09:25:52.000+00:00",
+      "description": "这是建立于2026-01-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5fa9e7e51e869675afeb",
+      "name": "jiaotou-tms-track",
+      "gmtCreate": "2026-01-28T09:39:33.000+00:00",
+      "description": "这是建立于2026-01-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5fa9e7e51e869675afeb",
+      "name": "jiaotou-tms-system",
+      "gmtCreate": "2026-01-28T09:47:47.000+00:00",
+      "description": "这是建立于2026-01-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5fa9e7e51e869675afeb",
+      "name": "jiaotou-tms-callback",
+      "gmtCreate": "2026-01-28T09:53:33.000+00:00",
+      "description": "这是建立于2026-01-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "jiaotou-wms-iot-micro-server",
+      "gmtCreate": "2026-01-28T11:28:23.000+00:00",
+      "description": "云交投-WMS IOT微服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d6381e7e51e8696781c99",
+      "name": "jiaotou-tms-proj",
+      "gmtCreate": "2026-01-29T02:37:17.000+00:00",
+      "description": "云南交投tms前端项目",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d6381e7e51e8696781c99",
+      "name": "yjt-tms-carrier-ui",
+      "gmtCreate": "2026-01-30T08:10:12.000+00:00",
+      "description": "云南交通供应商端前端项目",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "jiaotou-center-system-micro-server",
+      "gmtCreate": "2026-01-31T07:16:48.000+00:00",
+      "description": "这是建立于2026-01-31的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "jiaotou-center-infra-micro-server",
+      "gmtCreate": "2026-01-31T07:53:42.000+00:00",
+      "description": "这是建立于2026-01-31的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "jiaotou-center-micro-server",
+      "gmtCreate": "2026-01-31T08:02:34.000+00:00",
+      "description": "这是建立于2026-01-31的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5f18366599d2094b1a180251",
+      "name": "aitoken",
+      "gmtCreate": "2026-02-03T07:48:11.000+00:00",
+      "description": "这是建立于2026-02-03的应用",
+      "appTemplateName": "baoqi-frontend-node-template",
+      "appTemplateDisplayName": "宝奇前端node模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5fa9e7e51e869675afeb",
+      "name": "jiaotou-file-web",
+      "gmtCreate": "2026-02-04T12:41:42.000+00:00",
+      "description": "这是建立于2026-02-04的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5fa9e7e51e869675afeb",
+      "name": "jiaotou-tms-server",
+      "gmtCreate": "2026-02-05T02:11:08.000+00:00",
+      "description": "这是建立于2026-02-05的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5fa9e7e51e869675afeb",
+      "name": "tap-ocr-api-jiaotou",
+      "gmtCreate": "2026-02-08T05:34:59.000+00:00",
+      "description": "这是建立于2026-02-08的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "68a2c01388ec6bebc2d9dd9a",
+      "name": "oms-order",
+      "gmtCreate": "2026-02-09T03:17:42.000+00:00",
+      "description": "这是建立于2026-02-09的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6976fb7c44df4d070830a98d",
+      "name": "config-web-server",
+      "gmtCreate": "2026-02-10T09:40:50.000+00:00",
+      "description": "夸父配置的后台服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "69266c2ceed4a5bfee732e17",
+      "name": "trade-shipper",
+      "gmtCreate": "2026-02-27T07:54:35.000+00:00",
+      "description": "这是建立于2026-02-27的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "69266c2ceed4a5bfee732e17",
+      "name": "trade-shipper-biz",
+      "gmtCreate": "2026-02-27T08:21:24.000+00:00",
+      "description": "这是建立于2026-02-27的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5cc9c194a62170b6129c",
+      "name": "etc-api-web",
+      "gmtCreate": "2026-02-28T01:39:48.000+00:00",
+      "description": "这是建立于2026-02-28的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "69266c2ceed4a5bfee732e17",
+      "name": "sp-api",
+      "gmtCreate": "2026-03-02T02:05:04.000+00:00",
+      "description": "这是建立于2026-03-02的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6205ea96d748dff2a3ab5904",
+      "name": "yuanjin-tms-driver",
+      "gmtCreate": "2026-03-03T06:18:39.000+00:00",
+      "description": "源锦TMS司机小程序后端",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d5cc9c194a62170b6129c",
+      "name": "etc-invoice-api",
+      "gmtCreate": "2026-03-04T06:02:32.000+00:00",
+      "description": "这是建立于2026-03-04的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "oas-settle-job",
+      "gmtCreate": "2026-03-04T10:02:11.000+00:00",
+      "description": "这是建立于2026-03-04的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6976fb7c44df4d070830a98d",
+      "name": "autoins-installment-web",
+      "gmtCreate": "2026-03-05T01:43:12.000+00:00",
+      "description": "金融车险分期",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d60470c3c7ce81c9ca1ed",
+      "name": "canal-oas",
+      "gmtCreate": "2026-03-10T02:28:21.000+00:00",
+      "description": "这是建立于2026-03-10的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "686f159b46600729fef8ee22",
+      "name": "autoins-plat-admin",
+      "gmtCreate": "2026-03-11T07:41:14.000+00:00",
+      "description": "宝奇数科平台(车险分期)",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d6381e7e51e8696781c99",
+      "name": "shipper-prog",
+      "gmtCreate": "2026-03-13T06:50:31.000+00:00",
+      "description": "宝奇货主H5测试页",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "68ff208946600729fec255ae",
+      "name": "newenergy-supplier-web",
+      "gmtCreate": "2026-03-14T08:28:35.000+00:00",
+      "description": "这是建立于2026-03-14的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "68ff208946600729fec255ae",
+      "name": "newenergy-api-web",
+      "gmtCreate": "2026-03-16T03:15:55.000+00:00",
+      "description": "这是建立于2026-03-16的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "688034da1a2f30e9eb989e3c",
+      "name": "aiprompt-service-web",
+      "gmtCreate": "2026-03-22T13:57:42.000+00:00",
+      "description": "管理业务：提示词配置和链接云平台大模型，或者本地大模型。",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "65489364ba3f435c815b7f7e",
+      "name": "oas-track-job",
+      "gmtCreate": "2026-03-23T05:55:55.000+00:00",
+      "description": "这是建立于2026-03-23的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "robot-service",
+      "gmtCreate": "2026-03-24T02:05:01.000+00:00",
+      "description": "这是建立于2026-03-24的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "oa-assistant",
+      "gmtCreate": "2026-03-24T10:43:21.000+00:00",
+      "description": "OA快捷应用",
+      "appTemplateName": "python",
+      "appTemplateDisplayName": "python应用模板",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-tms-mp-driver",
+      "gmtCreate": "2026-03-25T08:04:24.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-tms-web",
+      "gmtCreate": "2026-03-25T08:46:58.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-tap-ocr-api",
+      "gmtCreate": "2026-03-25T08:48:33.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-gateway-web",
+      "gmtCreate": "2026-03-25T08:58:01.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-tms-system",
+      "gmtCreate": "2026-03-25T08:59:51.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-tms-callback",
+      "gmtCreate": "2026-03-25T09:01:02.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-tms-carrier",
+      "gmtCreate": "2026-03-25T09:02:18.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-tms-workflow",
+      "gmtCreate": "2026-03-25T09:03:05.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-tms-track",
+      "gmtCreate": "2026-03-25T09:13:45.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-file-web",
+      "gmtCreate": "2026-03-25T09:14:32.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-tms-server",
+      "gmtCreate": "2026-03-25T09:15:58.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhongbing-tms-mp-driver-sg",
+      "gmtCreate": "2026-03-25T11:27:07.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhongbing-tms-web-sg",
+      "gmtCreate": "2026-03-25T11:27:47.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhongbing-tms-system-sg",
+      "gmtCreate": "2026-03-25T11:28:19.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhongbing-tms-track-sg",
+      "gmtCreate": "2026-03-25T11:28:49.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhongbing-tms-capacity-pool-sg",
+      "gmtCreate": "2026-03-25T11:29:39.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhongbing-tms-proj-sg",
+      "gmtCreate": "2026-03-25T11:30:20.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhongbing-tms-gateway-sg",
+      "gmtCreate": "2026-03-25T11:44:44.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhongbing-baoqi-server-sg",
+      "gmtCreate": "2026-03-25T11:50:10.000+00:00",
+      "description": "这是建立于2026-03-25的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-tms-web-proj",
+      "gmtCreate": "2026-03-26T12:34:12.000+00:00",
+      "description": "这是建立于2026-03-26的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6205ea96d748dff2a3ab5904",
+      "name": "zhongbing-file-web",
+      "gmtCreate": "2026-04-02T09:55:50.000+00:00",
+      "description": "文件上传",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc837c194a62170f1866b",
+      "name": "openapi-api",
+      "gmtCreate": "2026-04-03T09:03:47.000+00:00",
+      "description": "openapi-api",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc837c194a62170f1866b",
+      "name": "toms",
+      "gmtCreate": "2026-04-07T05:12:16.000+00:00",
+      "description": "这是建立于2026-04-07的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "68a2c01388ec6bebc2d9dd9a",
+      "name": "trade-search-canal",
+      "gmtCreate": "2026-04-07T07:52:27.000+00:00",
+      "description": "这是建立于2026-04-07的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "datareport-script",
+      "gmtCreate": "2026-04-09T03:12:51.000+00:00",
+      "description": "这是建立于2026-04-09的应用",
+      "appTemplateName": "python",
+      "appTemplateDisplayName": "python应用模板",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d8331c194a62170c523d6",
+      "name": "canal-biz",
+      "gmtCreate": "2026-04-13T03:19:03.000+00:00",
+      "description": "这是建立于2026-04-13的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhwl-tms-callback",
+      "gmtCreate": "2026-04-13T06:08:24.000+00:00",
+      "description": "这是建立于2026-04-13的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhwl-tms-system",
+      "gmtCreate": "2026-04-13T06:22:45.000+00:00",
+      "description": "这是建立于2026-04-13的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "zhwl-tms-workflow",
+      "gmtCreate": "2026-04-13T06:26:48.000+00:00",
+      "description": "这是建立于2026-04-13的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "xinnengyuan-tms-carrier-proj",
+      "gmtCreate": "2026-04-13T10:08:23.000+00:00",
+      "description": "这是建立于2026-04-13的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6959f92f5e7217876dc704e0",
+      "name": "payment-payfront",
+      "gmtCreate": "2026-04-15T08:14:44.000+00:00",
+      "description": "支付前置服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664d6301c194a62170ba87e2",
+      "name": "payment-transaction-job",
+      "gmtCreate": "2026-04-16T01:42:40.000+00:00",
+      "description": "支付job服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6959f92f5e7217876dc704e0",
+      "name": "payment-account",
+      "gmtCreate": "2026-04-16T11:25:50.000+00:00",
+      "description": "账户核心服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6959f92f5e7217876dc704e0",
+      "name": "payment-finance",
+      "gmtCreate": "2026-04-17T02:12:25.000+00:00",
+      "description": "财务核心服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6959f92f5e7217876dc704e0",
+      "name": "payment-gateway",
+      "gmtCreate": "2026-04-17T02:35:59.000+00:00",
+      "description": "第三方支付网关服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6959f92f5e7217876dc704e0",
+      "name": "payment-biz",
+      "gmtCreate": "2026-04-17T02:59:21.000+00:00",
+      "description": "支付聚合服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6976fb7c44df4d070830a98d",
+      "name": "insurance-platform-server",
+      "gmtCreate": "2026-04-17T05:31:26.000+00:00",
+      "description": "货物保险配置中台",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6875e3b322061217a2dddfaa",
+      "name": "zb-screen",
+      "gmtCreate": "2026-04-20T06:52:18.000+00:00",
+      "description": "中兵项目-大屏",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5f4a5f81fa82bfeb8050197d",
+      "name": "login-frontend",
+      "gmtCreate": "2026-04-20T09:25:07.000+00:00",
+      "description": "这是建立于2026-04-20的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "baoqi-sync-server",
+      "gmtCreate": "2026-04-29T02:11:52.000+00:00",
+      "description": "这是建立于2026-04-29的应用",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "694a2db186cfbe0907231c0f",
+      "name": "baoqi-sync-ui",
+      "gmtCreate": "2026-04-29T02:28:47.000+00:00",
+      "description": "这是建立于2026-04-29的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "686cc55461f5dcc420b6ee71",
+      "name": "erp-canal",
+      "gmtCreate": "2026-05-11T01:44:35.000+00:00",
+      "description": "这是建立于2026-05-11的应用",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "67c927c725be8f2424fd3a75",
+      "name": "coupon-service",
+      "gmtCreate": "2026-05-20T03:27:55.000+00:00",
+      "description": "优惠券",
+      "appTemplateName": "baoqi-backend-jdk-21",
+      "appTemplateDisplayName": "宝奇后端微服务jdk21模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "6959f92f5e7217876dc704e0",
+      "name": "payment-query",
+      "gmtCreate": "2026-06-01T07:05:04.000+00:00",
+      "description": "支付查询服务",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "platform-admin-shuwu",
+      "gmtCreate": "2026-06-15T09:24:19.000+00:00",
+      "description": "这是建立于2026-06-15的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "platform-admin-tjxh",
+      "gmtCreate": "2026-06-29T07:20:38.000+00:00",
+      "description": "这是建立于2026-06-29的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "5ec4ef11f3cfd0d0e71cde26",
+      "name": "shipper-admin-tjxh",
+      "gmtCreate": "2026-06-29T07:29:52.000+00:00",
+      "description": "这是建立于2026-06-29的应用",
+      "appTemplateName": "baoqi-front-end-normal-template",
+      "appTemplateDisplayName": "宝奇前端标准模版",
+      "tags": null
+    }
+  ]
+}
