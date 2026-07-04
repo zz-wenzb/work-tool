@@ -107,11 +107,10 @@ async def handle_command(websocket, content, nickname, connected_clients):
 
 
 # core/command_handler.py 中修改 handle_help 函数
-
 async def handle_help(websocket):
     """处理 /help 命令"""
     from core.websocket_handler import DYNAMIC_DEPLOY_COMMANDS
-    from core.archery_handler import ARCHERY_COMMANDS
+    from core.archery_handler import ARCHERY_COMMANDS, ARCHERY_DATABASES
 
     help_text = "📋 可用命令:\n"
     help_text += "• /users — 查看在线用户\n"
@@ -121,14 +120,14 @@ async def handle_help(websocket):
     help_text += "\n\n🔍 Archery 查询命令:\n"
     for cmd, info in ARCHERY_COMMANDS.items():
         help_text += f"  {cmd} — {info['instance']} 的 {info['full_name']}\n"
-    help_text += "  用法: /<数据库> <SQL语句>\n"
-    help_text += "  示例: /tms SELECT * FROM users\n"
+    help_text += "\n  用法: /<数据库短名> <SQL语句>\n"
+    help_text += "  示例: /tms SELECT * FROM users LIMIT 10\n"
+    help_text += "        /order SELECT COUNT(*) FROM orders\n"
 
     # Token 命令
     help_text += "\n\n🔑 获取 Token 命令:\n"
     help_text += "• /token-app [用户名] [密码] — 获取 App 端 Token\n"
     help_text += "• /token-vue-nt [用户名] [密码] — 获取 Vue/NT 端 Token\n"
-    help_text += "  (注：用户名和密码可选，若不提供可能使用默认配置或提示错误)"
 
     # 动态部署命令
     if DYNAMIC_DEPLOY_COMMANDS:
@@ -136,13 +135,13 @@ async def handle_help(websocket):
         count = 0
         for c, cfg in DYNAMIC_DEPLOY_COMMANDS.items():
             if count >= 10:
-                help_text += f"\n  ... 还有 {len(DYNAMIC_DEPLOY_COMMANDS) - 10} 个项目 (请在左侧面板查看)"
+                help_text += f"\n  ... 还有 {len(DYNAMIC_DEPLOY_COMMANDS) - 10} 个项目"
                 break
             svc = cfg.get('service', 'Unknown')
             help_text += f"\n  {c} → {svc}"
             count += 1
 
-    help_text += "\n\n💡 提示：点击左侧或右侧面板的命令可直接填入输入框。"
+    help_text += "\n\n💡 提示：点击右侧面板的命令可直接填入输入框。"
 
     await websocket.send(
         json.dumps({"type": "system", "content": help_text, "time": get_current_time()}))

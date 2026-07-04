@@ -3,6 +3,8 @@ import json
 import logging
 from datetime import datetime
 
+from core.archery_api import ArcheryAPI, format_query_result, get_session
+
 logger = logging.getLogger(__name__)
 
 # ---------- Archery 数据库配置 ----------
@@ -53,6 +55,7 @@ def get_current_time():
     return datetime.now().strftime("%H:%M:%S")
 
 
+# core/archery_handler.py - handle_archery_query 函数使用表格格式
 async def handle_archery_query(websocket, content, cmd):
     """
     处理 Archery 查询命令
@@ -63,7 +66,7 @@ async def handle_archery_query(websocket, content, cmd):
     if not rest:
         await websocket.send(json.dumps({
             "type": "system",
-            "content": f"❌ 请提供SQL语句\n示例: {cmd} SELECT * FROM users",
+            "content": f"❌ 请提供SQL语句\n示例: {cmd} SELECT * FROM users LIMIT 10",
             "time": get_current_time()
         }))
         return
@@ -78,30 +81,44 @@ async def handle_archery_query(websocket, content, cmd):
         return
 
     sql = rest
-    database_full = cmd_info['full_name']
-    instance = cmd_info['instance']
+    instance_name = cmd_info['instance']
+    db_name = cmd_info['full_name']
 
-    # 【占位】这里调用实际的 Archery 查询逻辑
-    # result = await run_archery_query(instance, database_full, sql)
+    try:
+        # 执行查询
+        result = await execute_archery_query(instance_name, db_name, sql, limit=100)
 
-    reply_content = (
-        f"🔍 Archery 查询请求已收到\n"
-        f"实例: {instance}\n"
-        f"数据库: {database_full}\n"
-        f"SQL: {sql}\n"
-        f"\n【功能待实现】查询结果将在这里显示"
-    )
+        # 使用表格格式
+        if result.get("success"):
+            formatted = format_query_result(result, max_rows=10)
+        else:
+            formatted = f"❌ 查询失败: {result.get('error', '未知错误')}"
 
-    await websocket.send(json.dumps({
-        "type": "system",
-        "content": reply_content,
-        "time": get_current_time()
-    }))
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": formatted,
+            "time": get_current_time()
+        }))
+    except Exception as e:
+        logger.error(f"Archery 查询异常: {e}", exc_info=True)
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": f"❌ 查询异常: {e}",
+            "time": get_current_time()
+        }))
 
 
-async def run_archery_query(instance, database, sql):
+async def execute_archery_query(instance_name: str, db_name: str, sql: str, limit: int = 100) -> dict:
     """
-    执行 Archery 查询的占位函数
-    未来在这里实现具体的查询逻辑
+    执行 Archery 查询（异步包装）
     """
-    return f"【功能待实现】实例: {instance}, 数据库: {database}, SQL: {sql}"
+    try:
+        # 确保会话有效
+        get_session()
+
+        # 执行查询
+        result = ArcheryAPI.execute_sql_query(instance_name, db_name, sql, limit)
+        return result
+    except Exception as e:
+        logger.error(f"执行 Archery 查询失败: {e}")
+        return {"success": False, "error": str(e), "data": []}
