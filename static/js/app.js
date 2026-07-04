@@ -38,57 +38,49 @@ function renderArcheryInstances() {
     const container = document.getElementById('archery-instance-list');
     container.innerHTML = '';
 
-    ARCHERY_INSTANCES.forEach(instance => {
-        const li = document.createElement('li');
-        li.style.marginBottom = '12px';
+    // 按实例分组
+    const groups = {};
+    ARCHERY_DATABASES.forEach(db => {
+        if (!groups[db.instance]) {
+            groups[db.instance] = [];
+        }
+        groups[db.instance].push(db);
+    });
 
-        // 实例名（使用短命令: /baoqi）
-        const instanceCode = document.createElement('code');
-        const cmd = `/${instance.id}`;
-        instanceCode.textContent = cmd;
-        instanceCode.onclick = () => fillCmd(cmd);
-        instanceCode.title = `点击填入 ${cmd}`;
+    Object.keys(groups).forEach(instance => {
+        const dbs = groups[instance];
 
-        const instanceLabel = document.createElement('span');
-        instanceLabel.className = 'instance-short';
-        instanceLabel.textContent = ` ${instance.shortLabel}`;
+        // 实例标题
+        const instanceLi = document.createElement('li');
+        instanceLi.style.marginBottom = '8px';
+        instanceLi.style.fontWeight = '600';
+        instanceLi.style.color = '#1e293b';
+        instanceLi.style.fontSize = '13px';
+        instanceLi.textContent = `📊 ${instance}`;
+        container.appendChild(instanceLi);
 
-        const instanceFull = document.createElement('span');
-        instanceFull.className = 'instance-full';
-        instanceFull.textContent = `(${instance.label})`;
+        // 数据库列表
+        dbs.forEach(db => {
+            const li = document.createElement('li');
+            li.style.marginBottom = '4px';
+            li.style.paddingLeft = '16px';
 
-        li.appendChild(instanceCode);
-        li.appendChild(instanceLabel);
-        li.appendChild(instanceFull);
+            const code = document.createElement('code');
+            const cmd = `/${db.id}`;
+            code.textContent = cmd;
+            code.onclick = () => fillCmd(cmd);
+            code.title = `点击填入 ${cmd}`;
 
-        // 数据库子列表 (使用短名称)
-        const dbUl = document.createElement('ul');
-        dbUl.className = 'archery-db-list';
+            const desc = document.createElement('span');
+            desc.style.color = '#64748b';
+            desc.style.fontSize = '12px';
+            desc.style.marginLeft = '8px';
+            desc.textContent = `→ ${db.full}`;
 
-        instance.databases.forEach(db => {
-            const dbLi = document.createElement('li');
-            const dbCode = document.createElement('code');
-            // 点击数据库填入: /baoqi tms SELECT ...
-            const fullCmd = `/${instance.id} ${db.label}`;
-            dbCode.textContent = db.label;
-            dbCode.onclick = (e) => {
-                e.stopPropagation();
-                fillCmd(fullCmd);
-            };
-            dbCode.title = `点击填入: ${fullCmd}`;
-            dbLi.appendChild(dbCode);
-            // 显示完整数据库名作为提示
-            const dbHint = document.createElement('span');
-            dbHint.style.color = '#94a3b8';
-            dbHint.style.fontSize = '10px';
-            dbHint.style.marginLeft = '4px';
-            dbHint.textContent = db.full;
-            dbLi.appendChild(dbHint);
-            dbUl.appendChild(dbLi);
+            li.appendChild(code);
+            li.appendChild(desc);
+            container.appendChild(li);
         });
-
-        li.appendChild(dbUl);
-        container.appendChild(li);
     });
 }
 

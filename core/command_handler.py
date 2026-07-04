@@ -106,10 +106,12 @@ async def handle_command(websocket, content, nickname, connected_clients):
     return False
 
 
+# core/command_handler.py 中修改 handle_help 函数
+
 async def handle_help(websocket):
     """处理 /help 命令"""
     from core.websocket_handler import DYNAMIC_DEPLOY_COMMANDS
-    from core.archery_handler import ARCHERY_COMMANDS, ARCHERY_INSTANCES
+    from core.archery_handler import ARCHERY_COMMANDS
 
     help_text = "📋 可用命令:\n"
     help_text += "• /users — 查看在线用户\n"
@@ -118,10 +120,9 @@ async def handle_help(websocket):
     # Archery 命令
     help_text += "\n\n🔍 Archery 查询命令:\n"
     for cmd, info in ARCHERY_COMMANDS.items():
-        dbs = ", ".join(info['databases'].keys())
-        help_text += f"  {cmd} — {info['label']} (数据库: {dbs})\n"
-    help_text += "  用法: /<实例> <数据库> <SQL语句>\n"
-    help_text += "  示例: /baoqi tms SELECT * FROM users\n"
+        help_text += f"  {cmd} — {info['instance']} 的 {info['full_name']}\n"
+    help_text += "  用法: /<数据库> <SQL语句>\n"
+    help_text += "  示例: /tms SELECT * FROM users\n"
 
     # Token 命令
     help_text += "\n\n🔑 获取 Token 命令:\n"

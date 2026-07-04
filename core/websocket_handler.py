@@ -11,7 +11,8 @@ from core.monitor_manager import run_monitor_task
 from core.task_manager import task_manager
 from core.token_api import app_start, vue_nt_start, redis_migrate
 from core.command_handler import handle_command
-from core.archery_handler import ARCHERY_COMMANDS, ARCHERY_INSTANCES
+# 修改这里：只导入 ARCHERY_COMMANDS，不再导入 ARCHERY_INSTANCES
+from core.archery_handler import ARCHERY_COMMANDS
 
 # 配置日志
 logger = logging.getLogger(__name__)
