@@ -223,6 +223,21 @@ async def handle_client(websocket):
                         await websocket.send(
                             json.dumps({"type": "system", "content": reply_content, "time": get_current_time()}))
 
+
+                    # 【新增】处理 Archery 查询命令
+                    elif cmd == "/archery-query":
+                        # 获取命令后的所有内容作为查询参数
+                        query_content = content[len(cmd):].strip()
+                        if not query_content:
+                            reply_content = "❌ 请提供查询内容，例如: `/archery-query SELECT * FROM table`"
+                        else:
+                            # 调用我们刚刚定义的占位函数
+                            # 注意：这里假设 run_archery_query 是一个异步函数，需要用 await
+                            reply_content = await run_archery_query(query_content)
+
+                        await websocket.send(
+                            json.dumps({"type": "system", "content": reply_content, "time": get_current_time()})
+                        )
                     elif cmd == "/help":
 
                         help_text = "📋 可用命令:\n"
@@ -230,6 +245,9 @@ async def handle_client(websocket):
                         help_text += "• /users — 查看在线用户\n"
 
                         help_text += "• /help — 显示此帮助\n"
+                        # 【新增】在帮助信息中添加 Archery 命令
+                        help_text += "\n\n🔍 Archery 查询命令:\n"
+                        help_text += "• /archery-query [SQL语句] — 执行 SQL 查询\n"
 
                         # 【新增】Token 获取命令介绍
 
@@ -304,6 +322,19 @@ async def handle_client(websocket):
             logger.info(f"[客户端断开] IP={client_ip}, 用户={nickname}")
             leave_msg = {"type": "system", "content": f"【{nickname}】离开了聊天室", "time": get_current_time()}
             await broadcast(json.dumps(leave_msg))
+
+
+# 在文件顶部的导入区域，可以预留一个位置
+# from core.archery_api import run_archery_query # 未来实现时再导入
+
+# 【新增】定义一个占位函数
+async def run_archery_query(query_sql):
+    """
+    执行 Archery 查询的占位函数
+    未来在这里实现具体的查询逻辑
+    """
+    # 这里只是一个框架，返回一个提示信息
+    return f"【功能待实现】已收到查询请求，SQL内容为: {query_sql}"
 
 
 async def broadcast(message, exclude=None):
