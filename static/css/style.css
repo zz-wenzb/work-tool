@@ -103,63 +103,177 @@ button:hover {
     font-size: 14px;
 }
 
-/* ---------- 面板通用 ---------- */
-#deploy-panel,
-#monitor-panel,
-#token-panel,
-#command-panel,
-#archery-panel {
+/* ---------- 左侧部署面板 ---------- */
+#deploy-panel {
     background: #ffffff;
     border: 1px solid #e9edf4;
-    border-radius: 14px;
-    padding: 14px 12px;
-    font-size: 13px;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 12px;
     color: #1e293b;
     overflow-y: auto;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-}
-
-#deploy-panel {
     width: 230px;
     max-height: 100%;
 }
 
-.right-side-panel {
-    width: 240px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex-shrink: 0;
-}
-
-#token-panel,
-#command-panel,
-#archery-panel {
-    flex: 1;
-    min-height: 120px;
-}
-
-/* ---------- 面板标题 ---------- */
-#deploy-panel h3,
-#monitor-panel h3,
-#token-panel h3,
-#command-panel h3,
-#archery-panel h3 {
-    margin: 0 0 10px 0;
-    font-size: 14px;
+#deploy-panel h3 {
+    margin: 0 0 6px 0;
+    font-size: 13px;
     font-weight: 600;
     text-align: center;
     border-bottom: 2px solid #eef2f6;
-    padding-bottom: 8px;
+    padding-bottom: 6px;
+    flex-shrink: 0;
+    color: #1e4b8a;
+    letter-spacing: 0.3px;
+}
+
+#deploy-search {
+    width: 100%;
+    padding: 6px 8px;
+    margin-bottom: 8px;
+    border: 1px solid #dbe7f5;
+    border-radius: 6px;
+    font-size: 12px;
+    outline: none;
+    background: #fafcff;
+    transition: 0.2s;
+    flex-shrink: 0;
+}
+
+#deploy-search:focus {
+    border-color: #4f8cf7;
+    box-shadow: 0 0 0 3px rgba(79, 140, 247, 0.12);
+}
+
+#deploy-list-container {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#deploy-list-container li {
+    margin-bottom: 2px;
+    line-height: 1.3;
+    padding: 1px 4px;
+    border-radius: 4px;
+    transition: background 0.15s;
+    cursor: default;
+    word-break: break-word;
+    font-size: 11px;
+}
+
+#deploy-list-container li:hover {
+    background: #f1f5f9;
+}
+
+#deploy-list-container li.no-result {
+    color: #94a3b8;
+    text-align: center;
+    font-style: italic;
+    cursor: default;
+    background: transparent !important;
+}
+
+#deploy-list-container code {
+    display: inline-block;
+    background: #e6edfc;
+    color: #1e4b8a;
+    padding: 0px 6px;
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-weight: 600;
+    font-size: 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.15s;
+    border: 1px solid transparent;
+    letter-spacing: 0.2px;
+}
+
+#deploy-list-container code:hover {
+    filter: brightness(0.92);
+    border-color: #b9c7e0;
+}
+
+/* ---------- 右侧面板容器 ---------- */
+.right-side-panel {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-shrink: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* ---------- 右侧面板通用 ---------- */
+#archery-panel,
+#mq-panel,
+#token-panel,
+#command-panel {
+    background: #ffffff;
+    border: 1px solid #e9edf4;
+    border-radius: 12px;
+    padding: 8px 10px;
+    color: #1e293b;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+/* 使用 flex: 1 让所有面板平均分配剩余空间 */
+#archery-panel {
+    flex: 1;
+    min-height: 0;
+}
+
+#mq-panel {
+    flex: 2;
+    min-height: 0;
+}
+
+#token-panel {
+    flex: 0.6;
+    min-height: 0;
+}
+
+#command-panel {
+    flex: 0.6;
+    min-height: 0;
+}
+
+/* ---------- 面板标题 ---------- */
+#archery-panel h3,
+#mq-panel h3,
+#token-panel h3,
+#command-panel h3 {
+    margin: 0 0 3px 0;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid #eef2f6;
+    padding-bottom: 3px;
     flex-shrink: 0;
     letter-spacing: 0.3px;
 }
 
-#deploy-panel h3 {
-    color: #1e4b8a;
+#archery-panel h3 {
+    color: #15803d;
+    border-bottom-color: #bbf7d0;
+}
+
+#mq-panel h3 {
+    color: #7c3aed;
+    border-bottom-color: #ddd6fe;
 }
 
 #token-panel h3 {
@@ -172,36 +286,11 @@ button:hover {
     border-bottom-color: #e2e8f0;
 }
 
-#archery-panel h3 {
-    color: #15803d;
-    border-bottom-color: #bbf7d0;
-}
-
-/* ---------- 搜索框 ---------- */
-#deploy-search {
-    width: 100%;
-    padding: 8px 10px;
-    margin-bottom: 12px;
-    border: 1px solid #dbe7f5;
-    border-radius: 8px;
-    font-size: 13px;
-    outline: none;
-    background: #fafcff;
-    transition: 0.2s;
-    flex-shrink: 0;
-}
-
-#deploy-search:focus {
-    border-color: #4f8cf7;
-    box-shadow: 0 0 0 3px rgba(79, 140, 247, 0.12);
-}
-
-/* ---------- 列表容器 ---------- */
-#deploy-list-container,
-#monitor-panel ul,
+/* ---------- 面板列表 ---------- */
+#archery-instance-list,
+#mq-panel ul,
 #token-panel ul,
-#command-panel ul,
-#archery-panel ul {
+#command-panel ul {
     flex: 1;
     overflow-y: auto;
     min-height: 0;
@@ -210,49 +299,38 @@ button:hover {
     margin: 0;
 }
 
-#deploy-panel li,
-#monitor-panel li,
+#archery-panel li,
+#mq-panel li,
 #token-panel li,
-#command-panel li,
-#archery-panel li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-    padding: 4px 6px;
-    border-radius: 6px;
+#command-panel li {
+    margin-bottom: 1px;
+    line-height: 1.4;
+    padding: 1px 4px;
+    border-radius: 3px;
     transition: background 0.15s;
     cursor: default;
     word-break: break-word;
+    font-size: 11px;
 }
 
-#deploy-panel li:hover,
-#monitor-panel li:hover,
+#archery-panel li:hover,
+#mq-panel li:hover,
 #token-panel li:hover,
-#command-panel li:hover,
-#archery-panel li:hover {
+#command-panel li:hover {
     background: #f1f5f9;
 }
 
-#deploy-panel li.no-result {
-    color: #94a3b8;
-    text-align: center;
-    font-style: italic;
-    cursor: default;
-    background: transparent !important;
-}
-
 /* ---------- code 标签 ---------- */
-#deploy-panel code,
-#monitor-panel code,
+#archery-panel code,
+#mq-panel code,
 #token-panel code,
-#command-panel code,
-#archery-panel code {
+#command-panel code {
     display: inline-block;
-    background: #eef4ff;
-    padding: 2px 10px;
-    border-radius: 16px;
+    padding: 0px 5px;
+    border-radius: 10px;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 10px;
     cursor: pointer;
     user-select: none;
     transition: 0.15s;
@@ -260,9 +338,14 @@ button:hover {
     letter-spacing: 0.2px;
 }
 
-#deploy-panel code {
-    color: #1e4b8a;
-    background: #e6edfc;
+#archery-panel code {
+    color: #15803d;
+    background: #dcfce7;
+}
+
+#mq-panel code {
+    color: #5b21b6;
+    background: #ede9fe;
 }
 
 #token-panel code {
@@ -275,73 +358,53 @@ button:hover {
     background: #f1f5f9;
 }
 
-#archery-panel code {
-    color: #15803d;
-    background: #dcfce7;
-}
-
-#deploy-panel code:hover,
+#archery-panel code:hover,
+#mq-panel code:hover,
 #token-panel code:hover,
-#command-panel code:hover,
-#archery-panel code:hover {
+#command-panel code:hover {
     filter: brightness(0.92);
     border-color: #b9c7e0;
 }
 
-/* Archery 面板中的数据库列表 */
-.archery-db-list {
-    padding-left: 16px;
-    margin-top: 2px;
-    font-size: 12px;
-    color: #475569;
-}
-
-.archery-db-list li {
-    margin-bottom: 2px;
-    padding: 2px 4px;
-    list-style: none;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background 0.15s;
-}
-
-.archery-db-list li:hover {
-    background: #f1f5f9;
-}
-
-.archery-db-list li::before {
-    content: "📁 ";
-}
-
-.archery-db-list li code {
-    font-size: 11px;
-    padding: 0 6px;
-    background: transparent;
-    cursor: pointer;
-    font-weight: 500;
-    color: #1e293b;
-}
-
-.archery-db-list li code:hover {
-    background: #e2e8f0;
-}
-
-.instance-short {
+/* Archery 面板特殊样式 */
+#archery-panel .archery-instance-title {
     font-weight: 600;
     color: #1e293b;
+    font-size: 11px;
+    margin-top: 2px;
+    padding: 1px 4px;
 }
 
-.instance-full {
+#archery-panel .archery-db-item {
+    padding-left: 14px;
+    font-size: 10px;
+}
+
+#archery-panel .archery-db-item code {
+    font-size: 9px;
+}
+
+#archery-panel .archery-db-item .db-desc {
     color: #64748b;
-    font-size: 11px;
+    font-size: 10px;
     margin-left: 4px;
 }
 
-.loading-text {
-    color: #94a3b8;
-    font-style: italic;
+/* MQ 面板小字 */
+#mq-panel small {
+    color: #64748b;
+    font-size: 9px;
+    display: block;
+    margin-top: 2px;
     text-align: center;
-    padding: 20px 0;
+    flex-shrink: 0;
+}
+
+/* Token 和 Command 面板内容紧凑 */
+#token-panel li,
+#command-panel li {
+    font-size: 11px;
+    padding: 1px 4px;
 }
 
 /* ---------- 聊天主区域 ---------- */
@@ -508,93 +571,15 @@ button:hover {
     transform: scale(0.97);
 }
 
-/* ---------- 右侧面板 ---------- */
-.right-side-panel small {
-    color: #64748b;
-    font-size: 11px;
+/* ---------- 空状态 ---------- */
+#messages:empty::after {
+    content: '💬 开始聊天吧';
     display: block;
-    margin-top: 2px;
-}
-
-/* ---------- MQ 面板 ---------- */
-#mq-panel {
-    background: #ffffff;
-    border: 1px solid #e9edf4;
-    border-radius: 14px;
-    padding: 14px 12px;
-    font-size: 13px;
-    color: #1e293b;
-    overflow-y: auto;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-    flex: 1;
-    min-height: 120px;
-}
-
-#mq-panel h3 {
-    margin: 0 0 10px 0;
-    font-size: 14px;
-    font-weight: 600;
     text-align: center;
-    border-bottom: 2px solid #eef2f6;
-    padding-bottom: 8px;
-    flex-shrink: 0;
-    letter-spacing: 0.3px;
-    color: #7c3aed;
-    border-bottom-color: #ddd6fe;
-}
-
-#mq-panel ul {
-    flex: 1;
-    overflow-y: auto;
-    min-height: 0;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#mq-panel li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-    padding: 4px 6px;
-    border-radius: 6px;
-    transition: background 0.15s;
-    cursor: default;
-    word-break: break-word;
-}
-
-#mq-panel li:hover {
-    background: #f1f5f9;
-}
-
-#mq-panel code {
-    display: inline-block;
-    background: #ede9fe;
-    padding: 2px 10px;
-    border-radius: 16px;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-weight: 600;
-    font-size: 12px;
-    cursor: pointer;
-    user-select: none;
-    transition: 0.15s;
-    border: 1px solid transparent;
-    letter-spacing: 0.2px;
-    color: #5b21b6;
-}
-
-#mq-panel code:hover {
-    filter: brightness(0.92);
-    border-color: #c4b5fd;
-}
-
-#mq-panel small {
-    color: #64748b;
-    font-size: 11px;
-    display: inline;
-    margin-left: 4px;
+    color: #9ca3af;
+    font-size: 14px;
+    margin-top: 20px;
+    font-style: italic;
 }
 
 /* ---------- 响应式 ---------- */
@@ -606,18 +591,25 @@ button:hover {
 
     #deploy-panel {
         width: 100%;
-        max-height: 220px;
+        max-height: 200px;
     }
 
     .right-side-panel {
         width: 100%;
         flex-direction: row;
         flex-wrap: wrap;
+        height: auto;
+        max-height: none;
+        gap: 8px;
     }
 
-    .right-side-panel > * {
-        flex: 1 1 180px;
+    #archery-panel,
+    #mq-panel,
+    #token-panel,
+    #command-panel {
+        flex: 1 1 calc(50% - 8px);
         min-height: 120px;
+        max-height: 200px;
     }
 
     .chat-main {
@@ -653,5 +645,14 @@ button:hover {
 
     #messages .msg.chat.own {
         margin-left: 5%;
+    }
+
+    #archery-panel,
+    #mq-panel,
+    #token-panel,
+    #command-panel {
+        flex: 1 1 100%;
+        min-height: 100px;
+        max-height: 160px;
     }
 }

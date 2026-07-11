@@ -89,17 +89,13 @@ function renderArcheryInstances() {
         const dbs = groups[instance];
 
         const instanceLi = document.createElement('li');
-        instanceLi.style.marginBottom = '8px';
-        instanceLi.style.fontWeight = '600';
-        instanceLi.style.color = '#1e293b';
-        instanceLi.style.fontSize = '13px';
+        instanceLi.className = 'archery-instance-title';
         instanceLi.textContent = `📊 ${instance}`;
         container.appendChild(instanceLi);
 
         dbs.forEach(db => {
             const li = document.createElement('li');
-            li.style.marginBottom = '4px';
-            li.style.paddingLeft = '16px';
+            li.className = 'archery-db-item';
 
             const code = document.createElement('code');
             const cmd = `/${db.id}`;
@@ -108,9 +104,7 @@ function renderArcheryInstances() {
             code.title = `点击填入 ${cmd}`;
 
             const desc = document.createElement('span');
-            desc.style.color = '#64748b';
-            desc.style.fontSize = '12px';
-            desc.style.marginLeft = '8px';
+            desc.className = 'db-desc';
             desc.textContent = `→ ${db.full}`;
 
             li.appendChild(code);
@@ -143,7 +137,7 @@ function renderDeployList(projects, commandsMap) {
         const branchInfo = typeof cfg === 'object' && cfg.branch ? `(${cfg.branch})` : '';
 
         const li = document.createElement('li');
-        li.innerHTML = `<code>${cmd}</code> ${serviceName} <small style="color:#64748b;font-size:11px">${branchInfo}</small>`;
+        li.innerHTML = `<code>${cmd}</code> ${serviceName} <small style="color:#64748b;font-size:10px">${branchInfo}</small>`;
         li.title = `点击复制 ${cmd} 部署 ${serviceName}`;
         li.onclick = () => fillCmd(cmd);
 
