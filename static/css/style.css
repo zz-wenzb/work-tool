@@ -6,8 +6,8 @@
 }
 
 body {
-    font-family: "Segoe UI", Roboto, system-ui, sans-serif;
-    background: #f5f7fa;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #f0f2f5;
     padding: 20px;
     max-width: 1500px;
     margin: 0 auto;
@@ -18,9 +18,10 @@ body {
 
 h1 {
     text-align: center;
-    color: #1e293b;
+    color: #1a1a2e;
     margin-bottom: 18px;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 24px;
     letter-spacing: 0.5px;
 }
 
@@ -42,7 +43,7 @@ h1 {
 
 #chat-box.active {
     display: flex;
-    gap: 18px;
+    gap: 16px;
     flex: 1;
     min-height: 0;
     height: calc(100vh - 120px);
@@ -121,7 +122,6 @@ button:hover {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
 }
 
-/* 左侧面板宽度略微缩减，给中间留出更多空间 */
 #deploy-panel {
     width: 230px;
     max-height: 100%;
@@ -240,7 +240,7 @@ button:hover {
     background: transparent !important;
 }
 
-/* ---------- code 标签 (可点击命令) ---------- */
+/* ---------- code 标签 ---------- */
 #deploy-panel code,
 #monitor-panel code,
 #token-panel code,
@@ -326,7 +326,6 @@ button:hover {
     background: #e2e8f0;
 }
 
-/* 实例标签简写 */
 .instance-short {
     font-weight: 600;
     color: #1e293b;
@@ -362,48 +361,101 @@ button:hover {
 #messages {
     flex: 1;
     overflow-y: auto;
-    background: #fafcff;
-    padding: 14px 16px;
+    background: #f7f9fc;
+    padding: 16px 20px;
     border-radius: 10px;
     border: 1px solid #eef2f6;
     margin-bottom: 14px;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.6;
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: pre-wrap;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
+
+/* ============================================================
+   消息样式
+   ============================================================ */
 
 #messages .msg {
-    margin-bottom: 10px;
-    padding: 6px 8px;
-    border-radius: 6px;
-    word-break: break-word;
+    animation: msgFadeIn 0.2s ease;
+    max-width: 78%;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
+@keyframes msgFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 系统消息 */
 #messages .msg.system {
-    color: #475569;
-    font-style: italic;
-    background: #f1f5f9;
-    padding: 8px 12px;
-    border-radius: 8px;
-}
-
-#messages .msg.chat {
-    background: #f8fafc;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border-left: 3px solid #2563eb;
-}
-
-#messages .msg.chat strong {
-    color: #1e4b8a;
-}
-
-#messages .msg.chat small {
-    color: #64748b;
-    margin-left: 10px;
+    align-self: center;
+    background: rgba(0, 0, 0, 0.04);
+    color: #8c8c8c;
     font-size: 12px;
+    padding: 3px 16px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 90%;
+    margin: 3px 0;
+}
+
+/* 别人的消息 - 左对齐 */
+#messages .msg.chat:not(.own) {
+    align-self: flex-start;
+    background: #ffffff;
+    border: 1px solid #e5e9f0;
+    border-top-left-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    margin-right: 15%;
+}
+
+/* 自己的消息 - 右对齐 */
+#messages .msg.chat.own {
+    align-self: flex-end;
+    background: #d6e8ff;
+    border: 1px solid #c5d9f5;
+    border-top-right-radius: 2px;
+    box-shadow: 0 1px 2px rgba(26, 91, 191, 0.08);
+    margin-left: 15%;
+}
+
+/* 昵称 */
+#messages .msg .msg-nickname {
+    font-weight: 600;
+    color: #1a5bbf;
+    font-size: 13px;
+    margin-right: 4px;
+}
+
+#messages .msg.own .msg-nickname {
+    color: #0d47a1;
+}
+
+/* 时间 */
+#messages .msg .msg-time {
+    color: #b0b0b0;
+    font-size: 11px;
+    margin-right: 6px;
+}
+
+/* 消息内容 */
+#messages .msg .msg-body {
+    color: #1a1a2e;
+    word-break: break-word;
 }
 
 /* ---------- 输入区 ---------- */
@@ -415,31 +467,48 @@ button:hover {
 
 #message {
     flex: 1;
-    padding: 12px 16px;
-    font-size: 15px;
+    padding: 12px 18px;
+    font-size: 14px;
     border: 1px solid #d1d9e6;
-    border-radius: 10px;
+    border-radius: 12px;
     background: #fafcff;
     transition: 0.2s;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    outline: none;
 }
 
 #message:focus {
     border-color: #4f8cf7;
-    box-shadow: 0 0 0 3px rgba(79, 140, 247, 0.12);
-    outline: none;
+    box-shadow: 0 0 0 4px rgba(79, 140, 247, 0.10);
+    background: #ffffff;
+}
+
+#message::placeholder {
+    color: #9ca3af;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 13px;
 }
 
 .input-area button {
-    padding: 12px 28px;
+    padding: 12px 32px;
     background: #2563eb;
-    border-radius: 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.20);
+    transition: 0.2s;
 }
 
 .input-area button:hover {
-    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.30);
 }
 
-/* 右侧面板小字微调 */
+.input-area button:active {
+    transform: scale(0.97);
+}
+
+/* ---------- 右侧面板 ---------- */
 .right-side-panel small {
     color: #64748b;
     font-size: 11px;
@@ -447,7 +516,88 @@ button:hover {
     margin-top: 2px;
 }
 
-/* ---------- 响应式适配 ---------- */
+/* ---------- MQ 面板 ---------- */
+#mq-panel {
+    background: #ffffff;
+    border: 1px solid #e9edf4;
+    border-radius: 14px;
+    padding: 14px 12px;
+    font-size: 13px;
+    color: #1e293b;
+    overflow-y: auto;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    flex: 1;
+    min-height: 120px;
+}
+
+#mq-panel h3 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 2px solid #eef2f6;
+    padding-bottom: 8px;
+    flex-shrink: 0;
+    letter-spacing: 0.3px;
+    color: #7c3aed;
+    border-bottom-color: #ddd6fe;
+}
+
+#mq-panel ul {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#mq-panel li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background 0.15s;
+    cursor: default;
+    word-break: break-word;
+}
+
+#mq-panel li:hover {
+    background: #f1f5f9;
+}
+
+#mq-panel code {
+    display: inline-block;
+    background: #ede9fe;
+    padding: 2px 10px;
+    border-radius: 16px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.15s;
+    border: 1px solid transparent;
+    letter-spacing: 0.2px;
+    color: #5b21b6;
+}
+
+#mq-panel code:hover {
+    filter: brightness(0.92);
+    border-color: #c4b5fd;
+}
+
+#mq-panel small {
+    color: #64748b;
+    font-size: 11px;
+    display: inline;
+    margin-left: 4px;
+}
+
+/* ---------- 响应式 ---------- */
 @media (max-width: 1000px) {
     #chat-box.active {
         flex-direction: column;
@@ -491,5 +641,17 @@ button:hover {
 
     .input-area button {
         width: 100%;
+    }
+
+    #messages .msg {
+        max-width: 92%;
+    }
+
+    #messages .msg.chat:not(.own) {
+        margin-right: 5%;
+    }
+
+    #messages .msg.chat.own {
+        margin-left: 5%;
     }
 }

@@ -33,12 +33,50 @@ function fillCmd(cmd) {
     input.focus();
 }
 
-// ---------- 渲染 Archery 实例列表 (简化命令) ----------
+// ---------- 创建消息元素 ----------
+function createMessageElement(type, nickname, content, time, isOwn = false) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'msg';
+
+    if (isOwn) {
+        msgDiv.classList.add('own');
+    }
+
+    if (type === 'system') {
+        msgDiv.classList.add('system');
+        msgDiv.textContent = content;
+        return msgDiv;
+    }
+
+    if (type === 'chat') {
+        msgDiv.classList.add('chat');
+
+        // 判断是否为命令（以 / 开头）
+        const isCommand = content.startsWith('/');
+
+        // 构建消息内容
+        let bodyHtml = content.replace(/\n/g, '<br>');
+        if (isCommand) {
+            // 命令用蓝色高亮
+            bodyHtml = `<span style="color:#2563eb;font-weight:600;font-family:'JetBrains Mono','Fira Code',monospace;">${content}</span>`;
+        }
+
+        // 构建完整的消息 HTML
+        msgDiv.innerHTML = `
+            <span class="msg-nickname">${nickname}</span>
+            <span class="msg-time">${time}</span>
+            <span class="msg-body">${bodyHtml}</span>
+        `;
+    }
+
+    return msgDiv;
+}
+
+// ---------- 渲染 Archery 实例列表 ----------
 function renderArcheryInstances() {
     const container = document.getElementById('archery-instance-list');
     container.innerHTML = '';
 
-    // 按实例分组
     const groups = {};
     ARCHERY_DATABASES.forEach(db => {
         if (!groups[db.instance]) {
@@ -50,7 +88,6 @@ function renderArcheryInstances() {
     Object.keys(groups).forEach(instance => {
         const dbs = groups[instance];
 
-        // 实例标题
         const instanceLi = document.createElement('li');
         instanceLi.style.marginBottom = '8px';
         instanceLi.style.fontWeight = '600';
@@ -59,7 +96,6 @@ function renderArcheryInstances() {
         instanceLi.textContent = `📊 ${instance}`;
         container.appendChild(instanceLi);
 
-        // 数据库列表
         dbs.forEach(db => {
             const li = document.createElement('li');
             li.style.marginBottom = '4px';
@@ -84,7 +120,7 @@ function renderArcheryInstances() {
     });
 }
 
-// ---------- 渲染部署列表 (带搜索) ----------
+// ---------- 渲染部署列表 ----------
 function renderDeployList(projects, commandsMap) {
     windowAllDeployItems = [];
     deployListContainer.innerHTML = '';
@@ -125,7 +161,6 @@ function renderDeployList(projects, commandsMap) {
     filterDeployList(document.getElementById('deploy-search').value);
 }
 
-// 搜索过滤
 function filterDeployList(keyword) {
     const ul = deployListContainer.querySelector('ul');
     if (!ul) return;
@@ -186,7 +221,6 @@ function joinChat() {
             console.log("[收到]", data);
 
             if (data.type === 'project_list') {
-                console.log("[更新] 项目列表渲染");
                 renderDeployList(data.data, data.dynamic_commands);
                 return;
             }
@@ -195,22 +229,31 @@ function joinChat() {
                 showChat();
             }
 
-            const msgDiv = document.createElement('div');
-            msgDiv.className = 'msg ' + data.type;
-
             if (data.type === 'system') {
-                msgDiv.innerHTML = `<span>[${data.time}] ${data.content.replace(/\n/g, '<br>')}</span>`;
+                const msgDiv = createMessageElement('system', '', data.content, data.time);
+                messagesDiv.appendChild(msgDiv);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
             } else if (data.type === 'chat') {
-                const safeContent = data.content.replace(/\n/g, '<br>');
-                msgDiv.innerHTML = `<strong>${data.nickname}:</strong> ${safeContent} <small>[${data.time}]</small>`;
+                const myNick = document.getElementById('nickname').value.trim();
+                const isOwn = data.nickname === myNick;
+
+                // 去重
+                const lastMsg = messagesDiv.lastElementChild;
+                if (isOwn && lastMsg && lastMsg.dataset.content === data.content) {
+                    return;
+                }
+
+                const msgDiv = createMessageElement('chat', data.nickname, data.content, data.time, isOwn);
+                if (isOwn) {
+                    msgDiv.dataset.content = data.content;
+                }
+                messagesDiv.appendChild(msgDiv);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
             } else if (data.type === 'error') {
                 showError(data.content);
                 ws.close();
                 return;
             }
-
-            messagesDiv.appendChild(msgDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         } catch (e) {
             console.error("消息解析失败:", e);
         }
@@ -238,6 +281,16 @@ function sendMessage() {
     if (!content) return;
 
     if (ws && ws.readyState === WebSocket.OPEN) {
+        const nickname = document.getElementById('nickname').value.trim() || '我';
+        const now = new Date();
+        const timeStr = now.toTimeString().slice(0, 8);
+
+        // 立即显示
+        const msgDiv = createMessageElement('chat', nickname, content, timeStr, true);
+        msgDiv.dataset.content = content;
+        messagesDiv.appendChild(msgDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
         ws.send(JSON.stringify({type: "chat", content: content}));
         input.value = '';
     } else {

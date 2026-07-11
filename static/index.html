@@ -66,6 +66,26 @@
                 <li><code onclick="fillCmd('/help')">/help</code> <small>帮助信息</small></li>
             </ul>
         </div>
+
+        <!-- MQ 面板 -->
+        <div id="mq-panel">
+            <h3>📨 MQ Topic 管理</h3>
+            <ul>
+                <li><code onclick="fillCmd('/mq-list')">/mq-list</code> <small>列出所有 Topic</small></li>
+                <li><code onclick="fillCmd('/mq-exists')">/mq-exists &lt;topic&gt;</code> <small>检查 Topic
+                    是否存在</small></li>
+                <li><code onclick="fillCmd('/mq-create')">/mq-create &lt;topic&gt;</code> <small>创建 Topic</small></li>
+                <li><code onclick="fillCmd('/mq-delete')">/mq-delete &lt;topic&gt;</code> <small>删除 Topic
+                    (需确认)</small></li>
+                <li><code onclick="fillCmd('/mq-send')">/mq-send &lt;topic&gt; &lt;json&gt;</code> <small>发送 JSON
+                    消息</small></li>
+                <li><code onclick="fillCmd('/mq-recent')">/mq-recent &lt;topic&gt; [分钟]</code> <small>最近 N
+                    分钟消息</small></li>
+                <li><code onclick="fillCmd('/mq-query')">/mq-query &lt;topic&gt; &lt;字段=值&gt;</code>
+                    <small>条件查询消息</small></li>
+            </ul>
+            <small style="color:#94a3b8;">环境参数: dev, test, uat (默认 test)</small>
+        </div>
     </div>
 </div>
 

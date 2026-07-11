@@ -9,6 +9,7 @@ from core.monitor_manager import run_monitor_task
 from core.task_manager import task_manager
 from core.token_api import app_start, vue_nt_start, redis_migrate
 from core.archery_handler import ARCHERY_COMMANDS, handle_archery_query
+from core.mq_handler import MQ_COMMANDS, handle_mq_command
 
 logger = logging.getLogger(__name__)
 
@@ -97,6 +98,10 @@ async def handle_command(websocket, content, nickname, connected_clients):
         await handle_archery_query(websocket, content, cmd)
         return True
 
+    # 🆕 ========== MQ 命令 ==========
+    if cmd in MQ_COMMANDS:
+        return await handle_mq_command(websocket, content, cmd)
+
     # ========== 帮助 ==========
     if cmd == "/help":
         await handle_help(websocket)
@@ -128,6 +133,20 @@ async def handle_help(websocket):
     help_text += "\n\n🔑 获取 Token 命令:\n"
     help_text += "• /token-app [用户名] [密码] — 获取 App 端 Token\n"
     help_text += "• /token-vue-nt [用户名] [密码] — 获取 Vue/NT 端 Token\n"
+
+    # 🆕 MQ 命令
+    help_text += "\n\n📨 MQ Topic 管理命令:\n"
+    help_text += "• /mq-list [env] — 列出所有 Topic (默认 test)\n"
+    help_text += "• /mq-exists <topic> [env] — 检查 Topic 是否存在\n"
+    help_text += "• /mq-create <topic> [env] — 创建 Topic\n"
+    help_text += "• /mq-delete <topic> [env] — 删除 Topic (需二次确认)\n"
+    help_text += "• /mq-delete-confirm <topic> [env] — 确认删除 Topic\n"
+    help_text += "• /mq-send <topic> <JSON> [env] — 发送 JSON 消息到 Topic\n"
+    help_text += "• /mq-recent <topic> [分钟] [env] — 查询最近 N 分钟的消息\n"
+    help_text += "• /mq-query <topic> <字段=值> [分钟] [env] — 条件查询消息\n"
+    help_text += "\n  环境参数: dev, test, uat (默认 test)\n"
+    help_text += "  示例: /mq-send test_my_topic '{\"name\":\"张三\"}' test\n"
+    help_text += "  示例: /mq-query test_my_topic shipperName=货老板 10\n"
 
     # 动态部署命令
     if DYNAMIC_DEPLOY_COMMANDS:
