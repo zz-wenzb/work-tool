@@ -52,9 +52,9 @@ def start_http_server():
         def log_message(self, format, *args):
             logger.info(f"HTTP: {format % args}")
 
-    with socketserver.ThreadingTCPServer(("0.0.0.0", 8000), CustomHandler) as httpd:
-        logger.info("🌐 网页访问地址: http://localhost:8000")
-        logger.info(f"🌐 网页访问地址: http://{get_local_ip()}:8000")
+    with socketserver.ThreadingTCPServer(("0.0.0.0", 8020), CustomHandler) as httpd:
+        logger.info("🌐 网页访问地址: http://localhost:8020")
+        logger.info(f"🌐 网页访问地址: http://{get_local_ip()}:8020")
         httpd.serve_forever()
 
 
@@ -77,13 +77,13 @@ async def main():
     ws_server = await websockets.serve(
         handle_client,
         "0.0.0.0",
-        8765,
+        8021,
         ping_interval=20,
         ping_timeout=10,
         close_timeout=10,
     )
-    logger.info("💬 WebSocket 服务器运行在 ws://localhost:8765")
-    logger.info(f"💬 WebSocket 服务器运行在 ws://{get_local_ip()}:8765")
+    logger.info("💬 WebSocket 服务器运行在 ws://localhost:8021")
+    logger.info(f"💬 WebSocket 服务器运行在 ws://{get_local_ip()}:8021")
 
     http_thread = threading.Thread(target=start_http_server, daemon=True)
     http_thread.start()

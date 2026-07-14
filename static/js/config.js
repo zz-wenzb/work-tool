@@ -13,4 +13,4 @@ const ARCHERY_DATABASES = [
 ];
 
 // WebSocket 连接地址
-const WS_URL = `ws://${window.location.hostname}:8765`;
+const WS_URL = `ws://${window.location.hostname}:8021`;

@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua
 COPY . .
 
 # 暴露端口
-EXPOSE 8000 8765
+EXPOSE 8020 8021
 
 # 启动命令
 CMD ["python", "server.py"]

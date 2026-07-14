@@ -4,8 +4,8 @@ services:
   work-tool:
     build: .
     ports:
-      - "8000:8000"  # HTTP服务器端口
-      - "8765:8765"  # WebSocket服务器端口
+      - "8020:8020"  # HTTP服务器端口
+      - "8021:8021"  # WebSocket服务器端口
     volumes:
       - ./config:/app/config
       - ./static:/app/static
