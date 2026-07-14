@@ -26,11 +26,11 @@ except ImportError as e:
 # ========== MQ 环境配置（直接在这里配置） ==========
 MQ_ENV_CONFIG = {
     "dev": {
-        "host": "http://192.168.1.79:8082",  # 修复：去掉重复的 http://
-        "cookie": "",  # 可选，有 cookie 可跳过登录
-        "username": "",  # dev 环境不需要用户名密码
+        "host": "http://192.168.1.79:8082",
+        "cookie": "",
+        "username": "",
         "password": "",
-        "no_login": True  # 标记此环境不需要登录
+        "no_login": True
     },
     "test": {
         "host": "http://test-rocketmq.zhongbaozhiyun.com:8080",
@@ -51,12 +51,16 @@ MQ_ENV_CONFIG = {
 # MQ 命令映射
 MQ_COMMANDS = {
     "/mq-list": {
-        "description": "列出所有 topic",
+        "description": "列出所有 topic (支持模糊搜索)",
         "handler": "handle_mq_list"
     },
     "/mq-exists": {
         "description": "查询某个 topic 是否存在",
         "handler": "handle_mq_exists"
+    },
+    "/mq-last": {
+        "description": "查询某个 topic 最新一条消息的完整消息体",
+        "handler": "handle_mq_last"
     },
     "/mq-send": {
         "description": "给 topic 发消息",
@@ -87,6 +91,27 @@ _mq_managers = {}
 def get_current_time():
     """获取当前时间字符串"""
     return datetime.now().strftime("%H:%M:%S")
+
+
+def parse_env_from_end(parts, default_env="test"):
+    """
+    从参数列表末尾提取环境名
+    如果最后一个参数是 dev/test/uat，则作为环境名
+    否则返回默认环境
+
+    Args:
+        parts: 参数列表
+        default_env: 默认环境
+
+    Returns:
+        (env, remaining_parts): 环境名和剩余参数列表
+    """
+    if not parts:
+        return default_env, parts
+
+    if parts[-1] in ['dev', 'test', 'uat']:
+        return parts[-1], parts[:-1]
+    return default_env, parts
 
 
 def get_mq_manager(env: str = "test"):
@@ -120,8 +145,6 @@ def get_mq_manager(env: str = "test"):
         mgr = MQManager(mq_config)
 
         # 判断是否需要登录
-        # 1. 如果配置了 no_login=True，跳过登录
-        # 2. 如果没有配置 username 或 password，且有 cookie，跳过登录
         if mq_config.get('no_login', False):
             logger.info(f"✅ 跳过登录 (环境: {env}, no_login=True)")
             _mq_managers[cache_key] = mgr
@@ -238,14 +261,26 @@ def format_messages_for_display(messages: list, limit: int = 50) -> str:
     return result
 
 
+# ============================================================
+# 命令处理函数 (统一: env 参数放在最后)
+# ============================================================
+
 async def handle_mq_list(websocket, content, cmd):
     """
-    /mq-list - 列出所有 topic
-    用法: /mq-list [env]
-    示例: /mq-list test
+    /mq-list - 列出所有 topic（支持模糊搜索）
+    用法: /mq-list [关键词] [env]
+    示例: /mq-list                    # 默认 test 环境，列出所有
+    示例: /mq-list cargo              # 默认 test 环境，搜索包含 cargo
+    示例: /mq-list cargo test         # test 环境，搜索包含 cargo
+    示例: /mq-list test               # ⚠️ 注意: 这样会被当作关键词，不是环境！
     """
     parts = content.split()
-    env = parts[1] if len(parts) > 1 else "test"
+
+    # 从末尾提取 env
+    env, remaining = parse_env_from_end(parts[1:], "test")
+    keyword = ' '.join(remaining) if remaining else ""
+
+    logger.info(f"[MQ-LIST] env={env}, keyword={keyword}")
 
     mgr, err = get_mq_manager(env)
     if err:
@@ -257,7 +292,6 @@ async def handle_mq_list(websocket, content, cmd):
         return True
 
     result = mgr.query_topic_list()
-
     if result.get('status') != 0:
         await websocket.send(json.dumps({
             "type": "system",
@@ -277,13 +311,33 @@ async def handle_mq_list(websocket, content, cmd):
     # 按环境过滤（以 env% 开头的 topic）
     filtered_topics = [t for t in topics if t.startswith(f"{env}%")]
 
-    reply = f"📨 Topic 列表 (环境: {env})\n"
-    reply += f"共 {len(filtered_topics)} 个 Topic:\n"
+    # 按关键词模糊搜索（不区分大小写）
+    if keyword:
+        keyword_lower = keyword.lower()
+        filtered_topics = [t for t in filtered_topics if keyword_lower in t.lower()]
+
+    # 按字母排序
+    filtered_topics.sort()
+
+    # 构建回复
+    reply = f"📨 Topic 列表 (环境: {env})"
+    if keyword:
+        reply += f" | 搜索: '{keyword}'"
+    reply += f"\n共 {len(filtered_topics)} 个 Topic:\n"
+
     if filtered_topics:
+        max_display = 200
+        display_count = len(filtered_topics)
+        if display_count > max_display:
+            reply += f"(显示前 {max_display} 个，共 {display_count} 个)\n\n"
+            filtered_topics = filtered_topics[:max_display]
+
         for idx, topic in enumerate(filtered_topics, 1):
             reply += f"  {idx}. {topic}\n"
     else:
-        reply += "  (无)\n"
+        reply += "  (无匹配的 Topic)"
+        if keyword:
+            reply += f"\n\n💡 提示：没有找到包含 '{keyword}' 的 Topic"
 
     await websocket.send(json.dumps({
         "type": "system",
@@ -309,42 +363,9 @@ async def handle_mq_exists(websocket, content, cmd):
         }))
         return True
 
-    # 默认值
-    env = "test"
-    topic = ""
-
-    # 解析参数：
-    # 如果只有2个参数: /mq-exists test%nt_cargo → topic=test%nt_cargo, env=test
-    # 如果有3个参数: /mq-exists test%nt_cargo test → topic=test%nt_cargo, env=test
-    # 如果有3个参数但第二个是环境名: /mq-exists test test%nt_cargo → 这种情况需要特殊处理
-
-    if len(parts) == 2:
-        # 只有 topic，没有指定环境
-        topic = parts[1]
-        env = "test"
-    elif len(parts) == 3:
-        # 判断哪个是环境，哪个是 topic
-        # 如果第二个参数是 dev/test/uat，则第二个是环境，第三个是 topic
-        if parts[1] in ['dev', 'test', 'uat']:
-            env = parts[1]
-            topic = parts[2]
-        # 如果第三个参数是 dev/test/uat，则第三个是环境，第二个是 topic
-        elif parts[2] in ['dev', 'test', 'uat']:
-            env = parts[2]
-            topic = parts[1]
-        else:
-            # 都不是环境，把第二个和第三个合并作为 topic
-            topic = ' '.join(parts[1:])
-            env = "test"
-    else:
-        # 多于3个参数，从后往前找环境
-        env = "test"
-        # 检查最后一个是否是环境
-        if parts[-1] in ['dev', 'test', 'uat']:
-            env = parts[-1]
-            topic = ' '.join(parts[1:-1])
-        else:
-            topic = ' '.join(parts[1:])
+    # 从末尾提取 env
+    env, remaining = parse_env_from_end(parts[1:], "test")
+    topic = ' '.join(remaining) if remaining else ""
 
     if not topic:
         await websocket.send(json.dumps({
@@ -390,14 +411,111 @@ async def handle_mq_exists(websocket, content, cmd):
     reply += f"  存在: {'✅ 是' if exists else '❌ 否'}"
 
     if not exists and topics:
-        # 显示相似的 topic
         similar = [t for t in topics if topic.lower() in t.lower() or t.lower() in topic.lower()]
-        # 排除完全匹配的
         similar = [t for t in similar if t != topic]
         if similar:
             reply += f"\n\n  📋 相似的 Topic:\n"
             for s in similar[:5]:
                 reply += f"    • {s}\n"
+
+    await websocket.send(json.dumps({
+        "type": "system",
+        "content": reply,
+        "time": get_current_time()
+    }))
+    return True
+
+
+# core/mq_handler.py - 在 handle_mq_exists 后面添加
+
+async def handle_mq_last(websocket, content, cmd):
+    """
+    /mq-last - 查询某个 topic 最新一条消息的完整消息体
+    用法: /mq-last <topic> [env]
+    示例: /mq-last test%nt_cargo
+    示例: /mq-last test%nt_cargo uat
+    """
+    parts = content.split()
+    if len(parts) < 2:
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": "❌ 用法: /mq-last <topic> [env]\n示例: /mq-last test%nt_cargo",
+            "time": get_current_time()
+        }))
+        return True
+
+    # 从末尾提取 env
+    env, remaining = parse_env_from_end(parts[1:], "test")
+    topic = ' '.join(remaining) if remaining else ""
+
+    if not topic:
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": "❌ Topic 名称不能为空",
+            "time": get_current_time()
+        }))
+        return True
+
+    logger.info(f"[MQ-LAST] topic={topic}, env={env}")
+
+    mgr, err = get_mq_manager(env)
+    if err:
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": f"❌ {err}",
+            "time": get_current_time()
+        }))
+        return True
+
+    # 查询最近 60 分钟的消息，获取最新一条
+    result = mgr.query_topic_message(topic=topic, m=60, page_size=1)
+
+    if result.get('status') != 0:
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": f"❌ 查询失败: {result.get('errMsg', '未知错误')}",
+            "time": get_current_time()
+        }))
+        return True
+
+    messages = result.get('data', {}).get('page', {}).get('content', [])
+
+    if not messages:
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": f"📭 Topic [{topic}] (环境: {env}) 没有找到消息\n\n💡 提示: 可以尝试 /mq-send 发送一条测试消息",
+            "time": get_current_time()
+        }))
+        return True
+
+    # 取最新一条消息（列表默认按时间倒序排列，第一条就是最新的）
+    msg = messages[0]
+    msg_id = msg.get('msgId', 'N/A')
+    store_ts = msg.get('storeTimestamp')
+    store_time = format_timestamp(store_ts)
+    body = msg.get('messageBody', '')
+    topic_name = msg.get('topic', topic)
+
+    # 格式化消息体（尝试美化 JSON）
+    try:
+        parsed_body = json.loads(body)
+        formatted_body = json.dumps(parsed_body, ensure_ascii=False, indent=2)
+    except:
+        formatted_body = body
+
+    # 构建回复
+    reply = f"📨 Topic [{topic_name}] 最新消息 (环境: {env})\n"
+    reply += f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    reply += f"📌 消息ID: {msg_id}\n"
+    reply += f"🕐 时间: {store_time}\n"
+    reply += f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    reply += f"📄 消息体:\n"
+    reply += f"{formatted_body}"
+
+    # 如果消息体太长，截断
+    if len(reply) > 15000:
+        # 保留前 12000 字符
+        reply = reply[:12000] + "\n\n... (消息体过长，已截断)"
 
     await websocket.send(json.dumps({
         "type": "system",
@@ -415,8 +533,7 @@ async def handle_mq_send(websocket, content, cmd):
     示例: /mq-send test%nt_cargo '{"shipperName":"货老板"}' test
     提示: 消息内容请用单引号包裹 JSON
     """
-    # 先分割，但保留消息内容中的空格
-    parts = content.split(maxsplit=2)
+    parts = content.split()
     if len(parts) < 3:
         await websocket.send(json.dumps({
             "type": "system",
@@ -427,19 +544,21 @@ async def handle_mq_send(websocket, content, cmd):
         }))
         return True
 
-    # topic 是第二部分
+    # topic 是第二个参数
     topic = parts[1]
-    msg_and_env = parts[2]
 
-    # 默认环境
-    env = "test"
-    message_body = msg_and_env
+    # 从末尾提取 env（从剩余参数中提取）
+    env, remaining = parse_env_from_end(parts[2:], "test")
+    # remaining 是消息内容（可能有空格）
+    message_body = ' '.join(remaining) if remaining else ""
 
-    # 检查最后一个词是否是环境
-    words = msg_and_env.rsplit(maxsplit=1)
-    if len(words) == 2 and words[1] in ['dev', 'test', 'uat']:
-        env = words[1]
-        message_body = words[0]
+    if not message_body:
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": "❌ 消息内容不能为空",
+            "time": get_current_time()
+        }))
+        return True
 
     logger.info(f"[MQ-SEND] topic={topic}, env={env}, message_length={len(message_body)}")
 
@@ -495,7 +614,7 @@ async def handle_mq_send(websocket, content, cmd):
 async def handle_mq_recent(websocket, content, cmd):
     """
     /mq-recent - 查询某个 topic 最近 N 分钟的所有消息
-    用法: /mq-recent <topic> [minutes] [env]
+    用法: /mq-recent <topic> [分钟] [env]
     示例: /mq-recent test%nt_cargo 10
     示例: /mq-recent test%nt_cargo 30 test
     """
@@ -503,32 +622,29 @@ async def handle_mq_recent(websocket, content, cmd):
     if len(parts) < 2:
         await websocket.send(json.dumps({
             "type": "system",
-            "content": "❌ 用法: /mq-recent <topic> [minutes] [env]\n示例: /mq-recent test%nt_cargo 10",
+            "content": "❌ 用法: /mq-recent <topic> [分钟] [env]\n示例: /mq-recent test%nt_cargo 10",
             "time": get_current_time()
         }))
         return True
 
-    # 默认值
-    env = "test"
+    # 从末尾提取 env
+    env, remaining = parse_env_from_end(parts[1:], "test")
+
+    # 从 remaining 中提取分钟数（最后一个如果是数字）
     minutes = 60
+    if remaining:
+        # 检查最后一个是否是数字
+        if remaining[-1].isdigit():
+            minutes = int(remaining[-1])
+            remaining = remaining[:-1]
+        # 检查第一个是否是数字（如果只有两个参数: topic 和 分钟）
+        elif len(remaining) >= 2 and remaining[1].isdigit():
+            minutes = int(remaining[1])
+            remaining = [remaining[0]]
 
-    # 从后往前解析
-    i = len(parts) - 1
+    topic = ' '.join(remaining) if remaining else ""
 
-    # 1. 检查最后一个是否是环境
-    if i >= 1 and parts[i] in ['dev', 'test', 'uat']:
-        env = parts[i]
-        i -= 1
-
-    # 2. 检查当前是否是数字（分钟数）
-    if i >= 1 and parts[i].isdigit():
-        minutes = int(parts[i])
-        i -= 1
-
-    # 3. 剩余部分都是 topic
-    if i >= 1:
-        topic = ' '.join(parts[1:i + 1])
-    else:
+    if not topic:
         await websocket.send(json.dumps({
             "type": "system",
             "content": "❌ Topic 名称不能为空",
@@ -559,7 +675,7 @@ async def handle_mq_recent(websocket, content, cmd):
 
     messages = result.get('data', {}).get('page', {}).get('content', [])
 
-    reply = f"📥 Topic [{topic}] 最近 {minutes} 分钟\n"
+    reply = f"📥 Topic [{topic}] 最近 {minutes} 分钟 (环境: {env})\n"
     reply += format_messages_for_display(messages)
 
     await websocket.send(json.dumps({
@@ -573,7 +689,7 @@ async def handle_mq_recent(websocket, content, cmd):
 async def handle_mq_query(websocket, content, cmd):
     """
     /mq-query - 在某个 topic 查询消息（条件查询）
-    用法: /mq-query <topic> <field=value> [minutes] [env]
+    用法: /mq-query <topic> <字段=值> [分钟] [env]
     示例: /mq-query test%nt_cargo shipperName=货老板 10
     示例: /mq-query test%nt_cargo cargoName=钢材 30 test
     """
@@ -581,39 +697,29 @@ async def handle_mq_query(websocket, content, cmd):
     if len(parts) < 3:
         await websocket.send(json.dumps({
             "type": "system",
-            "content": "❌ 用法: /mq-query <topic> <field=value> [minutes] [env]\n"
+            "content": "❌ 用法: /mq-query <topic> <字段=值> [分钟] [env]\n"
                        "示例: /mq-query test%nt_cargo shipperName=货老板 10\n"
                        "示例: /mq-query test%nt_cargo cargoName=钢材 30 test",
             "time": get_current_time()
         }))
         return True
 
-    # 从后往前解析参数
-    # 默认值
-    env = "test"
+    # 从末尾提取 env
+    env, remaining = parse_env_from_end(parts[1:], "test")
+
+    # 从 remaining 中提取分钟数（最后一个如果是数字）
     minutes = 60
+    if remaining and remaining[-1].isdigit():
+        minutes = int(remaining[-1])
+        remaining = remaining[:-1]
+
+    # 从 remaining 中提取条件（包含 = 的参数）
     condition = ""
-    topic_parts = []
-
-    i = len(parts) - 1
-
-    # 1. 检查最后一个参数是否是环境
-    if i >= 1 and parts[i] in ['dev', 'test', 'uat']:
-        env = parts[i]
-        i -= 1
-
-    # 2. 检查当前参数是否是数字（分钟数）
-    if i >= 1 and parts[i].isdigit():
-        minutes = int(parts[i])
-        i -= 1
-
-    # 3. 现在 parts[i] 应该是条件（field=value）
-    # 条件可能包含 =，所以从后往前找包含 = 的参数
     condition_idx = -1
-    for j in range(i, 0, -1):
-        if '=' in parts[j]:
-            condition_idx = j
-            condition = parts[j]
+    for i in range(len(remaining) - 1, -1, -1):
+        if '=' in remaining[i]:
+            condition_idx = i
+            condition = remaining[i]
             break
 
     if condition_idx == -1:
@@ -624,11 +730,8 @@ async def handle_mq_query(websocket, content, cmd):
         }))
         return True
 
-    # 4. 条件之前的参数都是 topic 的一部分
-    if condition_idx > 1:
-        topic = ' '.join(parts[1:condition_idx])
-    else:
-        topic = parts[1]
+    # topic 是条件之前的所有内容
+    topic = ' '.join(remaining[:condition_idx]) if condition_idx > 0 else remaining[0] if remaining else ""
 
     # 验证条件格式
     if '=' not in condition:
@@ -649,7 +752,6 @@ async def handle_mq_query(websocket, content, cmd):
         }))
         return True
 
-    # 记录解析结果（调试用）
     logger.info(f"[MQ-QUERY] topic={topic}, field={field}, value={value}, minutes={minutes}, env={env}")
 
     mgr, err = get_mq_manager(env)
@@ -676,7 +778,7 @@ async def handle_mq_query(websocket, content, cmd):
     if not all_messages:
         reply = f"🔎 在 Topic [{topic}] 中查询消息\n"
         reply += f"  条件: {field}={value}\n"
-        reply += f"  时间范围: 最近 {minutes} 分钟\n"
+        reply += f"  时间范围: 最近 {minutes} 分钟 (环境: {env})\n"
         reply += "  ⚠️ 没有找到消息"
         await websocket.send(json.dumps({
             "type": "system",
@@ -696,7 +798,7 @@ async def handle_mq_query(websocket, content, cmd):
     if not filtered_messages:
         reply = f"🔎 在 Topic [{topic}] 中查询消息\n"
         reply += f"  条件: {field}={value}\n"
-        reply += f"  时间范围: 最近 {minutes} 分钟\n"
+        reply += f"  时间范围: 最近 {minutes} 分钟 (环境: {env})\n"
         reply += f"  共获取 {len(all_messages)} 条消息\n"
         reply += "  ⚠️ 没有匹配到符合条件的消息"
         await websocket.send(json.dumps({
@@ -708,7 +810,7 @@ async def handle_mq_query(websocket, content, cmd):
 
     reply = f"🔎 在 Topic [{topic}] 中查询消息\n"
     reply += f"  条件: {field}={value}\n"
-    reply += f"  时间范围: 最近 {minutes} 分钟\n"
+    reply += f"  时间范围: 最近 {minutes} 分钟 (环境: {env})\n"
     reply += format_messages_for_display(filtered_messages)
 
     await websocket.send(json.dumps({
@@ -724,6 +826,7 @@ async def handle_mq_create(websocket, content, cmd):
     /mq-create - 创建 topic
     用法: /mq-create <topic> [env]
     示例: /mq-create test_my_topic
+    示例: /mq-create test_my_topic test
     """
     parts = content.split()
     if len(parts) < 2:
@@ -734,8 +837,17 @@ async def handle_mq_create(websocket, content, cmd):
         }))
         return True
 
-    topic = parts[1]
-    env = parts[2] if len(parts) > 2 else "test"
+    # 从末尾提取 env
+    env, remaining = parse_env_from_end(parts[1:], "test")
+    topic = ' '.join(remaining) if remaining else ""
+
+    if not topic:
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": "❌ Topic 名称不能为空",
+            "time": get_current_time()
+        }))
+        return True
 
     mgr, err = get_mq_manager(env)
     if err:
@@ -783,8 +895,17 @@ async def handle_mq_delete(websocket, content, cmd):
         }))
         return True
 
-    topic = parts[1]
-    env = parts[2] if len(parts) > 2 else "test"
+    # 从末尾提取 env
+    env, remaining = parse_env_from_end(parts[1:], "test")
+    topic = ' '.join(remaining) if remaining else ""
+
+    if not topic:
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": "❌ Topic 名称不能为空",
+            "time": get_current_time()
+        }))
+        return True
 
     mgr, err = get_mq_manager(env)
     if err:
@@ -815,6 +936,7 @@ async def handle_mq_delete(websocket, content, cmd):
 MQ_HANDLERS = {
     "/mq-list": handle_mq_list,
     "/mq-exists": handle_mq_exists,
+    "/mq-last": handle_mq_last,
     "/mq-send": handle_mq_send,
     "/mq-recent": handle_mq_recent,
     "/mq-query": handle_mq_query,

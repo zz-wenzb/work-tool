@@ -67,24 +67,30 @@
             </ul>
         </div>
 
+        <!-- index.html 中 MQ 面板部分，修改 /mq-list 的描述 -->
+
         <!-- MQ 面板 -->
         <div id="mq-panel">
             <h3>📨 MQ Topic 管理</h3>
             <ul>
-                <li><code onclick="fillCmd('/mq-list')">/mq-list</code> <small>列出所有 Topic</small></li>
-                <li><code onclick="fillCmd('/mq-exists')">/mq-exists &lt;topic&gt;</code> <small>检查 Topic
+                <li><code onclick="fillCmd('/mq-list')">/mq-list [关键词] [env]</code> <small>列出 Topic
+                    (支持模糊搜索)</small></li>
+                <li><code onclick="fillCmd('/mq-exists')">/mq-exists &lt;topic&gt; [env]</code> <small>检查 Topic
                     是否存在</small></li>
-                <li><code onclick="fillCmd('/mq-create')">/mq-create &lt;topic&gt;</code> <small>创建 Topic</small></li>
-                <li><code onclick="fillCmd('/mq-delete')">/mq-delete &lt;topic&gt;</code> <small>删除 Topic
+                <li><code onclick="fillCmd('/mq-last')">/mq-last &lt;topic&gt; [env]</code>
+                    <small>最新一条完整消息</small></li>
+                <li><code onclick="fillCmd('/mq-create')">/mq-create &lt;topic&gt; [env]</code> <small>创建
+                    Topic</small></li>
+                <li><code onclick="fillCmd('/mq-delete')">/mq-delete &lt;topic&gt; [env]</code> <small>删除 Topic
                     (需确认)</small></li>
-                <li><code onclick="fillCmd('/mq-send')">/mq-send &lt;topic&gt; &lt;json&gt;</code> <small>发送 JSON
-                    消息</small></li>
-                <li><code onclick="fillCmd('/mq-recent')">/mq-recent &lt;topic&gt; [分钟]</code> <small>最近 N
+                <li><code onclick="fillCmd('/mq-send')">/mq-send &lt;topic&gt; &lt;json&gt; [env]</code> <small>发送
+                    JSON 消息</small></li>
+                <li><code onclick="fillCmd('/mq-recent')">/mq-recent &lt;topic&gt; [分钟] [env]</code> <small>最近 N
                     分钟消息</small></li>
-                <li><code onclick="fillCmd('/mq-query')">/mq-query &lt;topic&gt; &lt;字段=值&gt;</code>
+                <li><code onclick="fillCmd('/mq-query')">/mq-query &lt;topic&gt; &lt;字段=值&gt; [分钟] [env]</code>
                     <small>条件查询消息</small></li>
             </ul>
-            <small style="color:#94a3b8;">环境参数: dev, test, uat (默认 test)</small>
+            <small style="color:#94a3b8;">环境: dev, test, uat (默认 test) · 环境参数放最后</small>
         </div>
     </div>
 </div>

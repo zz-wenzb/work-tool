@@ -24,13 +24,11 @@ class MQManager:
         """
         if not self.cookie:
             return None
-        
+
         match = re.search(r'XSRF-TOKEN=([^;]+)', self.cookie)
         if match:
             return match.group(1)
         return None
-
-
 
     def login(self):
         """
@@ -42,7 +40,7 @@ class MQManager:
             logger.warning("⚠️ 未配置 MQ 账号密码，跳过登录步骤（使用已有 cookie）")
             logger.warning("⚠️ 如果接口返回 403，请检查 cookie 是否过期，或在配置文件中添加 username/password")
             return True
-        
+
         url = f"{self.host}/login/login.do"
         params = {
             "password": self.password,
@@ -102,35 +100,34 @@ class MQManager:
             print(f"❌ 登录发生异常: {e}")
             return False
 
-    def query_topic_message(self, topic: str, m: int = 15, page_size: int = 20) -> dict:
+    # core/mq_client.py
+
+    def query_topic_message(self, topic: str, m: int = 15, page_size: int = 20, fetch_all: bool = False) -> dict:
         """
-        查询topic消息列表（基础API）- 自动获取所有分页数据
-        
+        查询topic消息列表
+
         Args:
             topic: Topic名称
             m: 查询最近多少分钟的消息
             page_size: 每页大小，默认20
-            
+            fetch_all: 是否获取所有分页（默认False，只取第一页）
+
         Returns:
-            响应数据字典，格式: {'status': 0, 'data': {...}} 或 {'status': -1, 'errMsg': '...'}
-            其中 data.page.content 包含所有页面的消息
+            响应数据字典
         """
         url = f"{self.host}/message/queryMessagePageByTopic.query"
         headers = {
             'Cookie': self.cookie,
             'content-type': 'application/json;charset=UTF-8',
         }
-        
-        # 添加 XSRF-TOKEN
+
         xsrf_token = self._get_xsrf_token()
         if xsrf_token:
             headers['X-XSRF-TOKEN'] = xsrf_token
 
-        # 修正时间戳为毫秒级 (13位)
         end = int(time.time() * 1000)
         start = end - (m * 60 * 1000)
 
-        # 先获取第一页，确定总页数
         payload = {
             "topic": topic,
             "begin": start,
@@ -139,53 +136,53 @@ class MQManager:
             "pageSize": page_size,
             "taskId": ""
         }
-        
-        response = requests.post(url, headers=headers, json=payload)
-        
-        if response.status_code != 200:
-            logger.error(f"查询失败: {response.status_code}, {response.text}")
-            return {'status': -1, 'errMsg': f'HTTP {response.status_code}'}
-        
-        first_page = response.json()
-        
-        # 如果第一页就失败，直接返回
-        if first_page.get('status') != 0:
-            return first_page
-        
-        # 获取分页信息
-        page_info = first_page.get('data', {}).get('page', {})
-        total_pages = page_info.get('totalPages', 1)
-        all_content = page_info.get('content', [])
-        
-        logger.info(f"共 {total_pages} 页，已获取第 1 页")
-        
-        # 如果只有1页，直接返回
-        if total_pages <= 1:
-            return first_page
-        
-        # 循环获取剩余页面
-        for page_num in range(2, total_pages + 1):
-            payload['pageNum'] = page_num
+
+        try:
             response = requests.post(url, headers=headers, json=payload)
-            
-            if response.status_code == 200:
-                page_data = response.json()
-                if page_data.get('status') == 0:
-                    content = page_data.get('data', {}).get('page', {}).get('content', [])
-                    all_content.extend(content)
-                    logger.info(f"已获取第 {page_num}/{total_pages} 页，本页 {len(content)} 条")
+
+            if response.status_code != 200:
+                logger.error(f"查询失败: {response.status_code}")
+                return {'status': -1, 'errMsg': f'HTTP {response.status_code}'}
+
+            first_page = response.json()
+
+            # 如果只取第一页，或第一页失败，直接返回
+            if not fetch_all or first_page.get('status') != 0:
+                return first_page
+
+            # ========== 以下只有 fetch_all=True 时才执行 ==========
+            # 获取分页信息
+            page_info = first_page.get('data', {}).get('page', {})
+            total_pages = page_info.get('totalPages', 1)
+            all_content = page_info.get('content', [])
+
+            logger.info(f"获取全量数据: 共 {total_pages} 页")
+
+            # 循环获取剩余页面
+            for page_num in range(2, total_pages + 1):
+                payload['pageNum'] = page_num
+                response = requests.post(url, headers=headers, json=payload)
+
+                if response.status_code == 200:
+                    page_data = response.json()
+                    if page_data.get('status') == 0:
+                        content = page_data.get('data', {}).get('page', {}).get('content', [])
+                        all_content.extend(content)
+                        if page_num % 10 == 0:
+                            logger.info(f"已获取 {page_num}/{total_pages} 页")
                 else:
-                    logger.warning(f"第 {page_num} 页查询失败: {page_data.get('errMsg')}")
-            else:
-                logger.warning(f"第 {page_num} 页 HTTP 错误: {response.status_code}")
-        
-        # 更新第一页的数据，将所有内容合并
-        first_page['data']['page']['content'] = all_content
-        first_page['data']['page']['totalElements'] = len(all_content)
-        
-        logger.info(f"✅ 共获取 {len(all_content)} 条消息")
-        
-        return first_page
+                    logger.warning(f"第 {page_num} 页获取失败")
+
+            # 合并数据
+            first_page['data']['page']['content'] = all_content
+            first_page['data']['page']['totalElements'] = len(all_content)
+
+            logger.info(f"✅ 共获取 {len(all_content)} 条消息")
+            return first_page
+
+        except Exception as e:
+            logger.exception(f"查询异常: {e}")
+            return {'status': -1, 'errMsg': str(e)}
 
     def query_topic_list(self) -> dict:
         """
@@ -199,14 +196,14 @@ class MQManager:
             'Cookie': self.cookie,
             'content-type': 'application/json;charset=UTF-8',
         }
-        
+
         # 添加 XSRF-TOKEN
         xsrf_token = self._get_xsrf_token()
         if xsrf_token:
             headers['X-XSRF-TOKEN'] = xsrf_token
-        
+
         response = requests.get(url, headers=headers)
-        
+
         if response.status_code == 200:
             return response.json()
         else:
@@ -225,15 +222,15 @@ class MQManager:
             'Cookie': self.cookie,
             'Content-Type': 'application/json;charset=UTF-8',
         }
-        
+
         # 添加 XSRF-TOKEN
         xsrf_token = self._get_xsrf_token()
         if xsrf_token:
             headers['X-XSRF-TOKEN'] = xsrf_token
-        
+
         try:
             response = requests.get(url, headers=headers)
-            
+
             if response.status_code == 200:
                 result = response.json()
                 if result.get('status') == 0:
@@ -259,7 +256,7 @@ class MQManager:
         headers = {
             'Cookie': self.cookie
         }
-        
+
         # 添加 XSRF-TOKEN
         xsrf_token = self._get_xsrf_token()
         if xsrf_token:
@@ -279,8 +276,8 @@ class MQManager:
             logger.exception(f"获取详情异常: {e}")
             return None
 
-    def create_topic(self, topic: str, cluster_name_list: list = None, broker_name_list: list = None, 
-                     message_type: str = "NORMAL", write_queue_nums: int = 8, 
+    def create_topic(self, topic: str, cluster_name_list: list = None, broker_name_list: list = None,
+                     message_type: str = "NORMAL", write_queue_nums: int = 8,
                      read_queue_nums: int = 8, perm: int = 7, auto_fetch_cluster: bool = True) -> dict:
         """
         创建 Topic
@@ -304,17 +301,17 @@ class MQManager:
             if cluster_result.get('status') == 0:
                 data = cluster_result.get('data', {})
                 cluster_info = data.get('clusterInfo', {})
-                
+
                 # 提取集群名称列表
                 if not cluster_name_list:
                     cluster_addr_table = cluster_info.get('clusterAddrTable', {})
                     cluster_name_list = list(cluster_addr_table.keys()) if cluster_addr_table else ["DefaultCluster"]
-                
+
                 # 提取 broker 名称列表
                 if not broker_name_list:
                     broker_addr_table = cluster_info.get('brokerAddrTable', {})
                     broker_name_list = list(broker_addr_table.keys()) if broker_addr_table else []
-                
+
                 logger.info(f"自动获取到集群: {cluster_name_list}, Broker: {broker_name_list}")
             else:
                 logger.warning("无法自动获取集群信息，使用默认值")
@@ -327,12 +324,12 @@ class MQManager:
             'Cookie': self.cookie,
             'Content-Type': 'application/json',
         }
-        
+
         # 添加 XSRF-TOKEN
         xsrf_token = self._get_xsrf_token()
         if xsrf_token:
             headers['X-XSRF-TOKEN'] = xsrf_token
-        
+
         payload = {
             "clusterNameList": cluster_name_list or ["DefaultCluster"],
             "brokerNameList": broker_name_list or [],
@@ -342,10 +339,10 @@ class MQManager:
             "readQueueNums": read_queue_nums,
             "perm": perm
         }
-        
+
         try:
             response = requests.post(url, headers=headers, json=payload)
-            
+
             if response.status_code == 200:
                 result = response.json()
                 if result.get('status') == 0:
@@ -375,19 +372,19 @@ class MQManager:
             'Cookie': self.cookie,
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         }
-        
+
         # 添加 XSRF-TOKEN
         xsrf_token = self._get_xsrf_token()
         if xsrf_token:
             headers['X-XSRF-TOKEN'] = xsrf_token
-        
+
         payload = {
             "topic": topic
         }
-        
+
         try:
             response = requests.post(url, headers=headers, data=payload)
-            
+
             if response.status_code == 200:
                 result = response.json()
                 if result.get('status') == 0:
@@ -402,7 +399,8 @@ class MQManager:
             logger.exception(f"❌ 删除 Topic 异常: {e}")
             return {'status': -1, 'errMsg': str(e)}
 
-    def send_message(self, topic: str, message_body: str, tag: str = "", key: str = "", trace_enabled: bool = False) -> dict:
+    def send_message(self, topic: str, message_body: str, tag: str = "", key: str = "",
+                     trace_enabled: bool = False) -> dict:
         """
         发送消息到指定 Topic
         
@@ -422,12 +420,12 @@ class MQManager:
             'Cookie': self.cookie,
             'Content-Type': 'application/json;charset=UTF-8',
         }
-        
+
         # 添加 XSRF-TOKEN
         xsrf_token = self._get_xsrf_token()
         if xsrf_token:
             headers['X-XSRF-TOKEN'] = xsrf_token
-        
+
         payload = {
             "topic": topic,
             "tag": tag,
@@ -435,10 +433,10 @@ class MQManager:
             "messageBody": message_body,
             "traceEnabled": trace_enabled
         }
-        
+
         try:
             response = requests.post(url, headers=headers, json=payload)
-            
+
             if response.status_code == 200:
                 result = response.json()
                 if result.get('status') == 0:
