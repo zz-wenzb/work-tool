@@ -172,7 +172,6 @@ ELK_SERVICE_MAPPING = {
 }
 
 # 服务名称反向映射（用于搜索）
-# 构建 简称 -> 全名 和 全名 -> 简称 的映射
 _SERVICE_ALIAS_MAP = {}
 _SERVICE_FULL_NAME_MAP = {}
 
@@ -197,6 +196,7 @@ DEFAULT_QUERY_CONFIG = {
 # Cookie 和认证配置
 # ============================================================
 
+# 初始 Cookie（从你提供的脚本中提取）
 COOKIES = {
     "sid": "Fe26.2**da33316f7e1ea4d79e21eec4e6a6f6f727052df41879cead2423b557da8f59df*SDKyquwRhqWhajhq6iSNWw*gxtQIsvOqS-GYBPwZoY9DtkIYon-1IUmxxxiqIScB0ugjzAUSZ9XenpCQ_DVIvOytcE_VgUdE-aec9LLo-7R8P_jPzQxsDXrcMVzeNxr88lOa7znulASm3RYeaMp2eou8ERNipBtZL2n-Zc2W2uz4DVOYzMMTWy-TtRs1zCgryUDOMlvlkavMfuBLJDn3FokGi3-tPlCUrc7SY7u010vnOxBOMqzHwlCM4c2qA4Qrs3QEyPHnbImuf8HD6iFY3U6**253439102b47e89232325b8d8d218c30b91a15a571a89664e3906f7aca7c9210*9gOsb7Ok5S48o9AfKx9VfDKzy_yD1V2VDQy2mvx57v8",
     "apt.uid": "AP-YFGMCGUNNIFB-2-1767687842794-95994121.0.2.6b933aba-006b-4c12-b4b5-a0ddc2adfcf4"
@@ -212,57 +212,152 @@ CREDENTIALS = {
     "password": "baoqi0411"
 }
 
-_session = None
 
+# ============================================================
+# 认证管理器（核心优化）
+# ============================================================
 
-def get_session():
-    """获取带认证的 session"""
-    global _session
-
-    if _session is None:
-        _session = requests.Session()
-        _session.cookies.update(COOKIES)
-
-    return _session
-
-
-def login_and_get_cookie():
-    """登录 Kibana 获取新的 Cookie"""
-    session = requests.Session()
-    url = f"{KIBANA_HOST}/kibana/internal/security/login"
-
-    payload = {
-        "providerType": "basic",
-        "providerName": "basic",
-        "currentURL": f"{KIBANA_HOST}/kibana/login?msg=LOGGED_OUT",
-        "params": CREDENTIALS
-    }
-
-    try:
-        response = session.post(url, json=payload, headers=HEADERS, timeout=10)
-        if response.status_code == 200 and session.cookies:
-            for key, value in session.cookies.items():
-                COOKIES[key] = value
-            logger.info("[ELK] 登录成功，已更新 Cookie")
-            return session.cookies
-        else:
-            logger.error(f"[ELK] 登录失败: {response.status_code}")
-            return None
-    except Exception as e:
-        logger.error(f"[ELK] 登录异常: {e}")
-        return None
-
-
-def refresh_session():
-    """刷新 session"""
-    global _session
+class KibanaAuthManager:
+    """
+    Kibana 认证管理器
+    - 单例模式
+    - 懒加载登录
+    - 自动检测 cookie 过期并重新登录
+    - 线程安全
+    """
+    _instance = None
     _session = None
-    result = login_and_get_cookie()
-    if result:
-        _session = requests.Session()
-        _session.cookies.update(COOKIES)
-        return True
-    return False
+    _is_logged_in = False
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+    def __init__(self):
+        if not hasattr(self, '_initialized'):
+            self._initialized = True
+            self._login_lock = False  # 简单的锁，防止并发登录
+
+    def _do_login(self) -> bool:
+        """
+        执行登录操作
+        """
+        logger.info("[ELK] 正在登录 Kibana...")
+
+        session = requests.Session()
+        url = f"{KIBANA_HOST}/kibana/internal/security/login"
+
+        payload = {
+            "providerType": "basic",
+            "providerName": "basic",
+            "currentURL": f"{KIBANA_HOST}/kibana/login?msg=LOGGED_OUT",
+            "params": CREDENTIALS
+        }
+
+        try:
+            response = session.post(url, json=payload, headers=HEADERS, timeout=10)
+
+            if response.status_code == 200 and session.cookies:
+                # 更新全局 COOKIES
+                for key, value in session.cookies.items():
+                    COOKIES[key] = value
+
+                # 更新 session
+                if self._session is None:
+                    self._session = requests.Session()
+                else:
+                    self._session.cookies.clear()
+                self._session.cookies.update(COOKIES)
+
+                self._is_logged_in = True
+                logger.info("[ELK] ✅ 登录成功，Cookie 已保存")
+                return True
+            else:
+                logger.error(f"[ELK] ❌ 登录失败: HTTP {response.status_code}")
+                return False
+
+        except Exception as e:
+            logger.error(f"[ELK] ❌ 登录异常: {e}")
+            return False
+
+    def ensure_login(self) -> bool:
+        """
+        确保已登录，如果未登录或 session 无效则登录
+        """
+        # 如果已经登录且 session 存在，直接返回
+        if self._is_logged_in and self._session is not None:
+            return True
+
+        # 防止并发登录
+        if self._login_lock:
+            # 等待一小段时间后重试
+            import time
+            time.sleep(1)
+            return self._is_logged_in
+
+        self._login_lock = True
+        try:
+            # 如果 session 不存在，创建新的
+            if self._session is None:
+                self._session = requests.Session()
+                # 先用已有的 cookie 初始化
+                self._session.cookies.update(COOKIES)
+
+            # 测试当前 cookie 是否有效
+            if self._test_cookie_valid():
+                self._is_logged_in = True
+                return True
+
+            # Cookie 无效，重新登录
+            logger.info("[ELK] Cookie 已过期，正在重新登录...")
+            result = self._do_login()
+            self._is_logged_in = result
+            return result
+
+        finally:
+            self._login_lock = False
+
+    def _test_cookie_valid(self) -> bool:
+        """
+        测试当前 cookie 是否有效
+        发送一个简单请求验证
+        """
+        if self._session is None:
+            return False
+
+        try:
+            # 尝试获取 Kibana 状态，验证 cookie 是否有效
+            url = f"{KIBANA_HOST}/kibana/api/status"
+            response = self._session.get(url, timeout=5)
+
+            # 如果是 200 或 302，说明 cookie 有效
+            # 如果是 401，说明 cookie 过期
+            return response.status_code != 401
+
+        except Exception as e:
+            logger.warning(f"[ELK] Cookie 验证异常: {e}")
+            return False
+
+    def get_session(self) -> requests.Session:
+        """
+        获取经过认证的 session
+        如果未登录，自动登录
+        """
+        self.ensure_login()
+        return self._session
+
+    def refresh_session(self) -> bool:
+        """
+        强制刷新 session（重新登录）
+        """
+        self._is_logged_in = False
+        self._session = None
+        return self.ensure_login()
+
+
+# 全局认证管理器实例
+_auth_manager = KibanaAuthManager()
 
 
 # ============================================================
@@ -279,19 +374,10 @@ def get_service_mapping(service: str) -> str:
 
 
 def search_services(keyword: str) -> List[Dict[str, str]]:
-    """
-    根据关键字搜索服务
-
-    Args:
-        keyword: 搜索关键字
-
-    Returns:
-        匹配的服务列表，包含别名和全名
-    """
+    """根据关键字搜索服务"""
     keyword = keyword.lower().strip()
     results = []
 
-    # 在别名和全名中搜索
     for alias, full_name in ELK_SERVICE_MAPPING.items():
         if keyword in alias.lower() or keyword in full_name.lower():
             results.append({
@@ -299,7 +385,6 @@ def search_services(keyword: str) -> List[Dict[str, str]]:
                 "full_name": full_name
             })
 
-    # 去重（按全名去重）
     seen = set()
     unique_results = []
     for r in results:
@@ -364,6 +449,55 @@ def get_env_from_param(env_param: Optional[str]) -> str:
     if env_param and env_param.lower() in ELK_ENVIRONMENTS:
         return env_param.lower()
     return "test"
+
+
+def _execute_search_with_retry(
+        url: str,
+        params: dict,
+        payload: dict,
+        max_retries: int = 2
+) -> requests.Response:
+    """
+    执行搜索请求，如果遇到 401 自动重新登录并重试
+    """
+    for attempt in range(max_retries):
+        try:
+            # 获取认证 session（会自动登录）
+            session = _auth_manager.get_session()
+
+            # 如果是重试，强制刷新 session
+            if attempt > 0:
+                logger.info(f"[ELK] 第 {attempt + 1} 次尝试，刷新认证...")
+                _auth_manager.refresh_session()
+                session = _auth_manager.get_session()
+
+            response = session.post(
+                url,
+                params=params,
+                headers=HEADERS,
+                json=payload,
+                timeout=30
+            )
+
+            # 如果是 401，触发重试
+            if response.status_code == 401:
+                logger.warning(f"[ELK] 认证失败 (401)，准备重试... (尝试 {attempt + 1}/{max_retries})")
+                # 标记 session 无效，下次会重新登录
+                _auth_manager._is_logged_in = False
+                continue
+
+            return response
+
+        except Exception as e:
+            logger.error(f"[ELK] 请求异常: {e}")
+            if attempt == max_retries - 1:
+                raise
+            continue
+
+    # 所有重试都失败，返回一个空的错误响应
+    response = requests.Response()
+    response.status_code = 500
+    return response
 
 
 # ============================================================
@@ -456,87 +590,62 @@ def search_logs(
     all_logs = []
     search_after = None
     total_fetched = 0
-    max_retries = 2
 
-    for attempt in range(max_retries):
-        try:
-            session = get_session()
+    try:
+        while total_fetched < max_results:
+            if search_after:
+                payload['search_after'] = search_after
 
-            if attempt > 0:
-                logger.info("[ELK] 尝试刷新认证...")
-                if not refresh_session():
-                    continue
-                session = get_session()
+            # 使用带重试的请求函数
+            response = _execute_search_with_retry(url, params, payload)
 
-            while total_fetched < max_results:
-                if search_after:
-                    payload['search_after'] = search_after
-
-                response = session.post(
-                    url,
-                    params=params,
-                    headers=HEADERS,
-                    json=payload,
-                    timeout=30
-                )
-
-                if response.status_code == 401:
-                    logger.warning("[ELK] 认证失败 (401)，准备重试...")
-                    break
-
-                if response.status_code != 200:
-                    logger.error(f"[ELK] 请求失败: {response.status_code}")
-                    break
-
-                data = response.json()
-                hits = data.get('hits', {}).get('hits', [])
-
-                if not hits:
-                    break
-
-                for hit in hits:
-                    if total_fetched >= max_results:
-                        break
-
-                    source = hit.get('_source', {})
-
-                    timestamp = source.get('@timestamp', '')
-                    if timestamp:
-                        timestamp = timestamp[:19].replace('T', ' ')
-
-                    message = source.get('message', '')
-
-                    labels = source.get('kubernetes', {}).get('labels', {})
-                    service_name = labels.get('app', labels.get('run', ''))
-
-                    log_entry = {
-                        "timestamp": timestamp,
-                        "service": service_name,
-                        "message": message,
-                        "level": source.get('level', 'INFO'),
-                        "host": source.get('host', ''),
-                    }
-                    all_logs.append(log_entry)
-                    total_fetched += 1
-
-                if len(hits) < page_size:
-                    break
-
-                last_hit = hits[-1]
-                sort_values = last_hit.get('sort', [])
-                if sort_values:
-                    search_after = sort_values
-                else:
-                    break
-
-            if response.status_code != 401:
+            if response.status_code != 200:
+                logger.error(f"[ELK] 请求失败: {response.status_code}")
                 break
 
-        except Exception as e:
-            logger.error(f"[ELK] 查询异常: {e}")
-            if attempt == max_retries - 1:
+            data = response.json()
+            hits = data.get('hits', {}).get('hits', [])
+
+            if not hits:
                 break
-            continue
+
+            for hit in hits:
+                if total_fetched >= max_results:
+                    break
+
+                source = hit.get('_source', {})
+
+                timestamp = source.get('@timestamp', '')
+                if timestamp:
+                    timestamp = timestamp[:19].replace('T', ' ')
+
+                message = source.get('message', '')
+
+                labels = source.get('kubernetes', {}).get('labels', {})
+                service_name = labels.get('app', labels.get('run', ''))
+
+                log_entry = {
+                    "timestamp": timestamp,
+                    "service": service_name,
+                    "message": message,
+                    "level": source.get('level', 'INFO'),
+                    "host": source.get('host', ''),
+                }
+                all_logs.append(log_entry)
+                total_fetched += 1
+
+            if len(hits) < page_size:
+                break
+
+            last_hit = hits[-1]
+            sort_values = last_hit.get('sort', [])
+            if sort_values:
+                search_after = sort_values
+            else:
+                break
+
+    except Exception as e:
+        logger.error(f"[ELK] 查询异常: {e}")
 
     logger.info(f"[ELK] 查询完成: 共获取 {len(all_logs)} 条日志")
     return all_logs
@@ -617,7 +726,7 @@ def parse_elk_command(content: str) -> Dict[str, Any]:
         'minutes': DEFAULT_QUERY_CONFIG['minutes'],
         'env': DEFAULT_QUERY_CONFIG['env'],
         'date': None,
-        'search_keyword': None,  # 用于 /elk-services
+        'search_keyword': None,
     }
 
     if cmd == '/elk':
@@ -657,7 +766,6 @@ def parse_elk_command(content: str) -> Dict[str, Any]:
         result['valid'] = True
 
     elif cmd == '/elk-services':
-        # /elk-services <keyword>
         if len(parts) < 2:
             result['error'] = f'用法: {cmd} <关键字>\n示例: /elk-services gateway'
             return result
@@ -685,20 +793,16 @@ ELK_HELP = """
   /elk <服务> <关键字> [分钟] [环境]
     查询最近 N 分钟的日志
     示例: /elk tms error 30 test
-    说明: 服务=tms, 关键字=error, 最近30分钟, 环境=test (默认)
 
   /elk-date <服务> <关键字> <日期> [环境]
     查询指定日期的日志
     示例: /elk-date order timeout 2026-07-24 test
-    说明: 服务=order, 关键字=timeout, 日期=2026-07-24, 环境=test (默认)
-    支持日期格式: YYYY-MM-DD, YYYY/MM/DD, YYYYMMDD
 
   /elk-services <关键字>
     搜索匹配的服务名称
     示例: /elk-services gateway
-    说明: 返回所有包含 "gateway" 的服务别名和全名
 
-  环境支持: prod, test, uat (默认 test)
+  环境: prod, test, uat (默认 test)
   服务列表: 使用 /elk-services 搜索查看
 """
 
