@@ -92,6 +92,28 @@
             </ul>
             <small style="color:#94a3b8;">环境: dev, test, uat (默认 test) · 环境参数放最后</small>
         </div>
+
+        <!-- ELK 日志查询 -->
+        <div id="elk-panel">
+            <h3>📊 ELK 日志查询</h3>
+            <ul>
+                <li>
+                    <code onclick="fillCmd('/elk-services ')">/elk-services &lt;关键字&gt;</code>
+                    <small>搜索服务名称</small>
+                </li>
+                <li>
+                    <code onclick="fillCmd('/elk ')">/elk &lt;服务&gt; &lt;关键字&gt; [分钟] [环境]</code>
+                    <small>最近 N 分钟日志</small>
+                </li>
+                <li>
+                    <code onclick="fillCmd('/elk-date ')">/elk-date &lt;服务&gt; &lt;关键字&gt; &lt;日期&gt;
+                        [环境]</code>
+                    <small>指定日期日志</small>
+                </li>
+            </ul>
+            <small style="color:#94a3b8;">环境: dev, test, uat, prod · 服务: tms, oas, lorry...</small>
+        </div>
+
     </div>
 </div>
 

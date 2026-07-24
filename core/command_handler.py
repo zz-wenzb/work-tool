@@ -10,6 +10,12 @@ from core.task_manager import task_manager
 from core.token_api import app_start, vue_nt_start, redis_migrate
 from core.archery_handler import ARCHERY_COMMANDS, handle_archery_query
 from core.mq_handler import MQ_COMMANDS, handle_mq_command
+from core.elk_handler import (
+    ELK_COMMANDS,
+    ELK_HELP,
+    handle_elk_command,
+    get_current_time
+)
 
 logger = logging.getLogger(__name__)
 
@@ -102,6 +108,9 @@ async def handle_command(websocket, content, nickname, connected_clients):
     if cmd in MQ_COMMANDS:
         return await handle_mq_command(websocket, content, cmd)
 
+    # ========== ELK 日志查询 ==========
+    if cmd in ELK_COMMANDS:
+        return await handle_elk_command(websocket, content, cmd)
     # ========== 帮助 ==========
     if cmd == "/help":
         await handle_help(websocket)
@@ -168,6 +177,10 @@ async def handle_help(websocket):
     help_text += "  • /mq-query <topic> <字段=值> [分钟] [env]\n"
     help_text += "    条件查询消息\n"
     help_text += "    示例: /mq-query test%nt_cargo shipperName=货老板 10\n"
+
+    # ELK 命令
+    help_text += "\n\n📊 ELK 日志查询命令:\n"
+    help_text += ELK_HELP
 
     # 动态部署命令
     if DYNAMIC_DEPLOY_COMMANDS:
