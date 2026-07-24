@@ -16,6 +16,12 @@ from core.elk_handler import (
     handle_elk_command,
     get_current_time
 )
+from core.password_handler import (
+    PASSWORD_COMMANDS,
+    PASSWORD_HELP_SHORT,
+    handle_password_command,
+    get_current_time
+)
 
 logger = logging.getLogger(__name__)
 
@@ -108,6 +114,10 @@ async def handle_command(websocket, content, nickname, connected_clients):
     if cmd in MQ_COMMANDS:
         return await handle_mq_command(websocket, content, cmd)
 
+    # ========== 密码查询 ==========
+    if cmd in PASSWORD_COMMANDS:
+        return await handle_password_command(websocket, content, cmd)
+
     # ========== ELK 日志查询 ==========
     if cmd in ELK_COMMANDS:
         return await handle_elk_command(websocket, content, cmd)
@@ -181,6 +191,10 @@ async def handle_help(websocket):
     # ELK 命令
     help_text += "\n\n📊 ELK 日志查询命令:\n"
     help_text += ELK_HELP
+
+    # 密码查询
+    help_text += "\n\n🔑 密码查询命令:\n"
+    help_text += PASSWORD_HELP_SHORT
 
     # 动态部署命令
     if DYNAMIC_DEPLOY_COMMANDS:

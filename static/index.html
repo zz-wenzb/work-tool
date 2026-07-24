@@ -114,6 +114,27 @@
             <small style="color:#94a3b8;">环境: dev, test, uat, prod · 服务: tms, oas, lorry...</small>
         </div>
 
+        <!-- 密码查询 -->
+        <div id="password-panel">
+            <h3>🔑 密码查询</h3>
+            <ul>
+                <li>
+                    <code onclick="fillCmd('/pwd ')">/pwd &lt;关键字&gt; [环境]</code>
+                    <small>查询服务密码</small>
+                </li>
+                <li>
+                    <code onclick="fillCmd('/pwd kibana')">/pwd kibana</code>
+                    <small>查询 Kibana</small>
+                </li>
+                <li>
+                    <code onclick="fillCmd('/pwd mysql Test')">/pwd mysql Test</code>
+                    <small>查询 Test MySQL</small>
+                </li>
+            </ul>
+            <small style="color:#94a3b8;">支持: DEV, Test, UAT, PROD, Global</small>
+        </div>
+
+
     </div>
 </div>
 
