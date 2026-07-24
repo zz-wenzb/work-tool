@@ -22,6 +22,12 @@ from core.password_handler import (
     handle_password_command,
     get_current_time
 )
+from core.weekly_report_handler import (
+    WEEKLY_REPORT_COMMANDS,
+    WEEKLY_REPORT_HELP_SHORT,
+    handle_weekly_report_command,
+    get_current_time
+)
 
 logger = logging.getLogger(__name__)
 
@@ -121,6 +127,10 @@ async def handle_command(websocket, content, nickname, connected_clients):
     # ========== ELK 日志查询 ==========
     if cmd in ELK_COMMANDS:
         return await handle_elk_command(websocket, content, cmd)
+    # ========== 周报生成 ==========
+    if cmd in WEEKLY_REPORT_COMMANDS:
+        return await handle_weekly_report_command(websocket, content, cmd)
+
     # ========== 帮助 ==========
     if cmd == "/help":
         await handle_help(websocket)
@@ -196,6 +206,10 @@ async def handle_help(websocket):
     help_text += "\n\n🔑 密码查询命令:\n"
     help_text += PASSWORD_HELP_SHORT
 
+    # 周报生成
+    help_text += "\n\n📊 周报生成命令:\n"
+    help_text += WEEKLY_REPORT_HELP_SHORT
+    
     # 动态部署命令
     if DYNAMIC_DEPLOY_COMMANDS:
         help_text += f"\n\n🌐 动态项目部署 (共{len(DYNAMIC_DEPLOY_COMMANDS)}个):"

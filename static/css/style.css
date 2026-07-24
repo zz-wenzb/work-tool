@@ -831,3 +831,85 @@ button:hover {
     text-align: center;
     flex-shrink: 0;
 }
+
+/* ---------- 周报面板 ---------- */
+#weekly-report-panel {
+    background: #ffffff;
+    border: 1px solid #e9edf4;
+    border-radius: 12px;
+    padding: 8px 10px;
+    color: #1e293b;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    flex: 0.8;
+    min-height: 0;
+}
+
+#weekly-report-panel h3 {
+    margin: 0 0 3px 0;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid #eef2f6;
+    padding-bottom: 3px;
+    flex-shrink: 0;
+    letter-spacing: 0.3px;
+    color: #059669;
+    border-bottom-color: #a7f3d0;
+}
+
+#weekly-report-panel ul {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#weekly-report-panel li {
+    margin-bottom: 1px;
+    line-height: 1.4;
+    padding: 1px 4px;
+    border-radius: 3px;
+    transition: background 0.15s;
+    cursor: default;
+    word-break: break-word;
+    font-size: 11px;
+}
+
+#weekly-report-panel li:hover {
+    background: #f1f5f9;
+}
+
+#weekly-report-panel code {
+    display: inline-block;
+    padding: 0px 5px;
+    border-radius: 10px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-weight: 600;
+    font-size: 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.15s;
+    border: 1px solid transparent;
+    letter-spacing: 0.2px;
+    color: #059669;
+    background: #d1fae5;
+}
+
+#weekly-report-panel code:hover {
+    filter: brightness(0.92);
+    border-color: #b9c7e0;
+}
+
+#weekly-report-panel small {
+    color: #64748b;
+    font-size: 9px;
+    display: block;
+    margin-top: 2px;
+    text-align: center;
+    flex-shrink: 0;
+}
