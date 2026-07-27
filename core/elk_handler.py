@@ -2,11 +2,15 @@
 """
 ELK 日志查询处理模块
 基于 Kibana API 实现日志查询
+支持 Cookie 持久化缓存，自动检测过期并重新登录
 """
 
 import json
 import logging
 import requests
+import pickle
+import os
+import time
 from datetime import datetime, timedelta
 from typing import Dict, Any, Optional, List
 
@@ -17,6 +21,10 @@ logger = logging.getLogger(__name__)
 # ============================================================
 
 KIBANA_HOST = "http://devops.zhongbaozhiyun.com"
+
+# Cookie 缓存文件
+CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "cache")
+COOKIE_FILE = os.path.join(CACHE_DIR, "kibana_session.pkl")
 
 # 支持的环境列表
 ELK_ENVIRONMENTS = ["dev", "test", "uat", "prod"]
@@ -196,12 +204,6 @@ DEFAULT_QUERY_CONFIG = {
 # Cookie 和认证配置
 # ============================================================
 
-# 初始 Cookie（从你提供的脚本中提取）
-COOKIES = {
-    "sid": "Fe26.2**da33316f7e1ea4d79e21eec4e6a6f6f727052df41879cead2423b557da8f59df*SDKyquwRhqWhajhq6iSNWw*gxtQIsvOqS-GYBPwZoY9DtkIYon-1IUmxxxiqIScB0ugjzAUSZ9XenpCQ_DVIvOytcE_VgUdE-aec9LLo-7R8P_jPzQxsDXrcMVzeNxr88lOa7znulASm3RYeaMp2eou8ERNipBtZL2n-Zc2W2uz4DVOYzMMTWy-TtRs1zCgryUDOMlvlkavMfuBLJDn3FokGi3-tPlCUrc7SY7u010vnOxBOMqzHwlCM4c2qA4Qrs3QEyPHnbImuf8HD6iFY3U6**253439102b47e89232325b8d8d218c30b91a15a571a89664e3906f7aca7c9210*9gOsb7Ok5S48o9AfKx9VfDKzy_yD1V2VDQy2mvx57v8",
-    "apt.uid": "AP-YFGMCGUNNIFB-2-1767687842794-95994121.0.2.6b933aba-006b-4c12-b4b5-a0ddc2adfcf4"
-}
-
 HEADERS = {
     "kbn-xsrf": "kibana",
     "Content-Type": "application/json"
@@ -214,38 +216,64 @@ CREDENTIALS = {
 
 
 # ============================================================
-# 认证管理器（核心优化）
+# Kibana 认证管理器
 # ============================================================
 
 class KibanaAuthManager:
     """
     Kibana 认证管理器
     - 单例模式
-    - 懒加载登录
-    - 自动检测 cookie 过期并重新登录
-    - 线程安全
+    - Cookie 持久化到本地文件
+    - 自动检测过期并重新登录
     """
     _instance = None
-    _session = None
-    _is_logged_in = False
+    _session: Optional[requests.Session] = None
+    _last_used: float = 0
+    _is_logged_in: bool = False
+    _logging_in: bool = False
 
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
+            cls._instance._initialized = False
         return cls._instance
 
     def __init__(self):
-        if not hasattr(self, '_initialized'):
+        if not hasattr(self, '_initialized') or not self._initialized:
             self._initialized = True
-            self._login_lock = False  # 简单的锁，防止并发登录
+            self._init_session()
+
+    def _init_session(self):
+        """初始化或加载缓存的会话"""
+        self._session = requests.Session()
+        self._session.headers.update(HEADERS)
+
+        os.makedirs(CACHE_DIR, exist_ok=True)
+
+        if os.path.exists(COOKIE_FILE):
+            try:
+                with open(COOKIE_FILE, "rb") as f:
+                    cached_data = pickle.load(f)
+                    if cached_data.get('cookies') and cached_data.get('timestamp', 0) > time.time() - 1800:
+                        self._session.cookies.update(cached_data['cookies'])
+                        self._last_used = time.time()
+                        self._is_logged_in = True
+                        logger.info("✅ 从缓存加载 Kibana 会话成功")
+                        return
+                    else:
+                        logger.info("⏰ 缓存的 Kibana Cookie 已过期，将重新登录")
+                        os.remove(COOKIE_FILE)
+            except Exception as e:
+                logger.warning(f"加载缓存会话失败: {e}")
+                if os.path.exists(COOKIE_FILE):
+                    os.remove(COOKIE_FILE)
+
+        self._do_login()
 
     def _do_login(self) -> bool:
-        """
-        执行登录操作
-        """
-        logger.info("[ELK] 正在登录 Kibana...")
+        """执行登录操作并保存 Cookie"""
+        logger.info("🔐 正在登录 Kibana...")
 
-        session = requests.Session()
         url = f"{KIBANA_HOST}/kibana/internal/security/login"
 
         payload = {
@@ -256,103 +284,92 @@ class KibanaAuthManager:
         }
 
         try:
-            response = session.post(url, json=payload, headers=HEADERS, timeout=10)
+            response = self._session.post(url, json=payload, timeout=10)
 
-            if response.status_code == 200 and session.cookies:
-                # 更新全局 COOKIES
-                for key, value in session.cookies.items():
-                    COOKIES[key] = value
-
-                # 更新 session
-                if self._session is None:
-                    self._session = requests.Session()
-                else:
-                    self._session.cookies.clear()
-                self._session.cookies.update(COOKIES)
-
+            if response.status_code == 200 and self._session.cookies:
+                self._last_used = time.time()
                 self._is_logged_in = True
-                logger.info("[ELK] ✅ 登录成功，Cookie 已保存")
+
+                try:
+                    os.makedirs(CACHE_DIR, exist_ok=True)
+                    cache_data = {
+                        'cookies': dict(self._session.cookies),
+                        'timestamp': time.time()
+                    }
+                    with open(COOKIE_FILE, "wb") as f:
+                        pickle.dump(cache_data, f)
+                    logger.info("✅ Kibana 登录成功，Cookie 已保存到缓存")
+                except Exception as e:
+                    logger.warning(f"保存 Cookie 缓存失败: {e}")
+
                 return True
             else:
-                logger.error(f"[ELK] ❌ 登录失败: HTTP {response.status_code}")
+                logger.error(f"❌ Kibana 登录失败: HTTP {response.status_code}")
+                self._is_logged_in = False
                 return False
 
         except Exception as e:
-            logger.error(f"[ELK] ❌ 登录异常: {e}")
+            logger.error(f"❌ Kibana 登录异常: {e}")
+            self._is_logged_in = False
             return False
 
-    def ensure_login(self) -> bool:
-        """
-        确保已登录，如果未登录或 session 无效则登录
-        """
-        # 如果已经登录且 session 存在，直接返回
-        if self._is_logged_in and self._session is not None:
-            return True
-
-        # 防止并发登录
-        if self._login_lock:
-            # 等待一小段时间后重试
-            import time
-            time.sleep(1)
-            return self._is_logged_in
-
-        self._login_lock = True
-        try:
-            # 如果 session 不存在，创建新的
-            if self._session is None:
-                self._session = requests.Session()
-                # 先用已有的 cookie 初始化
-                self._session.cookies.update(COOKIES)
-
-            # 测试当前 cookie 是否有效
-            if self._test_cookie_valid():
-                self._is_logged_in = True
-                return True
-
-            # Cookie 无效，重新登录
-            logger.info("[ELK] Cookie 已过期，正在重新登录...")
-            result = self._do_login()
-            self._is_logged_in = result
-            return result
-
-        finally:
-            self._login_lock = False
-
     def _test_cookie_valid(self) -> bool:
-        """
-        测试当前 cookie 是否有效
-        发送一个简单请求验证
-        """
+        """测试当前 cookie 是否有效"""
         if self._session is None:
             return False
 
         try:
-            # 尝试获取 Kibana 状态，验证 cookie 是否有效
             url = f"{KIBANA_HOST}/kibana/api/status"
             response = self._session.get(url, timeout=5)
-
-            # 如果是 200 或 302，说明 cookie 有效
-            # 如果是 401，说明 cookie 过期
             return response.status_code != 401
-
         except Exception as e:
-            logger.warning(f"[ELK] Cookie 验证异常: {e}")
+            logger.warning(f"Cookie 验证异常: {e}")
             return False
 
+    def ensure_login(self) -> bool:
+        """确保已登录"""
+        if self._is_logged_in and self._session is not None:
+            if time.time() - self._last_used > 1500:
+                logger.info("⏰ 会话可能已过期，重新验证...")
+                self._is_logged_in = False
+
+            if self._is_logged_in:
+                if self._test_cookie_valid():
+                    self._last_used = time.time()
+                    return True
+                else:
+                    logger.warning("⚠️ Cookie 已过期，需要重新登录")
+                    self._is_logged_in = False
+
+        # 防止并发登录
+        if self._logging_in:
+            time.sleep(1)
+            return self._is_logged_in
+
+        self._logging_in = True
+        try:
+            if self._session is None:
+                self._session = requests.Session()
+                self._session.headers.update(HEADERS)
+
+            result = self._do_login()
+            self._is_logged_in = result
+            return result
+        finally:
+            self._logging_in = False
+
     def get_session(self) -> requests.Session:
-        """
-        获取经过认证的 session
-        如果未登录，自动登录
-        """
+        """获取经过认证的 session"""
         self.ensure_login()
         return self._session
 
     def refresh_session(self) -> bool:
-        """
-        强制刷新 session（重新登录）
-        """
+        """强制刷新 session"""
         self._is_logged_in = False
-        self._session = None
+        if os.path.exists(COOKIE_FILE):
+            os.remove(COOKIE_FILE)
+        self._session = requests.Session()
+        self._session.headers.update(HEADERS)
         return self.ensure_login()
 
 
@@ -403,6 +420,27 @@ def build_index_path(env: str, date_list: List[str]) -> str:
     all_index_patterns = []
 
     for p in prefixes:
+        for date_str in date_list:
+            all_index_patterns.append(f"{p}-*-{date_str}-*")
+
+    index_pattern = ",".join(all_index_patterns)
+    return f"/{index_pattern}/_search"
+
+
+def build_all_env_index_path(date_list: List[str]) -> str:
+    """
+    构建所有环境的索引路径（用于 traceId 查询）
+    包含所有环境的所有索引前缀
+    """
+    all_prefixes = []
+    for prefixes in ENV_INDEX_PREFIX.values():
+        all_prefixes.extend(prefixes)
+
+    # 去重
+    all_prefixes = list(set(all_prefixes))
+
+    all_index_patterns = []
+    for p in all_prefixes:
         for date_str in date_list:
             all_index_patterns.append(f"{p}-*-{date_str}-*")
 
@@ -462,10 +500,8 @@ def _execute_search_with_retry(
     """
     for attempt in range(max_retries):
         try:
-            # 获取认证 session（会自动登录）
             session = _auth_manager.get_session()
 
-            # 如果是重试，强制刷新 session
             if attempt > 0:
                 logger.info(f"[ELK] 第 {attempt + 1} 次尝试，刷新认证...")
                 _auth_manager.refresh_session()
@@ -479,10 +515,8 @@ def _execute_search_with_retry(
                 timeout=30
             )
 
-            # 如果是 401，触发重试
             if response.status_code == 401:
                 logger.warning(f"[ELK] 认证失败 (401)，准备重试... (尝试 {attempt + 1}/{max_retries})")
-                # 标记 session 无效，下次会重新登录
                 _auth_manager._is_logged_in = False
                 continue
 
@@ -494,7 +528,6 @@ def _execute_search_with_retry(
                 raise
             continue
 
-    # 所有重试都失败，返回一个空的错误响应
     response = requests.Response()
     response.status_code = 500
     return response
@@ -513,11 +546,19 @@ def search_logs(
         start_time: Optional[str] = None,
         end_time: Optional[str] = None,
         query_date: Optional[str] = None,
-        max_results: int = 500
+        max_results: int = 500,
+        all_env: bool = False
 ) -> List[Dict]:
-    """搜索日志"""
+    """
+    搜索日志
+
+    Args:
+        all_env: 是否查询所有环境（用于 traceId 查询）
+    """
     env = get_env_from_param(env)
-    app_name = get_service_mapping(service)
+    app_name = None
+    if not all_env:
+        app_name = get_service_mapping(service)
 
     date_list = []
 
@@ -557,14 +598,20 @@ def search_logs(
     if not date_list:
         date_list = [datetime.utcnow().strftime("%Y.%m.%d")]
 
-    es_path = build_index_path(env, date_list)
-    logger.info(f"[ELK] 索引: {es_path}")
+    # 构建索引路径
+    if all_env:
+        es_path = build_all_env_index_path(date_list)
+        logger.info(f"[ELK] 索引 (所有环境): {es_path}")
+    else:
+        es_path = build_index_path(env, date_list)
+        logger.info(f"[ELK] 索引: {es_path}")
 
     filters = [
         {"range": {"@timestamp": {"gte": gte, "lte": lte}}}
     ]
 
-    if app_name:
+    # 只有非 all_env 模式才添加服务过滤
+    if app_name and not all_env:
         filters.append({"term": {"kubernetes.labels.app.keyword": app_name}})
 
     if keyword:
@@ -596,7 +643,6 @@ def search_logs(
             if search_after:
                 payload['search_after'] = search_after
 
-            # 使用带重试的请求函数
             response = _execute_search_with_retry(url, params, payload)
 
             if response.status_code != 200:
@@ -624,12 +670,26 @@ def search_logs(
                 labels = source.get('kubernetes', {}).get('labels', {})
                 service_name = labels.get('app', labels.get('run', ''))
 
+                # 提取环境信息（从索引名中获取）
+                index_name = hit.get('_index', '')
+                env_from_index = "unknown"
+                if "lorry-prod" in index_name or "wh-prod" in index_name:
+                    env_from_index = "PROD"
+                elif "lorry-test" in index_name or "baoqi-test" in index_name:
+                    env_from_index = "TEST"
+                elif "lorry-uat" in index_name or "baoqi-uat" in index_name:
+                    env_from_index = "UAT"
+                elif "lorry-dev" in index_name or "baoqi-dev" in index_name:
+                    env_from_index = "DEV"
+
                 log_entry = {
                     "timestamp": timestamp,
                     "service": service_name,
                     "message": message,
                     "level": source.get('level', 'INFO'),
                     "host": source.get('host', ''),
+                    "env": env_from_index,
+                    "index": index_name,
                 }
                 all_logs.append(log_entry)
                 total_fetched += 1
@@ -655,7 +715,7 @@ def search_logs(
 # 格式化输出
 # ============================================================
 
-def format_logs_output(logs: List[Dict], limit: int = 50, keyword: str = "") -> str:
+def format_logs_output(logs: List[Dict], limit: int = 50, keyword: str = "", show_env: bool = False) -> str:
     if not logs:
         return "📭 未找到匹配的日志"
 
@@ -666,11 +726,20 @@ def format_logs_output(logs: List[Dict], limit: int = 50, keyword: str = "") -> 
     output_lines.append(f"📋 共找到 {total} 条日志，显示前 {show_count} 条：")
     output_lines.append("=" * 70)
 
+    env_icons = {
+        "PROD": "🔴",
+        "TEST": "🟢",
+        "UAT": "🟡",
+        "DEV": "🔵",
+        "unknown": "⚪"
+    }
+
     for i, log in enumerate(logs[:show_count]):
         timestamp = log.get("timestamp", "")
         level = log.get("level", "INFO")
         service = log.get("service", "")
         message = log.get("message", "")
+        env = log.get("env", "unknown")
 
         if keyword and keyword in message:
             message = message.replace(keyword, f"**{keyword}**")
@@ -686,7 +755,12 @@ def format_logs_output(logs: List[Dict], limit: int = 50, keyword: str = "") -> 
         elif "DEBUG" in level.upper():
             level_icon = "🔍"
 
-        output_lines.append(f"[{timestamp}] [{level_icon}{level}] [{service}] {message}")
+        env_icon = env_icons.get(env, "⚪")
+
+        if show_env:
+            output_lines.append(f"[{timestamp}] [{env_icon}{env}] [{level_icon}{level}] [{service}] {message}")
+        else:
+            output_lines.append(f"[{timestamp}] [{level_icon}{level}] [{service}] {message}")
 
     return "\n".join(output_lines)
 
@@ -727,6 +801,7 @@ def parse_elk_command(content: str) -> Dict[str, Any]:
         'env': DEFAULT_QUERY_CONFIG['env'],
         'date': None,
         'search_keyword': None,
+        'trace_id': None,
     }
 
     if cmd == '/elk':
@@ -773,6 +848,31 @@ def parse_elk_command(content: str) -> Dict[str, Any]:
         result['search_keyword'] = parts[1]
         result['valid'] = True
 
+    elif cmd == '/elk-trace':
+        # /elk-trace <traceId> [minutes] [env]
+        # 默认：30分钟，查所有环境
+        if len(parts) < 2:
+            result[
+                'error'] = f'用法: {cmd} <traceId> [分钟] [环境]\n示例: /elk-trace abc123\n示例: /elk-trace abc123 60 test'
+            return result
+
+        result['trace_id'] = parts[1]
+        result['keyword'] = parts[1]
+
+        idx = 2
+        # 解析分钟数（可选）
+        if idx < len(parts) and parts[idx].isdigit():
+            result['minutes'] = int(parts[idx])
+            idx += 1
+
+        # 解析环境（可选），默认 None 表示查所有环境
+        if idx < len(parts) and parts[idx].lower() in ELK_ENVIRONMENTS:
+            result['env'] = parts[idx].lower()
+        else:
+            result['env'] = None  # None 表示查询所有环境
+
+        result['valid'] = True
+
     else:
         result['error'] = f'未知命令: {cmd}'
 
@@ -787,6 +887,7 @@ ELK_COMMANDS = [
     "/elk",
     "/elk-date",
     "/elk-services",
+    "/elk-trace",
 ]
 
 ELK_HELP = """
@@ -801,6 +902,13 @@ ELK_HELP = """
   /elk-services <关键字>
     搜索匹配的服务名称
     示例: /elk-services gateway
+
+  /elk-trace <traceId> [分钟] [环境]
+    根据 traceId 查询日志（默认查询所有环境，30分钟）
+    示例: /elk-trace abc123               # 查所有环境，最近30分钟
+    示例: /elk-trace abc123 60            # 查所有环境，最近60分钟
+    示例: /elk-trace abc123 60 test       # 只查 test 环境，最近60分钟
+    示例: /elk-trace abc123 test          # 只查 test 环境，最近30分钟
 
   环境: prod, test, uat (默认 test)
   服务列表: 使用 /elk-services 搜索查看
@@ -828,6 +936,8 @@ async def handle_elk_command(websocket, content: str, cmd: str) -> bool:
         await handle_elk_date_search(websocket, params)
     elif cmd_type == '/elk-services':
         await handle_elk_services(websocket, params)
+    elif cmd_type == '/elk-trace':
+        await handle_elk_trace(websocket, params)
     else:
         await websocket.send(json.dumps({
             "type": "error",
@@ -977,5 +1087,85 @@ async def handle_elk_services(websocket, params: Dict):
         await websocket.send(json.dumps({
             "type": "error",
             "content": f"❌ 搜索失败: {str(e)}",
+            "time": get_current_time()
+        }))
+
+
+async def handle_elk_trace(websocket, params: Dict):
+    """处理 /elk-trace 命令 - 根据 traceId 查询日志（默认所有环境，30分钟）"""
+    trace_id = params['trace_id']
+    minutes = params['minutes']
+    env = params.get('env')
+
+    # 判断是否查询所有环境
+    all_env = env is None
+
+    try:
+        if all_env:
+            await websocket.send(json.dumps({
+                "type": "system",
+                "content": f"⏳ 正在查询 traceId: '{trace_id}'，最近{minutes}分钟，所有环境 ...",
+                "time": get_current_time()
+            }))
+        else:
+            await websocket.send(json.dumps({
+                "type": "system",
+                "content": f"⏳ 正在查询 traceId: '{trace_id}'，最近{minutes}分钟，环境={env} ...",
+                "time": get_current_time()
+            }))
+
+        # 执行查询
+        logs = search_logs(
+            service="",
+            keyword=trace_id,
+            minutes=minutes,
+            env=env or "test",
+            size=100,
+            max_results=1000,
+            all_env=all_env
+        )
+
+        # 按环境分组统计
+        env_stats = {}
+        for log in logs:
+            env_name = log.get('env', 'unknown')
+            env_stats[env_name] = env_stats.get(env_name, 0) + 1
+
+        stats_str = " | ".join([f"{k}: {v}条" for k, v in env_stats.items()]) if env_stats else "无数据"
+
+        output = format_logs_output(logs, limit=50, keyword=trace_id, show_env=True)
+
+        if all_env:
+            summary = f"🔍 traceId: '{trace_id}'，最近{minutes}分钟，所有环境\n"
+        else:
+            summary = f"🔍 traceId: '{trace_id}'，最近{minutes}分钟，环境={env}\n"
+        summary += f"📊 分布: {stats_str}\n"
+
+        if len(logs) > 50:
+            await websocket.send(json.dumps({
+                "type": "system",
+                "content": summary + f"共找到 {len(logs)} 条日志，分批显示...",
+                "time": get_current_time()
+            }))
+            for i in range(0, len(logs), 30):
+                batch = logs[i:i + 30]
+                batch_output = format_logs_output(batch, limit=30, keyword=trace_id, show_env=True)
+                await websocket.send(json.dumps({
+                    "type": "system",
+                    "content": batch_output,
+                    "time": get_current_time()
+                }))
+        else:
+            await websocket.send(json.dumps({
+                "type": "system",
+                "content": summary + output,
+                "time": get_current_time()
+            }))
+
+    except Exception as e:
+        logger.error(f"[ELK] traceId 查询失败: {e}")
+        await websocket.send(json.dumps({
+            "type": "error",
+            "content": f"❌ traceId 查询失败: {str(e)}",
             "time": get_current_time()
         }))
