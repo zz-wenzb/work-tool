@@ -14,9 +14,9 @@ logger = logging.getLogger(__name__)
 # ============================================================
 XXL_ENV_CONFIG = {
     'dev': {
-        'base_url': 'http://xxl-job-dev.xxx.com:9012/xxl-job-admin',
-        'username': 'zhongbaojob',
-        'password': 'zhongbaoJob0411'
+        'base_url': 'http://192.168.1.22:9561',
+        'username': 'admin',
+        'password': '123456'
     },
     'test': {
         'base_url': 'http://xxl-job-test.zhongbaozhiyun.com:9012/xxl-job-admin',
@@ -24,12 +24,12 @@ XXL_ENV_CONFIG = {
         'password': 'zhongbaoJob0411'
     },
     'uat': {
-        'base_url': 'http://xxl-job-uat.xxx.com:9012/xxl-job-admin',
+        'base_url': 'http://xxl-job-uat.zhongbaozhiyun.com:9013/xxl-job-admin',
         'username': 'zhongbaojob',
         'password': 'zhongbaoJob0411'
     },
     'prod': {
-        'base_url': 'http://xxl-job-prod.xxx.com:9012/xxl-job-admin',
+        'base_url': 'http://prod-xxl-job-lorry.zhongbaozhiyun.com',
         'username': 'zhongbaojob',
         'password': 'zhongbaoJob0411'
     }
