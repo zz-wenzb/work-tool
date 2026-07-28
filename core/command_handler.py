@@ -28,6 +28,7 @@ from core.weekly_report_handler import (
     handle_weekly_report_command,
     get_current_time
 )
+from core.xxl_job_handler import XXL_COMMANDS, XXL_HELP, handle_xxl_command
 
 logger = logging.getLogger(__name__)
 
@@ -131,6 +132,10 @@ async def handle_command(websocket, content, nickname, connected_clients):
     if cmd in WEEKLY_REPORT_COMMANDS:
         return await handle_weekly_report_command(websocket, content, cmd)
 
+    # ========== XXL-JOB 管理 ==========
+    if cmd in XXL_COMMANDS:
+        return await handle_xxl_command(websocket, content, cmd)
+
     # ========== 帮助 ==========
     if cmd == "/help":
         await handle_help(websocket)
@@ -210,6 +215,10 @@ async def handle_help(websocket):
     help_text += "\n\n📊 周报生成命令:\n"
     help_text += WEEKLY_REPORT_HELP_SHORT
     
+    # XXL-JOB 命令
+    help_text += "\n\n⚙️ XXL-JOB 管理命令:\n"
+    help_text += XXL_HELP
+
     # 动态部署命令
     if DYNAMIC_DEPLOY_COMMANDS:
         help_text += f"\n\n🌐 动态项目部署 (共{len(DYNAMIC_DEPLOY_COMMANDS)}个):"

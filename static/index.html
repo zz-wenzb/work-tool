@@ -41,105 +41,81 @@
 
     <!-- 右侧：功能面板组 -->
     <div class="right-side-panel">
-        <!-- Archery 查询 - 简化命令 -->
-        <div id="archery-panel">
-            <h3>🔍 Archery 查询</h3>
-            <ul id="archery-instance-list">
-                <li class="loading-text">加载实例列表中...</li>
-            </ul>
-        </div>
-
-        <!-- Token 获取 -->
-        <div id="token-panel">
-            <h3>🔑 获取 Token</h3>
-            <ul>
-                <li><code onclick="fillCmd('/token-app')">/token-app</code> <small>App Token</small></li>
-                <li><code onclick="fillCmd('/token-vue-nt')">/token-vue-nt</code> <small>Vue Token</small></li>
-            </ul>
-        </div>
-
-        <!-- 通用命令 -->
+        <!-- ========== 通用命令面板 ========== -->
         <div id="command-panel">
             <h3>📘 通用命令</h3>
             <ul>
                 <li><code onclick="fillCmd('/users')">/users</code> <small>查看在线用户</small></li>
                 <li><code onclick="fillCmd('/help')">/help</code> <small>帮助信息</small></li>
-                <li><code onclick="fillCmd('/report')">/report [天数]</code> <small>生成周报(默认7天)</small></li>
+                <li><code onclick="fillCmd('/report')">/report [天数]</code> <small>生成周报</small></li>
+                <li><code onclick="fillCmd('/token-app')">/token-app</code> <small>App Token</small></li>
+                <li><code onclick="fillCmd('/token-vue-nt')">/token-vue-nt</code> <small>Vue Token</small></li>
+                <li><code onclick="fillCmd('/pwd ')">/pwd &lt;关键字&gt; [环境]</code> <small>查询密码</small></li>
             </ul>
         </div>
 
-        <!-- index.html 中 MQ 面板部分，修改 /mq-list 的描述 -->
+        <!-- 中间件面板 -->
+        <div id="middleware-panel">
+            <h3>🔧 中间件</h3>
+            <div id="middleware-scroll">  <!-- 🆕 滚动容器 -->
 
-        <!-- MQ 面板 -->
-        <div id="mq-panel">
-            <h3>📨 MQ Topic 管理</h3>
-            <ul>
-                <li><code onclick="fillCmd('/mq-list')">/mq-list [关键词] [env]</code> <small>列出 Topic
-                    (支持模糊搜索)</small></li>
-                <li><code onclick="fillCmd('/mq-exists')">/mq-exists &lt;topic&gt; [env]</code> <small>检查 Topic
-                    是否存在</small></li>
-                <li><code onclick="fillCmd('/mq-last')">/mq-last &lt;topic&gt; [env]</code>
-                    <small>最新一条完整消息</small></li>
-                <li><code onclick="fillCmd('/mq-create')">/mq-create &lt;topic&gt; [env]</code> <small>创建
-                    Topic</small></li>
-                <li><code onclick="fillCmd('/mq-delete')">/mq-delete &lt;topic&gt; [env]</code> <small>删除 Topic
-                    (需确认)</small></li>
-                <li><code onclick="fillCmd('/mq-send')">/mq-send &lt;topic&gt; &lt;json&gt; [env]</code> <small>发送
-                    JSON 消息</small></li>
-                <li><code onclick="fillCmd('/mq-recent')">/mq-recent &lt;topic&gt; [分钟] [env]</code> <small>最近 N
-                    分钟消息</small></li>
-                <li><code onclick="fillCmd('/mq-query')">/mq-query &lt;topic&gt; &lt;字段=值&gt; [分钟] [env]</code>
-                    <small>条件查询消息</small></li>
-            </ul>
-            <small style="color:#94a3b8;">环境: dev, test, uat (默认 test) · 环境参数放最后</small>
+                <!-- Archery -->
+                <div class="mw-section">
+                    <div class="mw-title">🗄️ Archery</div>
+                    <ul id="archery-instance-list">
+                        <li class="loading-text">加载中...</li>
+                    </ul>
+                </div>
+
+                <!-- ELK -->
+                <div class="mw-section">
+                    <div class="mw-title">📊 ELK</div>
+                    <ul>
+                        <li><code onclick="fillCmd('/elk-services ')">/elk-services &lt;关键词&gt;</code>
+                            <small>搜索服务</small></li>
+                        <li><code onclick="fillCmd('/elk ')">/elk &lt;服务&gt; &lt;关键词&gt; [分钟] [环境]</code>
+                            <small>最近N分钟日志</small></li>
+                        <li><code onclick="fillCmd('/elk-trace ')">/elk-trace &lt;traceId&gt; [分钟] [环境]</code>
+                            <small>按traceId查询</small></li>
+                    </ul>
+                </div>
+
+                <!-- MQ -->
+                <div class="mw-section">
+                    <div class="mw-title">📨 MQ</div>
+                    <ul>
+                        <li><code onclick="fillCmd('/mq-list ')">/mq-list [关键词] [env]</code> <small>列出Topic</small>
+                        </li>
+                        <li><code onclick="fillCmd('/mq-exists ')">/mq-exists &lt;topic&gt; [env]</code>
+                            <small>检查是否存在</small></li>
+                        <li><code onclick="fillCmd('/mq-last ')">/mq-last &lt;topic&gt; [env]</code>
+                            <small>最新消息</small></li>
+                        <li><code onclick="fillCmd('/mq-send ')">/mq-send &lt;topic&gt; &lt;json&gt; [env]</code>
+                            <small>发送JSON</small></li>
+                        <li><code onclick="fillCmd('/mq-recent ')">/mq-recent &lt;topic&gt; [分钟] [env]</code> <small>最近N分钟消息</small>
+                        </li>
+                        <li><code onclick="fillCmd('/mq-query ')">/mq-query &lt;topic&gt; &lt;字段=值&gt; [分钟]
+                            [env]</code> <small>条件查询</small></li>
+                    </ul>
+                </div>
+
+                <!-- XXL-JOB -->
+                <div class="mw-section">
+                    <div class="mw-title">⚙️ XXL-JOB</div>
+                    <ul>
+                        <li><code onclick="fillCmd('/xxl-executors ')">/xxl-executors [关键词] [env]</code>
+                            <small>执行器列表</small></li>
+                        <li><code onclick="fillCmd('/xxl-tasks ')">/xxl-tasks &lt;ID/标题&gt; [关键词] [env]</code>
+                            <small>任务列表</small></li>
+                        <li><code onclick="fillCmd('/xxl-trigger ')">/xxl-trigger &lt;ID/描述&gt; [参数] [env]</code>
+                            <small>触发任务</small></li>
+                    </ul>
+                </div>
+
+            </div>  <!-- /middleware-scroll -->
+
+            <small>环境: dev/test/uat/prod (默认test) · 参数放最后</small>
         </div>
-
-        <!-- ELK 日志查询 -->
-        <div id="elk-panel">
-            <h3>📊 ELK 日志查询</h3>
-            <ul>
-                <li>
-                    <code onclick="fillCmd('/elk-services ')">/elk-services &lt;关键字&gt;</code>
-                    <small>搜索服务名称</small>
-                </li>
-                <li>
-                    <code onclick="fillCmd('/elk ')">/elk &lt;服务&gt; &lt;关键字&gt; [分钟] [环境]</code>
-                    <small>最近 N 分钟日志</small>
-                </li>
-                <li>
-                    <code onclick="fillCmd('/elk-date ')">/elk-date &lt;服务&gt; &lt;关键字&gt; &lt;日期&gt;
-                        [环境]</code>
-                    <small>指定日期日志</small>
-                </li>
-                <li>
-                    <code onclick="fillCmd('/elk-trace ')">/elk-trace &lt;traceId&gt; [分钟] [环境]</code>
-                    <small>按 traceId 查询(默认全环境30分钟)</small>
-                </li>
-            </ul>
-            <small style="color:#94a3b8;">环境: dev, test, uat, prod · 服务: tms, oas, lorry...</small>
-        </div>
-
-        <!-- 密码查询 -->
-        <div id="password-panel">
-            <h3>🔑 密码查询</h3>
-            <ul>
-                <li>
-                    <code onclick="fillCmd('/pwd ')">/pwd &lt;关键字&gt; [环境]</code>
-                    <small>查询服务密码</small>
-                </li>
-                <li>
-                    <code onclick="fillCmd('/pwd kibana')">/pwd kibana</code>
-                    <small>查询 Kibana</small>
-                </li>
-                <li>
-                    <code onclick="fillCmd('/pwd mysql Test')">/pwd mysql Test</code>
-                    <small>查询 Test MySQL</small>
-                </li>
-            </ul>
-            <small style="color:#94a3b8;">支持: DEV, Test, UAT, PROD, Global</small>
-        </div>
-
-
     </div>
 </div>
 

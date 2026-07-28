@@ -913,3 +913,173 @@ button:hover {
     text-align: center;
     flex-shrink: 0;
 }
+
+/* ---------- 中间件面板 ---------- */
+#middleware-panel {
+    background: #ffffff;
+    border: 1px solid #e9edf4;
+    border-radius: 12px;
+    padding: 10px 12px;
+    color: #1e293b;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    flex: 3;
+    min-height: 0;
+}
+
+#middleware-panel h3 {
+    margin: 0 0 5px 0;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 2px solid #eef2f6;
+    padding-bottom: 5px;
+    flex-shrink: 0;
+    color: #4f46e5;
+}
+
+/* 🆕 中间件滚动容器 */
+#middleware-scroll {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding-right: 2px;
+}
+
+/* 🆕 自定义滚动条（可选，更美观） */
+#middleware-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+#middleware-scroll::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+#middleware-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+#middleware-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* 其他样式保持不变 */
+#middleware-panel .mw-section {
+    border-bottom: 1px dashed #eef2f6;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+}
+
+#middleware-panel .mw-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+#middleware-panel .mw-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+    padding: 1px 2px;
+    margin-bottom: 2px;
+}
+
+#middleware-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#middleware-panel li {
+    margin-bottom: 1px;
+    line-height: 1.5;
+    padding: 1px 4px;
+    border-radius: 4px;
+    transition: background 0.15s;
+    cursor: default;
+    word-break: break-word;
+    font-size: 12px;
+}
+
+#middleware-panel li:hover {
+    background: #f1f5f9;
+}
+
+#middleware-panel code {
+    display: inline-block;
+    padding: 0px 5px;
+    border-radius: 10px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-weight: 600;
+    font-size: 11px;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.15s;
+    border: 1px solid transparent;
+}
+
+#middleware-panel .mw-section:nth-child(1) code {
+    color: #15803d;
+    background: #dcfce7;
+}
+#middleware-panel .mw-section:nth-child(2) code {
+    color: #0891b2;
+    background: #cffafe;
+}
+#middleware-panel .mw-section:nth-child(3) code {
+    color: #5b21b6;
+    background: #ede9fe;
+}
+#middleware-panel .mw-section:nth-child(4) code {
+    color: #dc2626;
+    background: #fee2e2;
+}
+
+#middleware-panel code:hover {
+    filter: brightness(0.92);
+    border-color: #b9c7e0;
+}
+
+#middleware-panel small {
+    font-size: 11px;
+    color: #64748b;
+    display: block;
+    margin-top: 4px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* Archery 实例列表 */
+#middleware-panel .archery-instance-title {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 11px;
+    padding: 1px 4px;
+}
+
+#middleware-panel .archery-db-item {
+    padding-left: 14px;
+    font-size: 11px;
+}
+
+#middleware-panel .archery-db-item code {
+    font-size: 10px;
+}
+
+#middleware-panel .archery-db-item .db-desc {
+    color: #64748b;
+    font-size: 10px;
+    margin-left: 4px;
+}
+
+#middleware-panel .loading-text {
+    color: #94a3b8;
+    font-size: 11px;
+    text-align: center;
+    font-style: italic;
+}
