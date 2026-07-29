@@ -9,7 +9,10 @@ const ARCHERY_DATABASES = [
     { id: 'lorry', label: 'lorry', instance: 'RDS-lorry', full: 'zhongbao-lorry' },
     { id: 'order', label: 'order', instance: 'RDS-lorry', full: 'zhongbao-lorry-order' },
     { id: 'marketing', label: 'marketing', instance: 'RDS-lorry', full: 'zhongbao-lorry-marketing' },
-    { id: 'cargo', label: 'cargo', instance: 'RDS-lorry', full: 'zhongbao-cargo' }
+    { id: 'cargo', label: 'cargo', instance: 'RDS-lorry', full: 'zhongbao-cargo' },
+    { id: 'recommend', label: 'recommend', instance: 'RDS-lorry', full: 'zhongbao-recommend' },
+    { id: 'payment', label: 'payment', instance: 'RDS-lorry', full: 'zhongbao-lorry-payment' },
+    { id: 'user', label: 'user', instance: 'RDS-lorry', full: 'zhongbao-lorry-user' }
 ];
 
 // WebSocket 连接地址

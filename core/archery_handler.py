@@ -3,7 +3,7 @@ import json
 import logging
 from datetime import datetime
 
-from core.archery_api import ArcheryAPI, format_query_result, get_session
+from core.archery_api import ArcheryAPI, format_query_result, get_session, force_reauthenticate, get_auth_status
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +36,18 @@ ARCHERY_DATABASES = {
     'cargo': {
         'instance': 'RDS-lorry',
         'full_name': 'zhongbao-cargo'
+    },
+    'recommend': {
+        'instance': 'RDS-lorry',
+        'full_name': 'zhongbao-recommend'
+    },
+    'payment': {
+        'instance': 'RDS-lorry',
+        'full_name': 'zhongbao-lorry-payment'
+    },
+    'user': {
+        'instance': 'RDS-lorry',
+        'full_name': 'zhongbao-lorry-user'
     }
 }
 
@@ -55,7 +67,6 @@ def get_current_time():
     return datetime.now().strftime("%H:%M:%S")
 
 
-# core/archery_handler.py - handle_archery_query 函数使用表格格式
 async def handle_archery_query(websocket, content, cmd):
     """
     处理 Archery 查询命令
@@ -85,14 +96,19 @@ async def handle_archery_query(websocket, content, cmd):
     db_name = cmd_info['full_name']
 
     try:
-        # 执行查询
+        # 执行查询（内部会自动处理鉴权）
         result = await execute_archery_query(instance_name, db_name, sql, limit=100)
 
         # 使用表格格式
         if result.get("success"):
             formatted = format_query_result(result, max_rows=10)
         else:
-            formatted = f"❌ 查询失败: {result.get('error', '未知错误')}"
+            error_msg = result.get('error', '未知错误')
+            # 检测是否是鉴权相关的错误
+            if 'login' in error_msg.lower() or 'auth' in error_msg.lower():
+                formatted = f"🔐 鉴权失败: {error_msg}\n💡 请重试或联系管理员"
+            else:
+                formatted = f"❌ 查询失败: {error_msg}"
 
         await websocket.send(json.dumps({
             "type": "system",
@@ -122,3 +138,53 @@ async def execute_archery_query(instance_name: str, db_name: str, sql: str, limi
     except Exception as e:
         logger.error(f"执行 Archery 查询失败: {e}")
         return {"success": False, "error": str(e), "data": []}
+
+
+# ================= 辅助管理函数 =================
+async def handle_archery_auth_refresh(websocket):
+    """
+    手动刷新 Archery 鉴权
+    """
+    try:
+        success = force_reauthenticate()
+        status = get_auth_status()
+
+        if success:
+            await websocket.send(json.dumps({
+                "type": "system",
+                "content": f"✅ Archery 鉴权刷新成功\n{json.dumps(status, indent=2, ensure_ascii=False)}",
+                "time": get_current_time()
+            }))
+        else:
+            await websocket.send(json.dumps({
+                "type": "system",
+                "content": f"❌ Archery 鉴权刷新失败，请检查日志",
+                "time": get_current_time()
+            }))
+    except Exception as e:
+        logger.error(f"刷新 Archery 鉴权失败: {e}", exc_info=True)
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": f"❌ 刷新鉴权异常: {e}",
+            "time": get_current_time()
+        }))
+
+
+async def handle_archery_auth_status(websocket):
+    """
+    获取 Archery 鉴权状态
+    """
+    try:
+        status = get_auth_status()
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": f"🔐 Archery 鉴权状态\n{json.dumps(status, indent=2, ensure_ascii=False)}",
+            "time": get_current_time()
+        }))
+    except Exception as e:
+        logger.error(f"获取 Archery 鉴权状态失败: {e}", exc_info=True)
+        await websocket.send(json.dumps({
+            "type": "system",
+            "content": f"❌ 获取鉴权状态异常: {e}",
+            "time": get_current_time()
+        }))

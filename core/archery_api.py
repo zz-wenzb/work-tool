@@ -4,7 +4,7 @@ import pickle
 import os
 import logging
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Dict, Any, List, Optional
 
 logger = logging.getLogger(__name__)
@@ -29,6 +29,7 @@ class ArcherySessionManager:
     _instance = None
     _session: Optional[requests.Session] = None
     _last_used: float = 0
+    _is_valid: bool = False  # 会话有效标志
 
     def __new__(cls):
         if not cls._instance:
@@ -50,13 +51,19 @@ class ArcherySessionManager:
             try:
                 with open(COOKIE_FILE, "rb") as f:
                     cached_session = pickle.load(f)
-                    # 检查是否过期（超过30分钟认为过期）
                     if cached_session.cookies.get("csrftoken"):
+                        # 复制 cookies 和必要的 headers
                         self._session.cookies.update(cached_session.cookies)
-                        self._session.headers.update(cached_session.headers)
+                        if 'X-CSRFToken' in cached_session.headers:
+                            self._session.headers['X-CSRFToken'] = cached_session.headers['X-CSRFToken']
                         self._last_used = time.time()
-                        logger.info("✅ 从缓存加载 Archery 会话成功")
-                        return
+                        # 验证会话是否真的有效
+                        if self._validate_session():
+                            self._is_valid = True
+                            logger.info("✅ 从缓存加载 Archery 会话成功")
+                            return
+                        else:
+                            logger.warning("⚠️ 缓存的会话无效，将重新登录")
             except Exception as e:
                 logger.warning(f"加载缓存会话失败: {e}")
                 if os.path.exists(COOKIE_FILE):
@@ -65,69 +72,155 @@ class ArcherySessionManager:
         # 执行登录
         self._login()
 
+    def _validate_session(self) -> bool:
+        """验证当前会话是否有效"""
+        try:
+            # 尝试访问首页，检查是否被重定向到登录页
+            response = self._session.get(BASE_URL, timeout=5, allow_redirects=False)
+
+            # 如果返回 302 重定向到登录页，说明会话无效
+            if response.status_code == 302:
+                location = response.headers.get('Location', '')
+                if 'login' in location.lower():
+                    logger.warning("会话已过期（重定向到登录页）")
+                    return False
+
+            # 如果返回 HTML 登录页
+            content_type = response.headers.get('Content-Type', '')
+            if 'text/html' in content_type and 'Login' in response.text:
+                logger.warning("会话已过期（返回登录页）")
+                return False
+
+            return True
+        except Exception as e:
+            logger.warning(f"验证会话失败: {e}")
+            return False
+
     def _login(self):
         """登录 Archery"""
         logger.info("正在登录 Archery...")
         try:
-            # 获取初始 CSRF
-            self._session.get(BASE_URL)
-            initial_csrf = self._session.cookies.get("csrftoken", "")
+            # 创建新的 Session 实例（清除旧状态）
+            self._session = requests.Session()
+            self._session.headers.update({
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                "Accept": "application/json, text/javascript, */*; q=0.01",
+                "X-Requested-With": "XMLHttpRequest"
+            })
 
+            # 步骤1: 获取初始 CSRF Token
+            logger.debug("获取初始 CSRF Token...")
+            init_response = self._session.get(BASE_URL, timeout=10)
+            initial_csrf = self._session.cookies.get("csrftoken", "")
+            logger.debug(f"初始 CSRF Token: {initial_csrf[:20] if initial_csrf else 'None'}...")
+
+            # 步骤2: 登录
             login_headers = {
                 "X-CSRFToken": initial_csrf,
                 "Referer": BASE_URL,
                 "Content-Type": "application/x-www-form-urlencoded"
             }
 
-            response = self._session.post(LOGIN_URL, data=LOGIN_DATA, headers=login_headers)
+            login_response = self._session.post(
+                LOGIN_URL,
+                data=LOGIN_DATA,
+                headers=login_headers,
+                timeout=10
+            )
 
-            if response.status_code == 200:
-                logger.info("✅ Archery 登录成功")
-                self._last_used = time.time()
-                # 保存会话到缓存
-                os.makedirs(os.path.dirname(COOKIE_FILE), exist_ok=True)
-                with open(COOKIE_FILE, "wb") as f:
-                    pickle.dump(self._session, f)
+            if login_response.status_code == 200:
+                # 验证登录是否成功（检查返回的是 JSON 还是 HTML）
+                content_type = login_response.headers.get('Content-Type', '')
+                if 'text/html' in content_type and 'Login' in login_response.text:
+                    raise Exception("登录失败：返回登录页面，请检查用户名密码")
+
+                # 获取新的 CSRF Token
+                new_csrf = self._session.cookies.get("csrftoken", "")
+                if new_csrf:
+                    self._session.headers["X-CSRFToken"] = new_csrf
+                    self._session.headers["Content-Type"] = "application/x-www-form-urlencoded"
+                    self._session.headers["Referer"] = BASE_URL
+
+                    self._last_used = time.time()
+                    self._is_valid = True
+
+                    # 保存会话到缓存
+                    os.makedirs(os.path.dirname(COOKIE_FILE), exist_ok=True)
+                    with open(COOKIE_FILE, "wb") as f:
+                        pickle.dump(self._session, f)
+
+                    logger.info("✅ Archery 登录成功")
+                else:
+                    raise Exception("登录后未获取到 CSRF Token")
             else:
-                raise Exception(f"登录失败，状态码: {response.status_code}, 响应: {response.text[:200]}")
+                raise Exception(f"登录失败，状态码: {login_response.status_code}")
+
         except Exception as e:
             logger.error(f"Archery 登录失败: {e}")
+            self._is_valid = False
             raise
 
+    def refresh_session(self):
+        """强制刷新会话（重新鉴权）"""
+        logger.info("🔄 强制刷新 Archery 会话（重新鉴权）...")
+
+        # 删除旧的缓存文件
+        if os.path.exists(COOKIE_FILE):
+            try:
+                os.remove(COOKIE_FILE)
+                logger.info("已删除旧会话缓存")
+            except Exception as e:
+                logger.warning(f"删除缓存文件失败: {e}")
+
+        # 重置会话状态
+        self._session = None
+        self._is_valid = False
+        self._last_used = 0
+
+        # 重新登录
+        self._login()
+
     def get_session(self) -> requests.Session:
-        """获取会话，如果过期则重新登录"""
-        # 检查会话是否过期（超过25分钟）
+        """获取会话，如果过期则自动重新鉴权"""
+        # 检查是否需要刷新
+        need_refresh = False
+
+        # 1. 检查时间过期
         if time.time() - self._last_used > 1500:  # 25分钟
-            logger.info("⏰ 会话可能已过期，尝试刷新...")
+            logger.info("⏰ 会话时间已过期")
+            need_refresh = True
+
+        # 2. 检查会话是否有效
+        if not need_refresh and not self._is_valid:
+            logger.info("🔍 会话标记为无效")
+            need_refresh = True
+
+        # 3. 如果会话存在但可能无效，进行验证
+        if not need_refresh and self._session:
+            try:
+                if not self._validate_session():
+                    logger.warning("⚠️ 会话验证失败，需要重新鉴权")
+                    need_refresh = True
+            except Exception as e:
+                logger.warning(f"会话验证异常: {e}")
+                need_refresh = True
+
+        # 如果需要刷新，执行重新鉴权
+        if need_refresh:
             self.refresh_session()
 
-        # 确保有 CSRF Token
+        # 确保 CSRF Token 存在
         csrf_token = self._session.cookies.get("csrftoken")
         if csrf_token:
-            self._session.headers.update({
-                "X-CSRFToken": csrf_token,
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Referer": BASE_URL
-            })
+            self._session.headers["X-CSRFToken"] = csrf_token
+            self._session.headers["Content-Type"] = "application/x-www-form-urlencoded"
+            self._session.headers["Referer"] = BASE_URL
         else:
-            logger.warning("⚠️ 未找到 CSRF Token，重新登录...")
+            logger.warning("⚠️ 未找到 CSRF Token，执行重新鉴权...")
             self.refresh_session()
 
         self._last_used = time.time()
         return self._session
-
-    def refresh_session(self):
-        """刷新会话"""
-        logger.info("🔄 刷新 Archery 会话...")
-        if os.path.exists(COOKIE_FILE):
-            os.remove(COOKIE_FILE)
-        self._session = requests.Session()
-        self._session.headers.update({
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            "Accept": "application/json, text/javascript, */*; q=0.01",
-            "X-Requested-With": "XMLHttpRequest"
-        })
-        self._login()
 
 
 # ================= 全局会话实例 =================
@@ -139,22 +232,55 @@ def get_session() -> requests.Session:
     return session_manager.get_session()
 
 
+def force_reauthenticate():
+    """
+    强制重新鉴权（外部调用接口）
+    用于手动重置会话
+    """
+    logger.info("🔐 执行强制重新鉴权...")
+    session_manager.refresh_session()
+    logger.info("✅ 重新鉴权完成")
+    return session_manager._is_valid
+
+
+def get_auth_status() -> dict:
+    """
+    获取当前鉴权状态
+    """
+    return {
+        "is_valid": session_manager._is_valid,
+        "last_used": datetime.fromtimestamp(session_manager._last_used).strftime(
+            "%Y-%m-%d %H:%M:%S") if session_manager._last_used > 0 else "Never",
+        "has_session": session_manager._session is not None,
+        "has_csrf": bool(session_manager._session.cookies.get("csrftoken")) if session_manager._session else False
+    }
+
+
 # ================= Archery API 接口 =================
 class ArcheryAPI:
     @staticmethod
     def execute_sql_query(instance_name: str, db_name: str, sql_content: str, limit_num: int = 100) -> Dict[str, Any]:
         """
-        执行 SQL 查询，自动处理会话过期
+        执行 SQL 查询，自动检测会话过期并重新鉴权
         """
-        max_retries = 2
+        max_retries = 3
         for attempt in range(max_retries):
             try:
+                # 获取会话（会自动验证和刷新）
                 session = get_session()
 
-                # 确保 CSRF Token 在请求头中
+                # 确保请求头完整
                 csrf_token = session.cookies.get("csrftoken")
                 if csrf_token:
                     session.headers["X-CSRFToken"] = csrf_token
+                    session.headers["Content-Type"] = "application/x-www-form-urlencoded"
+                    session.headers["Referer"] = BASE_URL
+                else:
+                    # 如果没有 CSRF，强制重新鉴权
+                    logger.warning("缺少 CSRF Token，强制重新鉴权")
+                    session_manager.refresh_session()
+                    session = get_session()
+                    continue
 
                 data = {
                     "instance_name": instance_name,
@@ -165,48 +291,96 @@ class ArcheryAPI:
                     "limit_num": limit_num
                 }
 
-                response = session.post(QUERY_URL, data=data)
+                response = session.post(QUERY_URL, data=data, timeout=30)
 
-                # 如果返回 403，说明会话失效，尝试刷新
-                if response.status_code == 403:
-                    logger.warning(f"⚠️ 收到 403，尝试刷新会话 (尝试 {attempt + 1}/{max_retries})")
+                # 检测会话过期
+                content_type = response.headers.get('Content-Type', '')
+                if 'text/html' in content_type or response.text.strip().startswith('<!DOCTYPE'):
+                    logger.warning(f"⚠️ 返回 HTML 页面（会话过期），尝试重新鉴权 (尝试 {attempt + 1}/{max_retries})")
                     session_manager.refresh_session()
                     continue
 
+                # 检测 403 权限问题
+                if response.status_code == 403:
+                    logger.warning(f"⚠️ 收到 403，会话可能过期，重新鉴权 (尝试 {attempt + 1}/{max_retries})")
+                    session_manager.refresh_session()
+                    continue
+
+                # 解析响应
                 return ArcheryParser.parse_sql_query(response)
+
+            except requests.exceptions.Timeout:
+                logger.error(f"请求超时 (尝试 {attempt + 1}/{max_retries})")
+                if attempt == max_retries - 1:
+                    return {"success": False, "error": "请求超时", "data": []}
+
             except Exception as e:
                 logger.error(f"执行 SQL 查询失败 (尝试 {attempt + 1}): {e}")
                 if attempt == max_retries - 1:
                     return {"success": False, "error": str(e), "data": []}
 
-        return {"success": False, "error": "查询失败，请重试", "data": []}
+        return {"success": False, "error": "查询失败，已重试多次", "data": []}
 
     @staticmethod
     def get_user_instances(tag_code: str = "can_read") -> Dict[str, Any]:
         """获取用户有权限的实例列表"""
-        try:
-            session = get_session()
-            params = {"tag_codes[]": tag_code}
-            response = session.get(INSTANCE_LIST_URL, params=params)
-            return ArcheryParser.parse_instances(response)
-        except Exception as e:
-            logger.error(f"获取实例列表失败: {e}")
-            return {"success": False, "error": str(e), "data": []}
+        max_retries = 2
+        for attempt in range(max_retries):
+            try:
+                session = get_session()
+                params = {"tag_codes[]": tag_code}
+                response = session.get(INSTANCE_LIST_URL, params=params, timeout=30)
+
+                # 检测会话过期
+                content_type = response.headers.get('Content-Type', '')
+                if 'text/html' in content_type or response.text.strip().startswith('<!DOCTYPE'):
+                    logger.warning(f"⚠️ 返回 HTML 页面（会话过期），尝试重新鉴权")
+                    session_manager.refresh_session()
+                    continue
+
+                if response.status_code == 403:
+                    logger.warning("⚠️ 收到 403，会话可能过期，重新鉴权")
+                    session_manager.refresh_session()
+                    continue
+
+                return ArcheryParser.parse_instances(response)
+            except Exception as e:
+                logger.error(f"获取实例列表失败 (尝试 {attempt + 1}): {e}")
+                if attempt == max_retries - 1:
+                    return {"success": False, "error": str(e), "data": []}
+        return {"success": False, "error": "获取实例列表失败", "data": []}
 
     @staticmethod
     def get_instance_databases(instance_name: str) -> Dict[str, Any]:
         """获取实例下的数据库列表"""
-        try:
-            session = get_session()
-            params = {
-                "instance_name": instance_name,
-                "resource_type": "database"
-            }
-            response = session.get(INSTANCE_RESOURCE_URL, params=params)
-            return ArcheryParser.parse_instance_databases(response)
-        except Exception as e:
-            logger.error(f"获取数据库列表失败: {e}")
-            return {"success": False, "error": str(e), "data": []}
+        max_retries = 2
+        for attempt in range(max_retries):
+            try:
+                session = get_session()
+                params = {
+                    "instance_name": instance_name,
+                    "resource_type": "database"
+                }
+                response = session.get(INSTANCE_RESOURCE_URL, params=params, timeout=30)
+
+                # 检测会话过期
+                content_type = response.headers.get('Content-Type', '')
+                if 'text/html' in content_type or response.text.strip().startswith('<!DOCTYPE'):
+                    logger.warning(f"⚠️ 返回 HTML 页面（会话过期），尝试重新鉴权")
+                    session_manager.refresh_session()
+                    continue
+
+                if response.status_code == 403:
+                    logger.warning("⚠️ 收到 403，会话可能过期，重新鉴权")
+                    session_manager.refresh_session()
+                    continue
+
+                return ArcheryParser.parse_instance_databases(response)
+            except Exception as e:
+                logger.error(f"获取数据库列表失败 (尝试 {attempt + 1}): {e}")
+                if attempt == max_retries - 1:
+                    return {"success": False, "error": str(e), "data": []}
+        return {"success": False, "error": "获取数据库列表失败", "data": []}
 
 
 # ================= 解析器 =================
@@ -214,12 +388,22 @@ class ArcheryParser:
     @staticmethod
     def parse_sql_query(response: requests.Response) -> Dict[str, Any]:
         """解析 SQL 查询结果"""
+        logger.info(f"响应状态码: {response.status_code}")
+        logger.info(f"响应头: {dict(response.headers)}")
+
+        # 打印前500字符的原始响应用于调试
+        raw_response = response.text[:500]
+        logger.info(f"原始响应: {raw_response}")
+
         if response.status_code != 200:
             error_msg = f"HTTP {response.status_code}"
             if response.status_code == 403:
                 error_msg = "会话已过期，请重新登录"
             elif response.status_code == 500:
                 error_msg = "服务器内部错误，请检查 SQL 语句"
+            # 检查是否是 HTML 响应
+            if response.text and response.text.strip().startswith('<!DOCTYPE'):
+                error_msg = "返回了HTML页面，可能会话已过期或需要重新登录"
             return {"success": False, "error": error_msg, "data": []}
 
         try:
@@ -242,6 +426,7 @@ class ArcheryParser:
                 return {"success": False, "error": err_msg, "data": []}
         except Exception as e:
             logger.error(f"解析 SQL 结果失败: {e}")
+            logger.error(f"响应内容: {response.text[:1000]}")
             return {"success": False, "error": f"解析失败: {e}", "data": []}
 
     @staticmethod
@@ -257,6 +442,7 @@ class ArcheryParser:
             else:
                 return {"success": False, "error": json_res.get("msg", "未知错误"), "data": []}
         except Exception as e:
+            logger.error(f"解析实例列表失败: {e}")
             return {"success": False, "error": f"解析失败: {e}", "data": []}
 
     @staticmethod
@@ -280,11 +466,11 @@ class ArcheryParser:
             else:
                 return {"success": False, "error": json_res.get("msg", "未知错误"), "data": []}
         except Exception as e:
+            logger.error(f"解析数据库列表失败: {e}")
             return {"success": False, "error": f"解析失败: {e}", "data": []}
 
 
 # ================= 格式化工具 =================
-# core/archery_api.py - 替换 format_query_result 函数
 def format_query_result(result: Dict[str, Any], max_rows: int = 10) -> str:
     """
     格式化查询结果为表格格式（显示所有列，自动换行）
