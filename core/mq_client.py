@@ -24,10 +24,24 @@ class MQManager:
         self.password = mq_config.get('password')
         self.no_login = mq_config.get('no_login', False)
 
-        # 从缓存或配置加载 cookie
-        self.cookie = self._load_cookie() or mq_config.get('cookie', '')
+        # 使用 Session 自动管理 cookie
+        self._session = requests.Session()
+        self._csrf_token = None
         self._last_used = time.time()
         self._is_logged_in = False
+
+        # 从缓存加载 cookie
+        self.cookie = self._load_cookie() or mq_config.get('cookie', '')
+        if self.cookie:
+            self._session.headers.update({'Cookie': self.cookie})
+
+        # 如果 no_login 为 True，通过 csrf-token 接口初始化会话
+        if self.no_login:
+            if not self.cookie or not self._csrf_token:
+                self._init_session()
+            self._is_logged_in = True
+            logger.info(f"✅ MQ 跳过登录 (no_login=True, host={self.host})")
+            return
 
         # 如果有 cookie，验证是否有效
         if self.cookie:
@@ -35,16 +49,69 @@ class MQManager:
             if not self._is_logged_in:
                 logger.warning("⚠️ 缓存的 MQ Cookie 已过期，将重新登录")
                 self.cookie = ""
-
-        # 如果 no_login 为 True，跳过登录
-        if self.no_login:
-            self._is_logged_in = True
-            logger.info(f"✅ MQ 跳过登录 (no_login=True, host={self.host})")
-            return
+            else:
+                self._fetch_csrf_token()
 
         # 如果没有有效 cookie，尝试登录
         if not self._is_logged_in and self.username and self.password:
             self.login()
+
+    def _init_session(self) -> bool:
+        """初始化会话：访问 csrf-token 接口获取 JSESSIONID 和 CSRF Token"""
+        try:
+            url = f"{self.host}/rocketmq-dashboard/csrf-token"
+            response = self._session.get(url, timeout=10)
+
+            if response.status_code != 200:
+                logger.error(f"初始化会话失败: HTTP {response.status_code}")
+                return False
+
+            result = response.json()
+            if result.get('status') != 0:
+                logger.error(f"初始化会话失败: {result.get('errMsg')}")
+                return False
+
+            token = result.get('data', {}).get('token')
+            if not token:
+                logger.error("CSRF Token 为空")
+                return False
+
+            self._csrf_token = token
+            self._session.headers.update({'X-XSRF-TOKEN': token})
+
+            # 从 session 中提取 cookie 并缓存
+            cookie_parts = []
+            for key, value in self._session.cookies.items():
+                cookie_parts.append(f"{key}={value}")
+            self.cookie = '; '.join(cookie_parts)
+            self._save_cookie(self.cookie)
+
+            logger.info(f"✅ 会话初始化成功，CSRF Token: {token[:8]}...")
+            return True
+
+        except Exception as e:
+            logger.error(f"初始化会话失败: {e}")
+            return False
+
+    def _fetch_csrf_token(self) -> Optional[str]:
+        """获取 CSRF Token"""
+        try:
+            url = f"{self.host}/rocketmq-dashboard/csrf-token"
+            response = self._session.get(url, timeout=10)
+
+            if response.status_code == 200:
+                result = response.json()
+                if result.get('status') == 0:
+                    token = result.get('data', {}).get('token')
+                    if token:
+                        self._csrf_token = token
+                        self._session.headers.update({'X-XSRF-TOKEN': token})
+                        logger.info(f"✅ 获取 CSRF Token 成功: {token[:8]}...")
+                        return token
+            return None
+        except Exception as e:
+            logger.warning(f"获取 CSRF Token 失败: {e}")
+            return None
 
     def _load_cookie(self) -> Optional[str]:
         """从缓存加载 cookie"""
@@ -69,9 +136,9 @@ class MQManager:
             cookie = cached_data.get('cookie', '')
             if cookie:
                 logger.info("✅ 从缓存加载 MQ Cookie 成功")
+                self._session.headers.update({'Cookie': cookie})
                 return cookie
-            else:
-                return None
+            return None
 
         except (pickle.UnpicklingError, EOFError, AttributeError) as e:
             logger.warning(f"加载 MQ 缓存失败 (数据损坏): {e}")
@@ -104,40 +171,25 @@ class MQManager:
             return False
 
         try:
-            url = f"{self.host}/topic/list.query"
+            url = f"{self.host}/ops/homePage.query"
             headers = {
-                'Cookie': self.cookie,
                 'content-type': 'application/json;charset=UTF-8',
             }
+            if self._csrf_token:
+                headers['X-XSRF-TOKEN'] = self._csrf_token
 
-            xsrf_token = self._get_xsrf_token()
-            if xsrf_token:
-                headers['X-XSRF-TOKEN'] = xsrf_token
+            response = self._session.get(url, headers=headers, timeout=5)
 
-            response = requests.get(url, headers=headers, timeout=5)
-
-            # 200 表示有效，403 表示过期
             if response.status_code == 200:
-                # 尝试解析 JSON
                 try:
                     result = response.json()
-                    # 检查业务状态码
                     if result.get('status') == 0 or result.get('status') == 200:
                         return True
-                    elif result.get('status') == -1 and '403' in str(result.get('errMsg', '')):
-                        return False
-                    else:
-                        # 其他错误可能是权限问题，但 cookie 可能有效
-                        return True
                 except (json.JSONDecodeError, ValueError):
-                    # 响应不是 JSON，可能是登录页，说明 cookie 无效
-                    logger.warning("MQ Cookie 验证: 响应不是 JSON，cookie 可能无效")
                     return False
             elif response.status_code == 403:
                 return False
-            else:
-                # 其他状态码可能是网络问题，保守处理
-                return True
+            return True
 
         except requests.exceptions.RequestException as e:
             logger.warning(f"MQ Cookie 验证请求异常: {e}")
@@ -147,32 +199,29 @@ class MQManager:
             return True
 
     def _get_xsrf_token(self) -> Optional[str]:
-        """从 cookie 中提取 XSRF-TOKEN"""
+        """获取 XSRF-TOKEN"""
+        if self._csrf_token:
+            return self._csrf_token
+
         if not self.cookie:
             return None
-
         match = re.search(r'XSRF-TOKEN=([^;]+)', self.cookie)
         if match:
             return match.group(1)
         return None
 
     def login(self) -> bool:
-        """
-        登录并更新 Cookie
-        如果未配置 username/password，则跳过登录（使用已有 cookie）
-        """
-        # 如果 no_login 为 True，跳过登录
+        """登录并更新 Cookie"""
         if self.no_login:
             self._is_logged_in = True
             logger.info("✅ MQ 跳过登录 (no_login=True)")
             return True
 
-        # 如果已经有有效 cookie，直接返回
         if self.cookie and self._test_cookie_valid():
             self._is_logged_in = True
+            self._fetch_csrf_token()
             return True
 
-        # 检查是否配置了账号密码
         if not self.username or not self.password:
             logger.warning("⚠️ 未配置 MQ 账号密码，且无有效 cookie")
             self._is_logged_in = False
@@ -192,25 +241,18 @@ class MQManager:
             response = requests.post(url, params=params, headers=headers, timeout=10)
 
             if response.status_code == 200:
-                # 获取响应头中的 Set-Cookie
                 set_cookie = response.headers.get('Set-Cookie')
-
                 if set_cookie:
-                    # 提取 JSESSIONID
                     match = re.search(r'JSESSIONID=([^;]+)', set_cookie)
                     if match:
                         new_session_id = match.group(1)
-
-                        # 更新 cookie
                         xsrf_token = self._get_xsrf_token()
                         if not self.cookie:
-                            # 如果没有 cookie，直接构建
                             if xsrf_token:
                                 self.cookie = f"JSESSIONID={new_session_id}; XSRF-TOKEN={xsrf_token}"
                             else:
                                 self.cookie = f"JSESSIONID={new_session_id}"
                         else:
-                            # 已有 cookie，替换 JSESSIONID
                             if "JSESSIONID=" in self.cookie:
                                 self.cookie = re.sub(
                                     r'JSESSIONID=[^;]+',
@@ -222,10 +264,9 @@ class MQManager:
 
                         self._last_used = time.time()
                         self._is_logged_in = True
-
-                        # 保存到缓存
+                        self._session.headers.update({'Cookie': self.cookie})
                         self._save_cookie(self.cookie)
-
+                        self._fetch_csrf_token()
                         logger.info("✅ MQ 登录成功，JSESSIONID 已更新并缓存")
                         return True
                     else:
@@ -245,19 +286,30 @@ class MQManager:
             return False
 
     def _ensure_valid_cookie(self) -> bool:
-        """确保 cookie 有效，如果无效则重新登录"""
-        # 如果 no_login 为 True，跳过验证
+        """确保 cookie 有效，如果无效则重新初始化"""
         if self.no_login:
-            return True
+            # 检查 session 是否有效
+            if self.cookie and self._csrf_token:
+                # 快速验证
+                try:
+                    url = f"{self.host}/ops/homePage.query"
+                    response = self._session.get(url, timeout=3)
+                    if response.status_code == 200:
+                        self._last_used = time.time()
+                        return True
+                except:
+                    pass
 
-        # 检查是否超过25分钟未使用
+            # 无效则重新初始化
+            logger.warning("⚠️ 会话无效，重新初始化...")
+            return self._init_session()
+
+        # 有账号密码的逻辑
         if time.time() - self._last_used > COOKIE_EXPIRE_SECONDS:
             logger.info("⏰ MQ 会话可能已过期，重新验证...")
             self._is_logged_in = False
 
-        # 如果标记为已登录且 cookie 存在，验证是否真正有效
         if self._is_logged_in and self.cookie:
-            # 先快速验证
             if self._test_cookie_valid():
                 self._last_used = time.time()
                 return True
@@ -265,50 +317,13 @@ class MQManager:
                 logger.warning("⚠️ MQ Cookie 已过期，需要重新登录")
                 self._is_logged_in = False
 
-        # 尝试重新登录
         if self.username and self.password:
             result = self.login()
             if result:
                 return True
 
-        # 如果登录失败，返回 False
         logger.warning("⚠️ MQ 无法获取有效 Cookie")
         return False
-
-    def _safe_request(self, method: str, url: str, **kwargs) -> Optional[dict]:
-        """
-        安全的请求方法，处理非 JSON 响应
-        """
-        try:
-            response = requests.request(method, url, **kwargs)
-
-            # 检查状态码
-            if response.status_code == 403:
-                logger.warning("⚠️ 收到 403，尝试重新登录...")
-                if self.login():
-                    # 重新发起请求
-                    response = requests.request(method, url, **kwargs)
-                else:
-                    return {'status': -1, 'errMsg': '认证失败，请重新登录'}
-
-            if response.status_code != 200:
-                logger.error(f"请求失败: {response.status_code}")
-                return {'status': -1, 'errMsg': f'HTTP {response.status_code}'}
-
-            # 尝试解析 JSON
-            try:
-                return response.json()
-            except (json.JSONDecodeError, ValueError) as e:
-                logger.error(f"响应不是 JSON 格式: {e}")
-                logger.debug(f"响应内容: {response.text[:200]}")
-                return {'status': -1, 'errMsg': '服务器返回非 JSON 响应，请检查服务状态'}
-
-        except requests.exceptions.RequestException as e:
-            logger.error(f"请求异常: {e}")
-            return {'status': -1, 'errMsg': str(e)}
-        except Exception as e:
-            logger.error(f"请求发生异常: {e}")
-            return {'status': -1, 'errMsg': str(e)}
 
     def query_topic_message(self, topic: str, m: int = 15, page_size: int = 20, fetch_all: bool = False) -> dict:
         """查询topic消息列表"""
@@ -317,7 +332,6 @@ class MQManager:
 
         url = f"{self.host}/message/queryMessagePageByTopic.query"
         headers = {
-            'Cookie': self.cookie,
             'content-type': 'application/json;charset=UTF-8',
         }
 
@@ -338,12 +352,15 @@ class MQManager:
         }
 
         try:
-            response = requests.post(url, headers=headers, json=payload, timeout=30)
+            response = self._session.post(url, headers=headers, json=payload, timeout=30)
 
             if response.status_code == 403:
-                logger.warning("⚠️ 收到 403，尝试重新登录...")
-                if self.login():
-                    response = requests.post(url, headers=headers, json=payload, timeout=30)
+                logger.warning("⚠️ 收到 403，尝试重新初始化...")
+                if self._init_session():
+                    xsrf_token = self._get_xsrf_token()
+                    if xsrf_token:
+                        headers['X-XSRF-TOKEN'] = xsrf_token
+                    response = self._session.post(url, headers=headers, json=payload, timeout=30)
                 else:
                     return {'status': -1, 'errMsg': '认证失败，请重新登录'}
 
@@ -351,28 +368,24 @@ class MQManager:
                 logger.error(f"查询失败: {response.status_code}")
                 return {'status': -1, 'errMsg': f'HTTP {response.status_code}'}
 
-            # 尝试解析 JSON
             try:
                 first_page = response.json()
             except (json.JSONDecodeError, ValueError) as e:
                 logger.error(f"响应不是 JSON 格式: {e}")
                 return {'status': -1, 'errMsg': '服务器返回非 JSON 响应'}
 
-            # 如果只取第一页，或第一页失败，直接返回
             if not fetch_all or first_page.get('status') != 0:
                 return first_page
 
-            # 获取分页信息
             page_info = first_page.get('data', {}).get('page', {})
             total_pages = page_info.get('totalPages', 1)
             all_content = page_info.get('content', [])
 
             logger.info(f"获取全量数据: 共 {total_pages} 页")
 
-            # 循环获取剩余页面
             for page_num in range(2, total_pages + 1):
                 payload['pageNum'] = page_num
-                response = requests.post(url, headers=headers, json=payload, timeout=30)
+                response = self._session.post(url, headers=headers, json=payload, timeout=30)
 
                 if response.status_code == 200:
                     try:
@@ -387,7 +400,6 @@ class MQManager:
                 else:
                     logger.warning(f"第 {page_num} 页获取失败")
 
-            # 合并数据
             first_page['data']['page']['content'] = all_content
             first_page['data']['page']['totalElements'] = len(all_content)
 
@@ -405,7 +417,6 @@ class MQManager:
 
         url = f"{self.host}/topic/list.query"
         headers = {
-            'Cookie': self.cookie,
             'content-type': 'application/json;charset=UTF-8',
         }
 
@@ -414,12 +425,15 @@ class MQManager:
             headers['X-XSRF-TOKEN'] = xsrf_token
 
         try:
-            response = requests.get(url, headers=headers, timeout=10)
+            response = self._session.get(url, headers=headers, timeout=10)
 
             if response.status_code == 403:
-                logger.warning("⚠️ 收到 403，尝试重新登录...")
-                if self.login():
-                    response = requests.get(url, headers=headers, timeout=10)
+                logger.warning("⚠️ 收到 403，尝试重新初始化...")
+                if self._init_session():
+                    xsrf_token = self._get_xsrf_token()
+                    if xsrf_token:
+                        headers['X-XSRF-TOKEN'] = xsrf_token
+                    response = self._session.get(url, headers=headers, timeout=10)
                 else:
                     return {'status': -1, 'errMsg': '认证失败，请重新登录'}
 
@@ -427,13 +441,11 @@ class MQManager:
                 logger.error(f"查询Topic列表失败: {response.status_code}")
                 return {'status': -1, 'errMsg': f'HTTP {response.status_code}'}
 
-            # 尝试解析 JSON
             try:
                 return response.json()
             except (json.JSONDecodeError, ValueError) as e:
                 logger.error(f"响应不是 JSON 格式: {e}")
-                logger.debug(f"响应内容: {response.text[:200]}")
-                return {'status': -1, 'errMsg': '服务器返回非 JSON 响应，请检查 Cookie 是否有效'}
+                return {'status': -1, 'errMsg': '服务器返回非 JSON 响应'}
 
         except Exception as e:
             logger.exception(f"查询Topic列表异常: {e}")
@@ -446,7 +458,6 @@ class MQManager:
 
         url = f"{self.host}/cluster/list.query"
         headers = {
-            'Cookie': self.cookie,
             'Content-Type': 'application/json;charset=UTF-8',
         }
 
@@ -455,12 +466,15 @@ class MQManager:
             headers['X-XSRF-TOKEN'] = xsrf_token
 
         try:
-            response = requests.get(url, headers=headers, timeout=10)
+            response = self._session.get(url, headers=headers, timeout=10)
 
             if response.status_code == 403:
-                logger.warning("⚠️ 收到 403，尝试重新登录...")
-                if self.login():
-                    response = requests.get(url, headers=headers, timeout=10)
+                logger.warning("⚠️ 收到 403，尝试重新初始化...")
+                if self._init_session():
+                    xsrf_token = self._get_xsrf_token()
+                    if xsrf_token:
+                        headers['X-XSRF-TOKEN'] = xsrf_token
+                    response = self._session.get(url, headers=headers, timeout=10)
                 else:
                     return {'status': -1, 'errMsg': '认证失败，请重新登录'}
 
@@ -491,21 +505,22 @@ class MQManager:
             "msgId": msg_id,
             "topic": topic
         }
-        headers = {
-            'Cookie': self.cookie
-        }
+        headers = {}
 
         xsrf_token = self._get_xsrf_token()
         if xsrf_token:
             headers['X-XSRF-TOKEN'] = xsrf_token
 
         try:
-            response = requests.get(detail_url, headers=headers, params=params, timeout=10)
+            response = self._session.get(detail_url, headers=headers, params=params, timeout=10)
 
             if response.status_code == 403:
-                logger.warning("⚠️ 收到 403，尝试重新登录...")
-                if self.login():
-                    response = requests.get(detail_url, headers=headers, params=params, timeout=10)
+                logger.warning("⚠️ 收到 403，尝试重新初始化...")
+                if self._init_session():
+                    xsrf_token = self._get_xsrf_token()
+                    if xsrf_token:
+                        headers['X-XSRF-TOKEN'] = xsrf_token
+                    response = self._session.get(detail_url, headers=headers, params=params, timeout=10)
                 else:
                     return None
 
@@ -535,7 +550,6 @@ class MQManager:
         if not self._ensure_valid_cookie():
             return {'status': -1, 'errMsg': '认证失败，请检查账号密码或网络连接'}
 
-        # 自动获取集群和 broker 信息
         if auto_fetch_cluster and (not cluster_name_list or not broker_name_list):
             cluster_result = self.query_cluster_info()
             if cluster_result.get('status') == 0:
@@ -560,7 +574,6 @@ class MQManager:
 
         url = f"{self.host}/topic/createOrUpdate.do"
         headers = {
-            'Cookie': self.cookie,
             'Content-Type': 'application/json',
         }
 
@@ -579,12 +592,15 @@ class MQManager:
         }
 
         try:
-            response = requests.post(url, headers=headers, json=payload, timeout=30)
+            response = self._session.post(url, headers=headers, json=payload, timeout=30)
 
             if response.status_code == 403:
-                logger.warning("⚠️ 收到 403，尝试重新登录...")
-                if self.login():
-                    response = requests.post(url, headers=headers, json=payload, timeout=30)
+                logger.warning("⚠️ 收到 403，尝试重新初始化...")
+                if self._init_session():
+                    xsrf_token = self._get_xsrf_token()
+                    if xsrf_token:
+                        headers['X-XSRF-TOKEN'] = xsrf_token
+                    response = self._session.post(url, headers=headers, json=payload, timeout=30)
                 else:
                     return {'status': -1, 'errMsg': '认证失败，请重新登录'}
 
@@ -614,7 +630,6 @@ class MQManager:
 
         url = f"{self.host}/topic/deleteTopic.do"
         headers = {
-            'Cookie': self.cookie,
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         }
 
@@ -627,12 +642,15 @@ class MQManager:
         }
 
         try:
-            response = requests.post(url, headers=headers, data=payload, timeout=30)
+            response = self._session.post(url, headers=headers, data=payload, timeout=30)
 
             if response.status_code == 403:
-                logger.warning("⚠️ 收到 403，尝试重新登录...")
-                if self.login():
-                    response = requests.post(url, headers=headers, data=payload, timeout=30)
+                logger.warning("⚠️ 收到 403，尝试重新初始化...")
+                if self._init_session():
+                    xsrf_token = self._get_xsrf_token()
+                    if xsrf_token:
+                        headers['X-XSRF-TOKEN'] = xsrf_token
+                    response = self._session.post(url, headers=headers, data=payload, timeout=30)
                 else:
                     return {'status': -1, 'errMsg': '认证失败，请重新登录'}
 
@@ -659,11 +677,10 @@ class MQManager:
                      trace_enabled: bool = False) -> dict:
         """发送消息到指定 Topic"""
         if not self._ensure_valid_cookie():
-            return {'status': -1, 'errMsg': '认证失败，请检查账号密码或网络连接'}
+            return {'status': -1, 'errMsg': '无法获取有效 Cookie'}
 
         url = f"{self.host}/topic/sendTopicMessage.do"
         headers = {
-            'Cookie': self.cookie,
             'Content-Type': 'application/json;charset=UTF-8',
         }
 
@@ -680,12 +697,17 @@ class MQManager:
         }
 
         try:
-            response = requests.post(url, headers=headers, json=payload, timeout=30)
+            response = self._session.post(url, headers=headers, json=payload, timeout=30)
 
             if response.status_code == 403:
-                logger.warning("⚠️ 收到 403，尝试重新登录...")
-                if self.login():
-                    response = requests.post(url, headers=headers, json=payload, timeout=30)
+                logger.warning("⚠️ 收到 403，尝试重新初始化...")
+                if self._init_session():
+                    xsrf_token = self._get_xsrf_token()
+                    if xsrf_token:
+                        headers['X-XSRF-TOKEN'] = xsrf_token
+                    response = self._session.post(url, headers=headers, json=payload, timeout=30)
+                    if response.status_code == 200:
+                        logger.info("✅ 重新初始化后发送成功")
                 else:
                     return {'status': -1, 'errMsg': '认证失败，请重新登录'}
 
