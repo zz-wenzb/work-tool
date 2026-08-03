@@ -1,6 +1,6 @@
 {
-  "created_at": "2026-07-31T15:45:57.727085",
-  "count": 413,
+  "created_at": "2026-08-03T09:25:35.178705",
+  "count": 414,
   "data": [
     {
       "creatorAccountId": null,
@@ -4128,6 +4128,16 @@
       "name": "energy-gateway-web",
       "gmtCreate": "2026-07-31T06:18:29.000+00:00",
       "description": "新能源-网关",
+      "appTemplateName": "baoqi-backend-jdk-17",
+      "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
+      "tags": null
+    },
+    {
+      "creatorAccountId": null,
+      "creatorId": "664dc837c194a62170f1866b",
+      "name": "trade-biz-v2",
+      "gmtCreate": "2026-07-31T09:32:08.000+00:00",
+      "description": "trade-biz-v2",
       "appTemplateName": "baoqi-backend-jdk-17",
       "appTemplateDisplayName": "宝奇后端微服务jdk17模版",
       "tags": null

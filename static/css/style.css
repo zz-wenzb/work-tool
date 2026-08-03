@@ -558,13 +558,13 @@ button:hover {
 
 /* 系统消息 */
 #messages .msg.system {
-    align-self: center;
+    align-self: flex-start;
     background: rgba(0, 0, 0, 0.04);
     color: #8c8c8c;
     font-size: 12px;
     padding: 3px 16px;
     border-radius: 12px;
-    text-align: center;
+    text-align: left;
     max-width: 90%;
     margin: 3px 0;
 }
@@ -612,6 +612,7 @@ button:hover {
 #messages .msg .msg-body {
     color: #1a1a2e;
     word-break: break-word;
+    text-align: left;  /* 🆕 强制左对齐 */
 }
 
 /* ---------- 输入区 ---------- */

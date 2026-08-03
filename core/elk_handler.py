@@ -43,140 +43,182 @@ ENV_INDEX_PREFIX = {
 
 # 用户输入的简称 -> 实际的 k8s app 名称
 ELK_SERVICE_MAPPING = {
-    # 核心服务
-    "tms": "tms-central",
-    "oas": "oas-central",
-    "lorry": "lorry-msp-gateway",
-    "order": "lorry-msp-order-service",
-    "marketing": "lorry-msp-marketing",
-    "cargo": "cargo-sync",
-    "gateway": "gateway-app",
-    "auth": "ums-auth",
-    "user": "lorry-msp-user",
-    "payment": "lorry-msp-payment",
-    "file": "lorry-msp-file",
-    "message": "lorry-msp-message",
-    "recommend": "recommend-query",
-    "trade": "trade-search",
-    "coupon": "coupon-service",
-    "driver": "lorry-msp-app-driver",
-    "employee": "lorry-msp-employee",
-    "number": "lorry-msp-number-generator",
-
-    # 网关相关
+    # ==================== 网关/路由层 ====================
     "gateway-app": "gateway-app",
-    "gateway-openapi": "gateway-openapi",
-    "gateway-shipper": "gateway-shipper",
-    "gateway-web": "gateway-web",
-    "gateway-web-energy": "gateway-web-energy",
     "gateway-platform": "gateway-platform",
+    "gateway-shipper": "gateway-shipper",
     "gateway-mp": "gateway-mp",
+    "gateway-openapi": "gateway-openapi",
+    "gateway-web-energy": "gateway-web-energy",
+    "gateway-web": "gateway-web",
     "gateway-sap": "gateway-sap",
+    "lorry-msp-gateway": "lorry-msp-gateway",
 
-    # 网货相关
+    # ==================== 认证/授权 ====================
+    "auth-server": "auth-server",
+    "ums-auth": "ums-auth",
+    "lorry-msp-auth": "lorry-msp-auth",
+
+    # ==================== 用户/员工 ====================
+    "user-server": "user-server",
+    "lorry-msp-user": "lorry-msp-user",
+    "lorry-msp-employee": "lorry-msp-employee",
+    "report-api-user": "report-api-user",
+
+    # ==================== TMS 运输管理系统 ====================
+    "tms-central": "tms-central",
+    "tms-vehicle-job": "tms-vehicle-job",
+    "tms-contract-job": "tms-contract-job",
+    "tms-api-web": "tms-api-web",
+
+    # ==================== OAS 运营管理系统 ====================
+    "oas-central": "oas-central",
+    "oas-mp-driver": "oas-mp-driver",
+    "oas-flow": "oas-flow",
+    "oas-revert": "oas-revert",
+    "oas-api-web": "oas-api-web",
+    "oas-report": "oas-report",
+    "oas-mp-order": "oas-mp-order",
+    "mq-consumer-oas": "mq-consumer-oas",
+    "canal-oas": "canal-oas",
+
+    # ==================== Lorry 货车业务 ====================
+    "lorry-xxl-job": "lorry-xxl-job",
+    "lorry-msp-data-warehouse-service": "lorry-msp-data-warehouse-service",
+    "lorry-msp-order-service": "lorry-msp-order-service",
+    "lorry-msp-wechat-robot": "lorry-msp-wechat-robot",
+    "lorry-msp-job": "lorry-msp-job",
+    "lorry-msp-robot-core": "lorry-msp-robot-core",
+    "lorry-msp-file": "lorry-msp-file",
+    "lorry-msp-web": "lorry-msp-web",
+    "lorry-msp-app-driver": "lorry-msp-app-driver",
+    "lorry-msp-message": "lorry-msp-message",
+    "lorry-msp-payment": "lorry-msp-payment",
+    "lorry-msp-marketing": "lorry-msp-marketing",
+
+    # ==================== 推荐系统 ====================
+    "recommend-query": "recommend-query",
+    "recommend-service": "recommend-service",
+    "recommend-job": "recommend-job",
+
+    # ==================== 货物/货运 ====================
     "cargo-sync": "cargo-sync",
     "cargo-posting": "cargo-posting",
 
-    # 推荐相关
-    "recommend-job": "recommend-job",
-    "recommend-query": "recommend-query",
-    "recommend-service": "recommend-service",
+    # ==================== 优惠券 ====================
+    "coupon-service": "coupon-service",
 
-    # OAS 相关
-    "oas-central": "oas-central",
-    "oas-revert": "oas-revert",
-    "oas-flow": "oas-flow",
-    "oas-report": "oas-report",
-    "oas-settle-job": "oas-settle-job",
-    "oas-api-web": "oas-api-web",
-    "oas-api-rescue": "oas-api-rescue",
-    "oas-mp-order": "oas-mp-order",
-    "oas-mp-driver": "oas-mp-driver",
-    "oas-mp-agent": "oas-mp-agent",
-    "oas-thirdpayment-job": "oas-thirdpayment-job",
-    "oas-deppon-track-push": "oas-deppon-track-push",
-
-    # TMS 相关
-    "tms-central": "tms-central",
-    "tms-api-web": "tms-api-web",
-    "tms-vehicle-job": "tms-vehicle-job",
-    "tms-auth": "tms-auth",
-
-    # MQ 相关
-    "mq-consumer-oas": "mq-consumer-oas",
-    "zhongbao-mq-default-producer-nengtou": "zhongbao-mq-default-producer-nengtou",
-
-    # 其他服务
-    "pub-api-config": "pub-api-config",
-    "infrastructure-contract": "infrastructure-contract",
-    "oils-backend": "oils-backend",
-    "auth-server": "auth-server",
-    "risk-control": "risk-control",
-    "pos-payment-job": "pos-payment-job",
+    # ==================== 支付/结算 ====================
     "pay-central": "pay-central",
-    "user-server": "user-server",
-    "energy-api-web": "energy-api-web",
-    "erp-doc": "erp-doc",
-    "upgrade-record": "upgrade-record",
-    "autoins-installment-web": "autoins-installment-web",
-    "erp-sys": "erp-sys",
-    "port-tms-web": "port-tms-web",
-    "xxl-job": "xxl-job",
-    "lane-track-api": "lane-track-api",
-    "energy-supplier-web": "energy-supplier-web",
-    "baoqi-notice-middle": "baoqi-notice-middle",
+    "payment-account": "payment-account",
     "pay-risk-central": "pay-risk-central",
-    "energy-job-web": "energy-job-web",
-    "openapi-oas-web": "openapi-oas-web",
-    "lane-dot-consumer": "lane-dot-consumer",
-    "trade-driver-biz": "trade-driver-biz",
-    "crm-api-web": "crm-api-web",
-    "openapi-callback-job": "openapi-callback-job",
-    "pos-settle-job": "pos-settle-job",
-    "sap-api-web": "sap-api-web",
-    "trade-waybill-shipper-posting": "trade-waybill-shipper-posting",
-    "mts-manage": "mts-manage",
-    "etc-api-web": "etc-api-web",
-    "newenergy-api-web": "newenergy-api-web",
-    "openapi-pos-web": "openapi-pos-web",
-    "openapi-oas": "openapi-oas",
-    "css-api-ticket": "css-api-ticket",
-    "openapi-dv": "openapi-dv",
-    "newenergy-supplier-web": "newenergy-supplier-web",
-    "lane-dot-producer": "lane-dot-producer",
-    "fuel-api-web": "fuel-api-web",
-    "capacity-api-web": "capacity-api-web",
-    "fds-invoice-api": "fds-invoice-api",
-    "report-api-user": "report-api-user",
-    "finance-api-nanjing": "finance-api-nanjing",
-    "pay-job-ccb": "pay-job-ccb",
-    "pay-api-web": "pay-api-web",
-    "pmts-api-web": "pmts-api-web",
-    "zhongbao-customer-web": "zhongbao-customer-web",
-    "pay-job-ceb": "pay-job-ceb",
-    "wms-server": "wms-server",
-    "erp-integration-central": "erp-integration-central",
-    "domain-order": "domain-order",
-    "openapi-developer": "openapi-developer",
-    "pay-job-jilin": "pay-job-jilin",
+    "pay-bank-central": "pay-bank-central",
+    "payment-transaction-job": "payment-transaction-job",
     "pay-oas-api-web": "pay-oas-api-web",
-    "openapi-gateway": "openapi-gateway",
-    "openapi-callback": "openapi-callback",
-    "mts-shipper": "mts-shipper",
-    "app-dv-api": "app-dv-api",
-    "datareport-api-web": "datareport-api-web",
-    "finance-api-jilin": "finance-api-jilin",
-    "mu-api": "mu-api",
-    "openapi-v2-callback": "openapi-v2-callback",
-    "ums-api-web": "ums-api-web",
-    "jiaotou-tms-server": "jiaotou-tms-server",
-    "openapi-auth-web": "openapi-auth-web",
+    "pay-job-ccb": "pay-job-ccb",
+    "pos-payment-job": "pos-payment-job",
+    "pos-settle-job": "pos-settle-job",
     "pay-oas-api-driver": "pay-oas-api-driver",
-    "jiaotou-tms-carrier": "jiaotou-tms-carrier",
+    "pay-oas-central": "pay-oas-central",
+    "mq-consumer-pay": "mq-consumer-pay",
+    "data-center-pay": "data-center-pay",
+
+    # ==================== 能源业务 ====================
+    "newenergy-supplier-web": "newenergy-supplier-web",
+    "energy-supplier-web": "energy-supplier-web",
+    "energy-api-web": "energy-api-web",
+    "energy-job-web": "energy-job-web",
+    "newenergy-api-web": "newenergy-api-web",
+    "gateway-web-energy": "gateway-web-energy",
+    "fuel-api-web": "fuel-api-web",
+
+    # ==================== 基础设施 ====================
+    "infrastructure-contract": "infrastructure-contract",
+    "capacity": "capacity",
+    "config-server": "config-server",
+    "auth-server": "auth-server",
+
+    # ==================== 文件服务 ====================
+    "file-web": "file-web",
+
+    # ==================== 风控/风险 ====================
+    "risk": "risk",
+    "risk-control": "risk-control",
+
+    # ==================== 司机服务 ====================
+    "driver-service": "driver-service",
+    "driver-search-service": "driver-search-service",
+    "trade-driver-biz": "trade-driver-biz",
+    "trade-driver": "trade-driver",
+
+    # ==================== 交易/订单 ====================
+    "trade-search-canal": "trade-search-canal",
+    "trade-search": "trade-search",
+    "trade-biz": "trade-biz",
+    "oms-order": "oms-order",
+
+    # ==================== 车道/线路 ====================
+    "lane-dot-producer": "lane-dot-producer",
+    "lane-dot-consumer": "lane-dot-consumer",
+    "lane-track-api": "lane-track-api",
+
+    # ==================== API/开放平台 ====================
+    "md-api": "md-api",
+    "mu-api": "mu-api",
+    "sp-api": "sp-api",
+    "openapi-oas-web": "openapi-oas-web",
+    "openapi-callback-job": "openapi-callback-job",
+    "openapi-callback": "openapi-callback",
+    "openapi-api": "openapi-api",
+    "openapi-pos-web": "openapi-pos-web",
+    "openapi-v2-callback": "openapi-v2-callback",
+    "pub-api-config": "pub-api-config",
+    "tap-map-api": "tap-map-api",
+    "fds-api-feeclouds": "fds-api-feeclouds",
+    "css-api-ticket": "css-api-ticket",
+    "css-api-web": "css-api-web",
+    "msg-api-web": "msg-api-web",
+    "debang-api-business": "debang-api-business",
+    "finance-api-jilin": "finance-api-jilin",
+    "statistics-oas-web": "statistics-oas-web",
+    "datareport-api-web": "datareport-api-web",
+    "port-tms-web": "port-tms-web",
+    "tms-api-web": "tms-api-web",
+    "quality-service-web": "quality-service-web",
+    "autoins-installment-web": "autoins-installment-web",
+
+    # ==================== MQ 消息队列 ====================
+    "mq-consumer-ma": "mq-consumer-ma",
+    "mq-consumer-pay": "mq-consumer-pay",
+    "mq-consumer-css": "mq-consumer-css",
+    "zhongbao-mq-default-producer": "zhongbao-mq-default-producer",
+
+    # ==================== Canal 数据同步 ====================
+    "canal-biz": "canal-biz",
+    "canal-oas": "canal-oas",
+    "erp-canal": "erp-canal",
+    "trade-search-canal": "trade-search-canal",
+
+    # ==================== ERP 企业资源计划 ====================
+    "erp-doc": "erp-doc",
+    "erp-sys": "erp-sys",
+
+    # ==================== 保险 ====================
+    "insurance-platform-server": "insurance-platform-server",
+    "baoqi-notice-middle": "baoqi-notice-middle",
+
+    # ==================== 中保 ====================
+    "zhongbao-customer-web": "zhongbao-customer-web",
+
+    # ==================== 其他 ====================
+    "log": "log",
     "obs-engine": "obs-engine",
-    "report-credit-stats": "report-credit-stats",
-    "openapi-v2-sink-zhongbao": "openapi-v2-sink-zhongbao",
-    "lane-track-handle-history": "lane-track-handle-history",
+    "merchant": "merchant",
+    "aiprompt-service-web": "aiprompt-service-web",
+    "etc-invoice-api": "etc-invoice-api",
+    "oils-backend": "oils-backend",
+    "tap-logs-consumer": "tap-logs-consumer",
+    "robot-service": "robot-service",
 }
 
 # 服务名称反向映射（用于搜索）
