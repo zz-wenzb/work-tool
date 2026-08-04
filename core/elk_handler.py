@@ -108,6 +108,9 @@ ELK_SERVICE_MAPPING = {
     # ==================== 优惠券 ====================
     "coupon-service": "coupon-service",
 
+    # ==================== 埋点 ====================
+    "track-server": "track-server",
+
     # ==================== 支付/结算 ====================
     "pay-central": "pay-central",
     "payment-account": "payment-account",
